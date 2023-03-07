@@ -7,20 +7,21 @@ define([
   "use strict";
 
   console.log("qlik: ", qlik);
+  console.log("qlik.navigation: ", qlik.navigation);
+
+  const sheets = qlik.navigation.sheets.map((sheet) => {
+    const {
+      qInfo: { qId },
+      qMeta: { title },
+    } = sheet;
+
+    return { label: title, value: qId };
+  });
+
+  console.log("sheets: ", sheets);
 
   $("<style>").html(cssContent).appendTo("head");
 
-  const MenuItemsSection = {
-    component: "items",
-    label: "Menu Items",
-    items: {
-      menuItems: {
-        type: "items",
-        label: "Menu Items",
-        items: {},
-      },
-    },
-  };
   return {
     template: template,
     initialProperties: {
@@ -60,6 +61,13 @@ define([
               type: "string",
               ref: "href",
               label: "URL",
+            },
+            sheet: {
+              type: "string",
+              component: "dropdown",
+              ref: "sheet",
+              translation: "Sheet",
+              options: sheets,
             },
             menuItemType: {
               type: "string",
