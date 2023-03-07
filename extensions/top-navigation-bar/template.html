@@ -1,8 +1,7 @@
-<div qv-extension>
-  <h1>{{myTitle}}</h1>
-  <ul>
+<div id="{{navigationContainerId}}" qv-extension>
+  <ul class="menu-items">
     <li ng-repeat="menuItem in menuItems">
-      {{ menuItem.label }} : <a href="{{menuItem.href}}">{{menuItem.href}}</a>
+      <a href="{{menuItem.href}}">{{ menuItem.label || menuItem.href}}</a>
     </li>
   </ul>
 </div>

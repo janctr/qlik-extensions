@@ -6,6 +6,8 @@ define([
 ], function (qlik, $, cssContent, template) {
   "use strict";
 
+  console.log("qlik: ", qlik);
+
   $("<style>").html(cssContent).appendTo("head");
 
   const MenuItemsSection = {
@@ -66,12 +68,12 @@ define([
               translation: "Link Type",
               options: [
                 {
-                  value: "Sheet Link",
-                  label: "sheet-link",
+                  label: "Sheet Link",
+                  value: "sheet-link",
                 },
                 {
-                  value: "Website URL",
-                  label: "web-link",
+                  label: "Website URL",
+                  value: "web-link",
                 },
               ],
             },
@@ -115,12 +117,34 @@ define([
       "$scope",
       function ($scope) {
         const layout = $scope.layout;
+        const navigationContainerId = "top-navigation";
 
         console.log(layout);
 
-        $scope.myTitle = "Watch Bill";
+        $scope.navigationContainerId = navigationContainerId;
         $scope.menuItems = layout.menuItems;
+
+        const parentContainer = $("#grid-wrap");
+        const qlikSenseHeader = $(".qs-header");
+        const qlikSenseSubHeader = $(
+          "#qv-page-container > div.MuiGrid-root.MuiGrid-container.MuiGrid-wrap-xs-nowrap.css-10f4c7e"
+        );
+
+        const totalHeaderHeightPx =
+          qlikSenseHeader.height() + qlikSenseSubHeader.height();
+
+        console.log("totalHeaderHeightPx: ", totalHeaderHeightPx);
+
+        console.log("parentContainer: ", parentContainer);
+
+        const nav = $(`#${navigationContainerId}`).prependTo("#grid-wrap");
+        nav.css("top", totalHeaderHeightPx);
+        console.log("nav: ", nav);
       },
     ],
+
+    paint: function ($, layout) {
+      console.log("paint called");
+    },
   };
 });
