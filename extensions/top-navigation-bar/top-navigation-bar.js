@@ -39,7 +39,7 @@ define([
       type: "items",
       component: "accordion",
       items: {
-        itemsList: {
+        menuItems: {
           type: "array",
           translation: "Menu Items",
           ref: "menuItems",
