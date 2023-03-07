@@ -8,6 +8,17 @@ define([
 
   $("<style>").html(cssContent).appendTo("head");
 
+  const MenuItemsSection = {
+    component: "items",
+    label: "Menu Items",
+    items: {
+      menuItems: {
+        type: "items",
+        label: "Menu Items",
+        items: {},
+      },
+    },
+  };
   return {
     template: template,
     initialProperties: {
@@ -26,26 +37,70 @@ define([
       type: "items",
       component: "accordion",
       items: {
-        dimensions: {
-          uses: "dimensions",
-          min: 0,
-        },
-        measures: {
-          uses: "measures",
-          min: 0,
-        },
-        sorting: {
-          uses: "sorting",
-        },
-        settings: {
-          uses: "settings",
+        itemsList: {
+          type: "array",
+          translation: "Menu Items",
+          ref: "menuItems",
+          min: 1,
+          allowAdd: true,
+          allowRemove: true,
+          allowMove: true,
+          addTranslation: "Add Items",
+          grouped: true,
           items: {
-            title: {
-              label: "Table Title",
+            // TODO: figure out a way to label this the value passed into label or a default value like "Menu Item"
+            label: {
               type: "string",
-              defaultValue: "",
-              ref: "props.tableTitle",
+              ref: "label",
+              label: "Label",
             },
+            href: {
+              type: "string",
+              ref: "href",
+              label: "URL",
+            },
+            menuItemType: {
+              type: "string",
+              component: "dropdown",
+              ref: "itemType",
+              translation: "Link Type",
+              options: [
+                {
+                  value: "Sheet Link",
+                  label: "sheet-link",
+                },
+                {
+                  value: "Website URL",
+                  label: "web-link",
+                },
+              ],
+            },
+
+            // itemType: {
+            //   type: "string",
+            //   component: "dropdown",
+            //   ref: "menuItem",
+            //   translation: "Item type",
+            //   options: [
+            //     {
+            //       value: "A",
+
+            //       label: "A-type",
+            //     },
+            //     {
+            //       value: "B",
+
+            //       label: "B-type",
+            //     },
+            //     {
+            //       value: "C",
+
+            //       label: "C-Type",
+            //     },
+            //   ],
+            //   show: true,
+            //   defaultValue: "A",
+            // },
           },
         },
       },
@@ -59,7 +114,12 @@ define([
     controller: [
       "$scope",
       function ($scope) {
+        const layout = $scope.layout;
+
+        console.log(layout);
+
         $scope.myTitle = "Watch Bill";
+        $scope.menuItems = layout.menuItems;
       },
     ],
   };
