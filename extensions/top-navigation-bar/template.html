@@ -1,7 +1,10 @@
 <div id="{{navigationContainerId}}" qv-extension>
   <ul class="menu-items">
     <li ng-repeat="menuItem in menuItems">
-      <a href="{{menuItem.href}}">{{ menuItem.label || menuItem.href}}</a>
+      <a
+        href="{{menuItem.itemType === 'web-link' ?  menuItem.href : getSheetUrl(menuItem.sheetId)}}"
+        >{{ menuItem.label || menuItem.href}}</a
+      >
     </li>
   </ul>
 </div>

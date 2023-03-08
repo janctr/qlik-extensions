@@ -7,7 +7,6 @@ define([
   "use strict";
 
   console.log("qlik: ", qlik);
-  console.log("qlik.navigation: ", qlik.navigation);
 
   const sheets = qlik.navigation.sheets.map((sheet) => {
     const {
@@ -19,6 +18,12 @@ define([
   });
 
   console.log("sheets: ", sheets);
+
+  function getSheetUrl(sheetId) {
+    const appId = qlik.currApp().id;
+
+    return `https://qlik.advana.data.mil/sense/app/${appId}/sheet/${sheetId}`;
+  }
 
   $("<style>").html(cssContent).appendTo("head");
 
@@ -57,23 +62,11 @@ define([
               ref: "label",
               label: "Label",
             },
-            href: {
-              type: "string",
-              ref: "href",
-              label: "URL",
-            },
-            sheet: {
-              type: "string",
-              component: "dropdown",
-              ref: "sheet",
-              translation: "Sheet",
-              options: sheets,
-            },
             menuItemType: {
               type: "string",
               component: "dropdown",
               ref: "itemType",
-              translation: "Link Type",
+              label: "Link Type",
               options: [
                 {
                   label: "Sheet Link",
@@ -85,32 +78,25 @@ define([
                 },
               ],
             },
-
-            // itemType: {
-            //   type: "string",
-            //   component: "dropdown",
-            //   ref: "menuItem",
-            //   translation: "Item type",
-            //   options: [
-            //     {
-            //       value: "A",
-
-            //       label: "A-type",
-            //     },
-            //     {
-            //       value: "B",
-
-            //       label: "B-type",
-            //     },
-            //     {
-            //       value: "C",
-
-            //       label: "C-Type",
-            //     },
-            //   ],
-            //   show: true,
-            //   defaultValue: "A",
-            // },
+            href: {
+              type: "string",
+              ref: "href",
+              label: "URL",
+              show: function (x) {
+                return x.itemType === "web-link";
+              },
+            },
+            sheet: {
+              type: "string",
+              component: "dropdown",
+              ref: "sheetId",
+              label: "Sheet",
+              defaultValue: 0,
+              options: sheets,
+              show: function (x) {
+                return x.itemType === "sheet-link";
+              },
+            },
           },
         },
       },
@@ -131,28 +117,19 @@ define([
 
         $scope.navigationContainerId = navigationContainerId;
         $scope.menuItems = layout.menuItems;
+        $scope.getSheetUrl = getSheetUrl;
 
-        const parentContainer = $("#grid-wrap");
         const qlikSenseHeader = $(".qs-header");
         const qlikSenseSubHeader = $(
           "#qv-page-container > div.MuiGrid-root.MuiGrid-container.MuiGrid-wrap-xs-nowrap.css-10f4c7e"
         );
 
-        const totalHeaderHeightPx =
-          qlikSenseHeader.height() + qlikSenseSubHeader.height();
-
-        console.log("totalHeaderHeightPx: ", totalHeaderHeightPx);
-
-        console.log("parentContainer: ", parentContainer);
-
-        const nav = $(`#${navigationContainerId}`).prependTo("#grid-wrap");
-        nav.css("top", totalHeaderHeightPx);
-        console.log("nav: ", nav);
+        $(`#${navigationContainerId}`)
+          .prependTo("#grid-wrap")
+          .css("top", qlikSenseHeader.height() + qlikSenseSubHeader.height());
       },
     ],
 
-    paint: function ($, layout) {
-      console.log("paint called");
-    },
+    paint: function ($, layout) {},
   };
 });
