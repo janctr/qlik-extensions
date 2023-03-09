@@ -2,7 +2,7 @@
   <ul class="menu-items">
     <li ng-repeat="menuItem in menuItems">
       <a
-        href="{{menuItem.itemType === 'web-link' ?  menuItem.href : getSheetUrl(menuItem.sheetId)}}"
+        href="{{menuItem.linkType === 'web-link' ?  menuItem.href : getSheetUrl(menuItem.sheetId)}}"
         >{{ menuItem.label || menuItem.href}}</a
       >
     </li>
