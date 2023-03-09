@@ -3,7 +3,8 @@ define([
   "jquery",
   "text!./style.css",
   "text!./template.html",
-], function (qlik, $, cssContent, template) {
+  "./properties",
+], function (qlik, $, cssContent, template, props) {
   "use strict";
 
   console.log("qlik: ", qlik);
@@ -29,84 +30,7 @@ define([
 
   return {
     template: template,
-    initialProperties: {
-      qHyperCubeDef: {
-        qDimensions: [],
-        qMeasures: [],
-        qInitialDataFetch: [
-          {
-            qWidth: 20,
-            qHeight: 200,
-          },
-        ],
-      },
-    },
-    definition: {
-      type: "items",
-      component: "accordion",
-      items: {
-        menuItems: {
-          type: "array",
-          translation: "Menu Items",
-          ref: "menuItems",
-          min: 1,
-          allowAdd: true,
-          allowRemove: true,
-          allowMove: true,
-          addTranslation: "Add Items",
-          grouped: true,
-          items: {
-            // TODO: figure out a way to label this the value passed into label or a default value like "Menu Item"
-            label: {
-              type: "string",
-              ref: "label",
-              label: "Label",
-            },
-            menuItemType: {
-              type: "string",
-              component: "dropdown",
-              ref: "itemType",
-              label: "Link Type",
-              options: [
-                {
-                  label: "Sheet Link",
-                  value: "sheet-link",
-                },
-                {
-                  label: "Website URL",
-                  value: "web-link",
-                },
-              ],
-            },
-            href: {
-              type: "string",
-              ref: "href",
-              label: "URL",
-              show: function (x) {
-                return x.itemType === "web-link";
-              },
-            },
-            sheet: {
-              type: "string",
-              component: "dropdown",
-              ref: "sheetId",
-              label: "Sheet",
-              defaultValue: 0,
-              options: sheets,
-              show: function (x) {
-                return x.itemType === "sheet-link";
-              },
-            },
-          },
-        },
-      },
-    },
-    support: {
-      snapshot: true,
-      export: true,
-      exportData: true,
-    },
-
+    definition: props.definition,
     controller: [
       "$scope",
       function ($scope) {
