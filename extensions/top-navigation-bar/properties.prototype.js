@@ -79,6 +79,9 @@ define(["qlik"], function (qlik) {
     ],
   };
 
+  const menuItemComponent = {};
+  const submenuComponent = {};
+
   const itemsDefinition = {
     menuItems: {
       type: "array",
