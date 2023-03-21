@@ -1,3 +1,5 @@
+/** Experimental. Ctrl + F 'this' */
+
 define(["qlik"], function (qlik) {
   const sheets = qlik.navigation.sheets.map(
     ({ qInfo: { qId }, qMeta: { title } }) => ({ label: title, value: qId })
@@ -79,10 +81,55 @@ define(["qlik"], function (qlik) {
     ],
   };
 
-  const menuItemComponent = {};
-  const submenuComponent = {};
+  const linkComponent = {
+    type: "string",
+    ref: "link",
+    label: "Link",
+  };
 
-  const itemsDefinition = {
+  //   const submenuComponent = {
+  //     // An array of menuItems
+  //     show: function (x) {
+  //       return x.isGroup === "item-group";
+  //     },
+  //     type: "array",
+  //     translation: "Sub Menu Items",
+  //     ref: "submenu",
+  //     min: 1,
+  //     allowAdd: true,
+  //     allowRemove: true,
+  //     allowmove: true,
+  //     addTranslation: "Add Item",
+  //     grouped: true,
+  //     itemTitleRef: "label",
+  //     items: menuItemComponent,
+  //   };
+
+  const menuItemComponent = {
+    // Can either be a submenu or a link
+    label: labelComponent,
+    isGroup: isGroupComponent,
+    link: linkComponent,
+    submenu: {
+      // An array of menuItems
+      show: function (x) {
+        return x.isGroup === "item-group";
+      },
+      type: "array",
+      translation: "Sub Menu Items",
+      ref: "submenu",
+      min: 1,
+      allowAdd: true,
+      allowRemove: true,
+      allowmove: true,
+      addTranslation: "Add Item",
+      grouped: true,
+      itemTitleRef: "label",
+      items: this,
+    },
+  };
+
+  const menu = {
     menuItems: {
       type: "array",
       translation: "Menu Items",
@@ -94,34 +141,7 @@ define(["qlik"], function (qlik) {
       addTranslation: "Add Item",
       grouped: true,
       itemTitleRef: "label",
-      items: {
-        isGroup: isGroupComponent,
-        label: labelComponent,
-        /******************* Children ******************** */
-        itemGroup: {
-          type: "array",
-          ref: "childMenuItems",
-          show: isItemGroup,
-          grouped: true,
-          allowAdd: true,
-          allowRemove: true,
-          allowMove: true,
-          translation: "Menu Items",
-          addTranslation: "Add Item",
-          itemTitleRef: "label",
-          items: {
-            isGroup: isGroupComponent,
-            label: labelComponent,
-            menuItemType: menuItemTypeComponent,
-            href: hrefComponent,
-            sheet: sheetLinkComponent,
-          },
-        },
-        /*******************************************************************/
-        menuItemType: menuItemTypeComponent,
-        href: hrefComponent,
-        sheet: sheetLinkComponent,
-      },
+      items: menuItemComponent,
     },
   };
 
@@ -129,7 +149,7 @@ define(["qlik"], function (qlik) {
     definition: {
       type: "items",
       component: "accordion",
-      items: itemsDefinition,
+      items: menu,
     },
   };
   return properties;

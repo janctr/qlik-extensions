@@ -4,7 +4,8 @@ define([
   "text!./style.css",
   "text!./template.html",
   "./properties",
-], function (qlik, $, cssContent, template, props) {
+  "./properties.prototype",
+], function (qlik, $, cssContent, template, props, proto) {
   "use strict";
 
   console.log("qlik: ", qlik);
