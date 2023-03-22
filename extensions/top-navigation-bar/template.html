@@ -1,10 +1,26 @@
 <div id="{{navigationContainerId}}" qv-extension>
   <ul class="menu-items">
     <li ng-repeat="menuItem in menuItems">
+      <ul class="menu-item-group" ng-if="menuItem.isGroup === 'item-group'">
+        <span>{{menuItem.label}}</span>
+        <li>
+          <a
+            ng-repeat="childMenuItem in menuItem.childMenuItems"
+            class="menu-item"
+            href="{{childMenuItem.linkType === 'web-link' ?  childMenuItem.href : getSheetUrl(childMenuItem.sheetId)}}"
+          >
+            {{ childMenuItem.label || childMenuItem.href }}
+          </a>
+        </li>
+      </ul>
+
       <a
+        class="menu-item"
+        ng-if="menuItem.isGroup === 'item'"
         href="{{menuItem.linkType === 'web-link' ?  menuItem.href : getSheetUrl(menuItem.sheetId)}}"
-        >{{ menuItem.label || menuItem.href}}</a
       >
+        {{ menuItem.label || menuItem.href}}
+      </a>
     </li>
   </ul>
 </div>

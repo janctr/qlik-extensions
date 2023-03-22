@@ -49,12 +49,19 @@ define([
           "#qv-page-container > div.MuiGrid-root.MuiGrid-container.MuiGrid-wrap-xs-nowrap.css-10f4c7e"
         );
 
+        const gridWidth = $("#grid-wrap").width();
+        console.log("griWidth: ", gridWidth);
         $(`#${navigationContainerId}`)
           .prependTo("#grid-wrap")
-          .css("top", qlikSenseHeader.height() + qlikSenseSubHeader.height());
+          .css("top", qlikSenseHeader.height() + qlikSenseSubHeader.height())
+          .css("width", $("#grid-wrap").width() + "px");
       },
     ],
 
-    paint: function ($, layout) {},
+    paint: function ($, layout) {
+      const gridWidth = $("#grid-wrap").width();
+      console.log("griWidth: ", gridWidth);
+      $("#top-navigation").css("width", gridWidth + "px");
+    },
   };
 });

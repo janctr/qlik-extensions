@@ -107,7 +107,6 @@ define(["qlik"], function (qlik) {
           addTranslation: "Add Item",
           itemTitleRef: "label",
           items: {
-            isGroup: isGroupComponent,
             label: labelComponent,
             menuItemType: menuItemTypeComponent,
             href: hrefComponent,
