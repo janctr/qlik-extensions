@@ -1,33 +1,78 @@
 <div qv-extension style="height: 100%; position: relative; overflow: auto">
-  <table>
-    <thead>
-      <tr>
-        <th
-          ng-repeat="head in table.headers track by $index"
-          qva-activate="head.orderBy()"
-        >
-          {{head.qFallbackTitle}}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="row in table.rows track by $index">
-        <td
-          ng-repeat="cell in row.cells track by $index"
-          class="selectable"
-          ng-class="{'selected':cell.selected,'numeric':cell.qNum}"
-          qva-activate="cell.select($event)"
-        >
-          {{cell.qText}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <button
-    ng-if="table.rowCount>table.rows.length"
-    qva-activate="table.getMoreData()"
-    class="lui-button more"
-  >
-    More...
-  </button>
+  <div class="nmcead-container">
+    <div class="nmcead-header">
+      <div class="empty"></div>
+      <div class="title bg-blue">NMCPAC MISSIONS/MANNING</div>
+      <div class="unit-name">UNIT NAME</div>
+      <div class="overall-status vertical-text">OVERALL STATUS</div>
+
+      <!-- MISSION CAPS -->
+
+      <div class="mission-caps">MISSION CAPS</div>
+      <div
+        ng-repeat="missionCap in missionCaps track by $index"
+        ng-value="{{$index}}"
+        class="mission-cap vertical-text"
+        style="grid-column-start: {{$index + 6}};
+            grid-column-end: {{$index + 7}};
+            grid-row-start: 2;
+            grid-row-end: 7;"
+      >
+        {{ missionCap }}
+      </div>
+
+      <!-- MAINTENANCE CAPS -->
+
+      <div class="maintenance-caps">MAINTENANCE CAPS</div>
+      <div class="maintenance-caps-intermediate">Intermediate</div>
+      <div class="maintenance-caps-limited">Limited</div>
+      <div
+        ng-repeat="maintenanceCap in maintenanceCaps track by $index"
+        ng-value="{{$index}}"
+        class="maintenance-cap vertical-text"
+        style="grid-column-start: {{$index + 23}};
+            grid-column-end: {{$index + 24}};
+            grid-row-start: 3;
+            grid-row-end: 7;"
+      >
+        {{ maintenanceCap }}
+      </div>
+
+      <!-- Unit/Team Manning -->
+
+      <div class="unit-team-manning">Unit/Team Manning</div>
+      <div
+        ng-repeat="unit in unitTeamManning track by $index"
+        ng-value="{{$index}}"
+        class="unit-team-manning-column vertical-text"
+        style="grid-column-start: {{$index+ 31}};
+          grid-column-end: {{$index+ 32}};
+          grid-row-start: 2;
+          grid-row-end: 7;"
+      >
+        {{ unit }}
+      </div>
+    </div>
+
+    <div class="nmcead-body">
+      <div class="ead-row-header vertical-text bg-blue-light-1">EAD</div>
+      <div class="cwd-row-header vertical-text bg-blue-light-2">CWD</div>
+
+      <div
+        ng-repeat="eadCell in eadRows track by $index"
+        ng-value="{{$index}}"
+        class="{{ ($index % 31 === 0) ? 'row-unit-name' : 'row-cell'}}"
+      >
+        {{eadCell}}
+      </div>
+
+      <div
+        ng-repeat="cwdCell in cwdRows track by $index"
+        ng-value="{{$index}}"
+        class="{{ ($index % 31 === 0) ? 'row-unit-name' : 'row-cell'}}"
+      >
+        {{cwdCell}}
+      </div>
+    </div>
+  </div>
 </div>
