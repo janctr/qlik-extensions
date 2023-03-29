@@ -26,7 +26,7 @@ define([
       items: {
         dimensions: {
           uses: "dimensions",
-          min: 1,
+          min: 0,
         },
         measures: {
           uses: "measures",
