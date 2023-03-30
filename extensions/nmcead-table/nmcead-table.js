@@ -6,16 +6,95 @@ define([
 ], function (qlik, $, cssContent, template) {
   "use strict";
   $("<style>").html(cssContent).appendTo("head");
+
+  function getRows(division, hyperCube) {
+    const data = hyperCube.qDataPages[0].qMatrix;
+
+    console.log("data: ", data);
+
+    const formattedRows = data
+      .filter((row) => {
+        return row[1].qText === division; // This is where the division column is
+      })
+      .map((datum) => {
+        return datum
+          .slice(1)
+          .map((value) => (value.qNum === "NaN" ? value.qText : value.qNum))
+          .filter((value) => value !== "EAD" && value !== "CWD");
+      });
+
+    console.log("formattedRows: ", formattedRows.flat());
+
+    return formattedRows.flat();
+  }
   return {
     template: template,
     initialProperties: {
       qHyperCubeDef: {
-        qDimensions: [],
+        qDimensions: [
+          { qNullSupression: false, qDef: { qFieldDefs: ["ID"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["division"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["unitName"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["overallStatus"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["missionVLS"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["missionCLS"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["missionSM"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["missionVLA"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["missionTLAM"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["missionHWT"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["missionLWT"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["missionMINES"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["missionBOMBS"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["missionROCKETS"] } },
+          {
+            qNullSupression: false,
+            qDef: { qFieldDefs: ["missionAirMissiles"] },
+          },
+          {
+            qNullSupression: false,
+            qDef: { qFieldDefs: ["missionSonoBuoys"] },
+          },
+          {
+            qNullSupression: false,
+            qDef: { qFieldDefs: ["missionSmallArms"] },
+          },
+          { qNullSupression: false, qDef: { qFieldDefs: ["missionRSSI"] } },
+          {
+            qNullSupression: false,
+            qDef: { qFieldDefs: ["missionTransport"] },
+          },
+          {
+            qNullSupression: false,
+            qDef: { qFieldDefs: ["missionArmedHelo"] },
+          },
+          { qNullSupression: false, qDef: { qFieldDefs: ["missionQRT"] } },
+          {
+            qNullSupression: false,
+            qDef: { qFieldDefs: ["maintenanceQuickStrikeMine"] },
+          },
+          { qNullSupression: false, qDef: { qFieldDefs: ["maintenanceSLMM"] } },
+          {
+            qNullSupression: false,
+            qDef: { qFieldDefs: ["maintenanceREXTORP"] },
+          },
+          { qNullSupression: false, qDef: { qFieldDefs: ["maintenanceESSM"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["maintenanceSM"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["maintenanceTLAM"] } },
+          {
+            qNullSupression: false,
+            qDef: { qFieldDefs: ["maintenanceVLAAUR"] },
+          },
+          { qNullSupression: false, qDef: { qFieldDefs: ["maintenanceLWT"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["MIL"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["CIV"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["MLC"] } },
+          { qNullSupression: false, qDef: { qFieldDefs: ["FDNH"] } },
+        ],
         qMeasures: [],
         qInitialDataFetch: [
           {
-            qWidth: 10,
-            qHeight: 50,
+            qWidth: 33,
+            qHeight: 100,
           },
         ],
       },
@@ -177,12 +256,14 @@ define([
           }
         }
 
+        console.log("eadRows: ", eadRows);
+
         $scope.missionCaps = missionCaps;
         $scope.maintenanceCaps = maintenanceCaps;
         $scope.unitTeamManning = unitTeamManning;
 
-        $scope.eadRows = eadRows;
-        $scope.cwdRows = cwdRows;
+        $scope.eadRows = getRows("EAD", $scope.layout.qHyperCube);
+        $scope.cwdRows = getRows("CWD", $scope.layout.qHyperCube);
       },
     ],
   };
