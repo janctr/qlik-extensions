@@ -1,5 +1,5 @@
 {
-	"name": "nmcead-table",
+	"name": "nmcead-kneeboard",
 	"description": "Table visualization template based on angular.js",
 	"icon": "table",
 	"type": "visualization",
