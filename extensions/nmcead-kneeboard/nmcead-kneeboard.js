@@ -3,22 +3,13 @@ define([
   "jquery",
   "text!./style.css",
   "text!./template.html",
-], function (qlik, $, cssContent, template) {
+  "./missionsAndManning",
+], function (qlik, $, cssContent, template, missionsAndManningProperties) {
   "use strict";
   $("<style>").html(cssContent).appendTo("head");
 
-  let currentTab = 1;
-
-  function setCurrentTab(tab) {
-    currentTab = tab;
-
-    console.log("current tab: ", currentTab);
-  }
-
   function getRows(division, hyperCube) {
     const data = hyperCube.qDataPages[0].qMatrix;
-
-    console.log("data: ", data);
 
     const formattedRows = data
       .filter((row) => {
@@ -35,69 +26,15 @@ define([
 
     return formattedRows.flat();
   }
+
+  const missionAndManningDims =
+    missionsAndManningProperties.missionsAndManningColumns;
+
   return {
     template: template,
     initialProperties: {
       qHyperCubeDef: {
-        qDimensions: [
-          { qNullSupression: false, qDef: { qFieldDefs: ["ID"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["division"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["unitName"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["overallStatus"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["missionVLS"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["missionCLS"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["missionSM"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["missionVLA"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["missionTLAM"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["missionHWT"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["missionLWT"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["missionMINES"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["missionBOMBS"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["missionROCKETS"] } },
-          {
-            qNullSupression: false,
-            qDef: { qFieldDefs: ["missionAirMissiles"] },
-          },
-          {
-            qNullSupression: false,
-            qDef: { qFieldDefs: ["missionSonoBuoys"] },
-          },
-          {
-            qNullSupression: false,
-            qDef: { qFieldDefs: ["missionSmallArms"] },
-          },
-          { qNullSupression: false, qDef: { qFieldDefs: ["missionRSSI"] } },
-          {
-            qNullSupression: false,
-            qDef: { qFieldDefs: ["missionTransport"] },
-          },
-          {
-            qNullSupression: false,
-            qDef: { qFieldDefs: ["missionArmedHelo"] },
-          },
-          { qNullSupression: false, qDef: { qFieldDefs: ["missionQRT"] } },
-          {
-            qNullSupression: false,
-            qDef: { qFieldDefs: ["maintenanceQuickStrikeMine"] },
-          },
-          { qNullSupression: false, qDef: { qFieldDefs: ["maintenanceSLMM"] } },
-          {
-            qNullSupression: false,
-            qDef: { qFieldDefs: ["maintenanceREXTORP"] },
-          },
-          { qNullSupression: false, qDef: { qFieldDefs: ["maintenanceESSM"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["maintenanceSM"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["maintenanceTLAM"] } },
-          {
-            qNullSupression: false,
-            qDef: { qFieldDefs: ["maintenanceVLAAUR"] },
-          },
-          { qNullSupression: false, qDef: { qFieldDefs: ["maintenanceLWT"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["MIL"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["CIV"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["MLC"] } },
-          { qNullSupression: false, qDef: { qFieldDefs: ["FDNH"] } },
-        ],
+        qDimensions: [...missionAndManningDims],
         qMeasures: [],
         qInitialDataFetch: [
           {
@@ -273,14 +210,11 @@ define([
 
         $scope.setCurrentTab = function setCurrentTab(tab) {
           $scope.currentTab = tab;
-
-          console.log("current tab: ", $scope.currentTab);
         };
-        $scope.currentTab = 1;
+
+        $scope.currentTab = 2;
 
         $scope.isCurrentTab = function (tab) {
-          console.log("tab: ", tab);
-          console.log("currentTab: ", $scope.currentTab);
           return tab === $scope.currentTab;
         };
       },
