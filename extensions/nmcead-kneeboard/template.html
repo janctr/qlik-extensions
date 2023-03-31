@@ -1,5 +1,54 @@
 <div qv-extension style="height: 100%; position: relative; overflow: auto">
-  <div class="nmcead-container">
+  <!-- KPIs -->
+  <div class="nmcead-title">
+    <h1>Navy Munitions Command, East Asia Division</h1>
+  </div>
+  <div class="nmcead-kpi-container">
+    <div class="nmcead-kpi">
+      <div class="nmcead-kpi-header">Infrastructure</div>
+      <div class="nmcead-kpi-body status-green">Status: GOOD</div>
+    </div>
+    <div class="nmcead-kpi">
+      <div class="nmcead-kpi-header">Missions/Manning</div>
+      <div class="nmcead-kpi-body status-red">Status: Critical</div>
+    </div>
+    <div class="nmcead-kpi">
+      <div class="nmcead-kpi-header">Quick Response Team</div>
+      <div class="nmcead-kpi-body status-green">Status: GOOD</div>
+    </div>
+  </div>
+
+  <!--------------------------------->
+
+  <!-- Tabs -->
+  <div class="nmcead-tabs">
+    <div class="nmcead-tab-header-container">
+      <div
+        class="tab-header{{isCurrentTab(1) ? ' current': ''}}"
+        ng-click="setCurrentTab(1)"
+      >
+        Infrastructure
+      </div>
+      <div
+        class="tab-header{{isCurrentTab(2) ? ' current': ''}}"
+        ng-click="setCurrentTab(2)"
+      >
+        Missions/Manning
+      </div>
+      <div
+        class="tab-header{{isCurrentTab(3) ? ' current': ''}}"
+        ng-click="setCurrentTab(3)"
+      >
+        QRT
+      </div>
+    </div>
+    <div class="nmc-tab"></div>
+  </div>
+  <!----------->
+
+  <div
+    class="nmcead-missions-manning-container{{isCurrentTab(2) ? ' show': ''}}"
+  >
     <div class="nmcead-header">
       <div class="empty"></div>
       <div class="title bg-blue">NMCPAC MISSIONS/MANNING</div>
@@ -74,5 +123,13 @@
         {{cwdCell}}
       </div>
     </div>
+  </div>
+
+  <div class="nmcead-infrastructure-container{{isCurrentTab(1) ? ' show': ''}}">
+    <h1>Infrastructure Container</h1>
+  </div>
+
+  <div class="nmcead-qrt-container{{isCurrentTab(3) ? ' show': ''}}">
+    <h1>QRT Container</h1>
   </div>
 </div>

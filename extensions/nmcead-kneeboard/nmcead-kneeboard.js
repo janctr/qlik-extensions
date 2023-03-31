@@ -7,6 +7,14 @@ define([
   "use strict";
   $("<style>").html(cssContent).appendTo("head");
 
+  let currentTab = 1;
+
+  function setCurrentTab(tab) {
+    currentTab = tab;
+
+    console.log("current tab: ", currentTab);
+  }
+
   function getRows(division, hyperCube) {
     const data = hyperCube.qDataPages[0].qMatrix;
 
@@ -256,14 +264,25 @@ define([
           }
         }
 
-        console.log("eadRows: ", eadRows);
-
         $scope.missionCaps = missionCaps;
         $scope.maintenanceCaps = maintenanceCaps;
         $scope.unitTeamManning = unitTeamManning;
 
         $scope.eadRows = getRows("EAD", $scope.layout.qHyperCube);
         $scope.cwdRows = getRows("CWD", $scope.layout.qHyperCube);
+
+        $scope.setCurrentTab = function setCurrentTab(tab) {
+          $scope.currentTab = tab;
+
+          console.log("current tab: ", $scope.currentTab);
+        };
+        $scope.currentTab = 1;
+
+        $scope.isCurrentTab = function (tab) {
+          console.log("tab: ", tab);
+          console.log("currentTab: ", $scope.currentTab);
+          return tab === $scope.currentTab;
+        };
       },
     ],
   };
