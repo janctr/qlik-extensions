@@ -42,64 +42,18 @@
         QRT
       </div>
     </div>
-    <div class="nmc-tab"></div>
   </div>
   <!----------->
 
   <div
     class="nmcead-missions-manning-container{{isCurrentTab(2) ? ' show': ''}}"
   >
-    <div class="nmcead-header">
-      <div class="empty"></div>
-      <div class="title bg-blue">NMCPAC MISSIONS/MANNING</div>
-      <div class="unit-name">UNIT NAME</div>
-      <div class="overall-status vertical-text">OVERALL STATUS</div>
-
-      <!-- MISSION CAPS -->
-
-      <div class="mission-caps">MISSION CAPS</div>
+    <div class="nmcead-missions-and-manning-header">
       <div
-        ng-repeat="missionCap in missionCaps track by $index"
-        ng-value="{{$index}}"
-        class="mission-cap vertical-text"
-        style="grid-column-start: {{$index + 6}};
-            grid-column-end: {{$index + 7}};
-            grid-row-start: 2;
-            grid-row-end: 7;"
+        ng-repeat="header in missionsAndManningsHeaders.headers track by $index"
+        class="{{header.className}}"
       >
-        {{ missionCap }}
-      </div>
-
-      <!-- MAINTENANCE CAPS -->
-
-      <div class="maintenance-caps">MAINTENANCE CAPS</div>
-      <div class="maintenance-caps-intermediate">Intermediate</div>
-      <div class="maintenance-caps-limited">Limited</div>
-      <div
-        ng-repeat="maintenanceCap in maintenanceCaps track by $index"
-        ng-value="{{$index}}"
-        class="maintenance-cap vertical-text"
-        style="grid-column-start: {{$index + 23}};
-            grid-column-end: {{$index + 24}};
-            grid-row-start: 3;
-            grid-row-end: 7;"
-      >
-        {{ maintenanceCap }}
-      </div>
-
-      <!-- Unit/Team Manning -->
-
-      <div class="unit-team-manning">Unit/Team Manning</div>
-      <div
-        ng-repeat="unit in unitTeamManning track by $index"
-        ng-value="{{$index}}"
-        class="unit-team-manning-column vertical-text"
-        style="grid-column-start: {{$index+ 31}};
-          grid-column-end: {{$index+ 32}};
-          grid-row-start: 2;
-          grid-row-end: 7;"
-      >
-        {{ unit }}
+        {{header.value}}
       </div>
     </div>
 
