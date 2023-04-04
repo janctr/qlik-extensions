@@ -1,0 +1,73 @@
+.nmcead-infrastructure-header > * {
+    border: 1px solid black;
+}
+
+.nmcead-infrastructure-container > .nmcead-infrastructure-header  {  
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "empty title title title title title title overall-status ohe ohe platform platform mhe mhe mhe mhe mhe mhe mhe whe whe cese cese load-facilities load-facilities load-facilities critical-degradations critical-degradations critical-degradations critical-degradations critical-degradations"
+      "empty title title title title title title overall-status ohe-vls ohe-cls platform-vbpt platform-la mhe-4k-forklift mhe-6k-forklift mhe-8k-forklift mhe-10k-forklift mhe-12k-forklift mhe-15k-forklift mhe-20k-forklift whe-60t-cranes whe-100t-cranes cese-10k-truck cese-15k-truck wharfs anchorage barges critical-degradation-1 critical-degradation-2 critical-degradation-3 critical-degradation-4 critical-degradation-5"
+      "empty title title title title title title overall-status ohe-vls ohe-cls platform-vbpt platform-la mhe-4k-forklift mhe-6k-forklift mhe-8k-forklift mhe-10k-forklift mhe-12k-forklift mhe-15k-forklift mhe-20k-forklift whe-60t-cranes whe-100t-cranes cese-10k-truck cese-15k-truck wharfs anchorage barges critical-degradation-1 critical-degradation-2 critical-degradation-3 critical-degradation-4 critical-degradation-5"
+      "empty unit-name unit-name unit-name unit-name unit-name unit-name overall-status ohe-vls ohe-cls platform-vbpt platform-la mhe-4k-forklift mhe-6k-forklift mhe-8k-forklift mhe-10k-forklift mhe-12k-forklift mhe-15k-forklift mhe-20k-forklift whe-60t-cranes whe-100t-cranes cese-10k-truck cese-15k-truck wharfs anchorage barges critical-degradation-1 critical-degradation-2 critical-degradation-3 critical-degradation-4 critical-degradation-5"
+      "empty unit-name unit-name unit-name unit-name unit-name unit-name overall-status ohe-vls ohe-cls platform-vbpt platform-la mhe-4k-forklift mhe-6k-forklift mhe-8k-forklift mhe-10k-forklift mhe-12k-forklift mhe-15k-forklift mhe-20k-forklift whe-60t-cranes whe-100t-cranes cese-10k-truck cese-15k-truck wharfs anchorage barges critical-degradation-1 critical-degradation-2 critical-degradation-3 critical-degradation-4 critical-degradation-5"
+      "empty unit-name unit-name unit-name unit-name unit-name unit-name overall-status ohe-vls ohe-cls platform-vbpt platform-la mhe-4k-forklift mhe-6k-forklift mhe-8k-forklift mhe-10k-forklift mhe-12k-forklift mhe-15k-forklift mhe-20k-forklift whe-60t-cranes whe-100t-cranes cese-10k-truck cese-15k-truck wharfs anchorage barges critical-degradation-1 critical-degradation-2 critical-degradation-3 critical-degradation-4 critical-degradation-5";
+}
+  
+.nmcead-infrastructure-header > .empty { grid-area: empty; }  
+.nmcead-infrastructure-header > .title { grid-area: title; }
+.nmcead-infrastructure-header > .unit-name { grid-area: unit-name; }
+.nmcead-infrastructure-header > .overall-status { grid-area: overall-status }
+.nmcead-infrastructure-header > .ohe { grid-area: ohe; }
+.nmcead-infrastructure-header > .ohe-vls { grid-area: ohe-vls; }
+.nmcead-infrastructure-header > .ohe-cls { grid-area: ohe-cls; }
+.nmcead-infrastructure-header > .platform { grid-area: platform; }
+.nmcead-infrastructure-header > .platform-vbpt { grid-area: platform-vbpt; }
+.nmcead-infrastructure-header > .platform-la { grid-area: platform-la; }
+.nmcead-infrastructure-header > .mhe { grid-area: mhe; }
+.nmcead-infrastructure-header > .mhe-4k-forklift { grid-area: mhe-4k-forklift; }
+.nmcead-infrastructure-header > .mhe-6k-forklift { grid-area: mhe-6k-forklift; }
+.nmcead-infrastructure-header > .mhe-8k-forklift { grid-area: mhe-8k-forklift; }
+.nmcead-infrastructure-header > .mhe-10k-forklift { grid-area: mhe-10k-forklift; }
+.nmcead-infrastructure-header > .mhe-12k-forklift { grid-area: mhe-12k-forklift; }
+.nmcead-infrastructure-header > .mhe-15k-forklift { grid-area: mhe-15k-forklift; }
+.nmcead-infrastructure-header > .mhe-20k-forklift { grid-area: mhe-20k-forklift; }
+.nmcead-infrastructure-header > .whe { grid-area: whe; }
+.nmcead-infrastructure-header > .whe-60t-cranes { grid-area: whe-60t-cranes; }
+.nmcead-infrastructure-header > .whe-100t-cranes { grid-area: whe-100t-cranes; }
+.nmcead-infrastructure-header > .cese { grid-area: cese; }
+.nmcead-infrastructure-header > .cese-10k-truck { grid-area: cese-10k-truck; }
+.nmcead-infrastructure-header > .cese-15k-truck { grid-area: cese-15k-truck; }
+.nmcead-infrastructure-header > .load-facilities { grid-area: load-facilities; }
+.nmcead-infrastructure-header > .wharfs { grid-area: wharfs; }
+.nmcead-infrastructure-header > .anchorage { grid-area: anchorage; }
+.nmcead-infrastructure-header > .barges { grid-area: barges; }
+.nmcead-infrastructure-header > .critical-degradations { grid-area: critical-degradations; }
+.nmcead-infrastructure-header > .critical-degradation-1 { grid-area: critical-degradation-1; }
+.nmcead-infrastructure-header > .critical-degradation-2 { grid-area: critical-degradation-2; }
+.nmcead-infrastructure-header > .critical-degradation-3 { grid-area: critical-degradation-3; }
+.nmcead-infrastructure-header > .critical-degradation-4 { grid-area: critical-degradation-4; }
+.nmcead-infrastructure-header > .critical-degradation-5 { grid-area: critical-degradation-5; }
+
+
+
+/* Body of the table */
+
+.nmcead-infrastructure-body {
+    display: grid;
+    grid-template-columns: 1fr 6fr repeat(24, 1fr);
+    /* grid-template-rows: repeat(22, 1fr); */
+    border: 1px solid black;
+    /* font-size: 1.5rem; */
+    font-weight: bold;
+    text-align: center;
+  
+    min-height: 300px;
+}
+
+.nmcead-infrastructure-body > * {
+    border: 1px solid black;
+}

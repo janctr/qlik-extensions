@@ -45,12 +45,13 @@
   </div>
   <!----------->
 
+  <!-- Missions/Manning -->
   <div
     class="nmcead-missions-manning-container{{isCurrentTab(2) ? ' show': ''}}"
   >
     <div class="nmcead-missions-and-manning-header">
       <div
-        ng-repeat="header in missionsAndManningsHeaders.headers track by $index"
+        ng-repeat="header in missionsAndManningsHeaders track by $index"
         class="{{header.className}}"
       >
         {{header.value}}
@@ -79,11 +80,100 @@
     </div>
   </div>
 
+  <!-- Infrastructure -->
   <div class="nmcead-infrastructure-container{{isCurrentTab(1) ? ' show': ''}}">
-    <h1>Infrastructure Container</h1>
+    <div class="nmcead-infrastructure-header">
+      <div
+        ng-repeat="header in infrastructureHeaders"
+        class="{{header.className}}"
+      >
+        {{ header.value}}
+      </div>
+    </div>
+
+    <div
+      class="nmcead-infrastructure-body"
+      style="grid-template-rows: repeat({{infrastructureRowsEadCount+infrastructureRowsCwdCount}}, 1fr)"
+    >
+      <div
+        class="ead-row-header vertical-text bg-blue-light-1"
+        style="
+          grid-row-start: 1;
+          grid-row-end: {{infrastructureRowsEadCount+1}};"
+      >
+        EAD
+      </div>
+      <div
+        class="cwd-row-header vertical-text bg-blue-light-2"
+        style="
+          grid-row-start: {{infrastructureRowsEadCount+1}};
+          grid-row-end: {{infrastructureRowsEadCount+infrastructureRowsCwdCount+1}};"
+      >
+        CWD
+      </div>
+
+      <div ng-repeat="eadCell in infrastructureRowsEad track by $index">
+        {{ eadCell }}
+      </div>
+
+      <div ng-repeat="cwdCell in infrastructureRowsCwd track by $index">
+        {{ cwdCell }}
+      </div>
+    </div>
   </div>
 
   <div class="nmcead-qrt-container{{isCurrentTab(3) ? ' show': ''}}">
-    <h1>QRT Container</h1>
+    <div class="nmcead-qrt-header">
+      <div
+        ng-repeat="header in quickResponseTeamHeaders"
+        class="{{header.className}}"
+      >
+        {{ header.value}}
+      </div>
+    </div>
+
+    <div
+      class="nmcead-qrt-body"
+      style="grid-template-rows: repeat({{quickResponseTeamRowsEadCount+quickResponseTeamRowsCwdCount+quickResponseTeamRowHomeGrownCount}}, 1fr)"
+    >
+      <div
+        class="ead-row-header vertical-text bg-blue-light-1"
+        style="
+        grid-row-start: 1;
+        grid-row-end: {{quickResponseTeamRowsEadCount+1}};"
+      >
+        EAD
+      </div>
+      <div
+        class="cwd-row-header vertical-text bg-blue-light-2"
+        style="
+        grid-row-start: {{quickResponseTeamRowsEadCount+1}};
+        grid-row-end: {{quickResponseTeamRowsEadCount + quickResponseTeamRowsCwdCount+1}};"
+      >
+        CWD
+      </div>
+      <div
+        class="homegrown-row-header vertical-text bg-blue-light-2"
+        style="
+        grid-row-start: {{quickResponseTeamRowsEadCount + quickResponseTeamRowsCwdCount + 1}};
+        grid-row-end: {{quickResponseTeamRowsEadCount + quickResponseTeamRowsCwdCount + + quickResponseTeamRowHomeGrownCount + 1}};"
+      >
+        HOME GROWN
+      </div>
+
+      <div ng-repeat="eadCell in quickResponseTeamRowsEad track by $index">
+        {{ eadCell }}
+      </div>
+
+      <div ng-repeat="cwdCell in quickResponseTeamRowsCwd track by $index">
+        {{ cwdCell }}
+      </div>
+
+      <div
+        ng-repeat="homeGrownCell in quickResponseTeamRowsHomeGrown track by $index"
+      >
+        {{ homeGrownCell }}
+      </div>
+    </div>
   </div>
 </div>

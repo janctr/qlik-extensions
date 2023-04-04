@@ -80,7 +80,7 @@
   min-height: 300px;
 }
 
-.ead-row-header {
+.nmcead-body > .ead-row-header {
   border: 1px solid black;
   grid-column-start: 1;
   grid-column-end: 2;
@@ -89,7 +89,7 @@
   grid-row-end: 18;
 }
 
-.cwd-row-header {
+.nmcead-body > .cwd-row-header {
   border: 1px solid black;
   grid-column-start: 1;
   grid-column-end: 2;

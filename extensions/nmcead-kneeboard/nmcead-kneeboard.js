@@ -3,18 +3,33 @@ define([
   "jquery",
   "text!./style.css",
   "text!./missions-table-grid-styles.css",
+  "text!./infrastructure-table-grid-styles.css",
+  "text!./qrt-table-grid-styles.css",
   "text!./template.html",
   "./missionsAndManning",
+  "./infrastructure",
+  "./quickResponseTeam",
 ], function (
   qlik,
   $,
-  cssContent,
+  mainCssContent,
   missionsTableStyles,
+  infrastructureTableStyles,
+  quickResponseTeamTableStyles,
   template,
-  missionsAndManningProperties
+  missionsAndManningProperties,
+  infrastructureProperties,
+  quickResponseTeamProperties
 ) {
   "use strict";
-  $("<style>").html(cssContent).appendTo("head");
+  [
+    mainCssContent,
+    missionsTableStyles,
+    infrastructureTableStyles,
+    quickResponseTeamTableStyles,
+  ].forEach((cssContent) => {
+    $("<style>").html(cssContent).appendTo("head");
+  });
 
   function getRows(division, hyperCube) {
     const data = hyperCube.qDataPages[0].qMatrix;
@@ -37,8 +52,27 @@ define([
     return formattedRows.flat();
   }
 
-  const missionAndManningDims =
-    missionsAndManningProperties.missionsAndManningColumns;
+  function getRowCount(division, hyperCube) {
+    const data = hyperCube.qDataPages[0].qMatrix;
+
+    const formattedRows = data
+      .filter((row) => {
+        return row[1].qText === division; // This is where the division column is
+      })
+      .map((datum) => {
+        return datum
+          .slice(2)
+          .map((value) => (value.qNum === "NaN" ? value.qText : value.qNum));
+      });
+
+    console.log("row count: ", formattedRows.length);
+
+    return formattedRows.length;
+  }
+
+  const missionAndManningDims = missionsAndManningProperties.dimensions;
+  const infrastructureDims = infrastructureProperties.dimensions;
+  const quickResponseTeamDims = quickResponseTeamProperties.dimensions;
 
   return {
     template: template,
@@ -88,6 +122,7 @@ define([
       exportData: true,
     },
     paint: function () {
+      console.log("this.backendApi: ", this.backendApi);
       //setup scope.table
       if (!this.$scope.table) {
         this.$scope.table = qlik.table(this);
@@ -97,12 +132,8 @@ define([
     controller: [
       "$scope",
       function ($scope) {
-        $scope.missionsAndManningsHeaders = {
-          headers: missionsAndManningProperties.headers,
-          missionCaps: missionsAndManningProperties.missionCaps,
-          maintenanceCaps: missionsAndManningProperties.maintenanceCaps,
-          unitTeamManning: missionsAndManningProperties.unitTeamManning,
-        };
+        $scope.missionsAndManningsHeaders =
+          missionsAndManningProperties.headers;
 
         $scope.eadRows = getRows("EAD", $scope.layout.qHyperCube);
         $scope.cwdRows = getRows("CWD", $scope.layout.qHyperCube);
@@ -116,6 +147,75 @@ define([
         $scope.isCurrentTab = function (tab) {
           return tab === $scope.currentTab;
         };
+
+        // infrastructureHyperCube
+        qlik.currApp().createCube(
+          {
+            qDimensions: [...infrastructureDims],
+            qMeasures: [],
+            qInitialDataFetch: [
+              {
+                qWidth: infrastructureDims.length,
+                qHeight: 100,
+              },
+            ],
+          },
+          (reply) => {
+            console.log("infrastructure hypercube: ", reply);
+            $scope.infrastructureHeaders = infrastructureProperties.headers;
+
+            $scope.infrastructureRowsEad = getRows("EAD", reply.qHyperCube);
+            $scope.infrastructureRowsCwd = getRows("CWD", reply.qHyperCube);
+
+            $scope.infrastructureRowsEadCount = getRowCount(
+              "EAD",
+              reply.qHyperCube
+            );
+            $scope.infrastructureRowsCwdCount = getRowCount(
+              "CWD",
+              reply.qHyperCube
+            );
+          }
+        );
+
+        // quickResponseTeam
+        qlik.currApp().createCube(
+          {
+            qDimensions: [...quickResponseTeamDims],
+            qMeasures: [],
+            qInitialDataFetch: [
+              {
+                qWidth: quickResponseTeamDims.length,
+                qHeight: 100,
+              },
+            ],
+          },
+          (reply) => {
+            console.log("quickResponseTeam hypercube: ", reply);
+            $scope.quickResponseTeamHeaders =
+              quickResponseTeamProperties.headers;
+
+            $scope.quickResponseTeamRowsEad = getRows("EAD", reply.qHyperCube);
+            $scope.quickResponseTeamRowsCwd = getRows("CWD", reply.qHyperCube);
+            $scope.quickResponseTeamRowsHomeGrown = getRows(
+              "HOME GROWN",
+              reply.qHyperCube
+            );
+
+            $scope.quickResponseTeamRowsEadCount = getRowCount(
+              "EAD",
+              reply.qHyperCube
+            );
+            $scope.quickResponseTeamRowsCwdCount = getRowCount(
+              "CWD",
+              reply.qHyperCube
+            );
+            $scope.quickResponseTeamRowHomeGrownCount = getRowCount(
+              "HOME GROWN",
+              reply.qHyperCube
+            );
+          }
+        );
       },
     ],
   };

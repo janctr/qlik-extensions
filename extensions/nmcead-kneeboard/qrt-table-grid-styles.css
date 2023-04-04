@@ -1,0 +1,64 @@
+.nmcead-qrt-header > * {
+    border: 1px solid black;
+}
+
+.nmcead-qrt-container > .nmcead-qrt-header {  
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "empty title title title title title overall-status man man train train train train equip equip equip equip"
+      "empty title title title title title overall-status man-10-of-10 man-greater-than-2 vls cls barge-ops qual-or-cert vls-ohe cls-ohe ssn-vls-platform redline-other"
+      "empty title title title title title overall-status man-10-of-10 man-greater-than-2 vls cls barge-ops qual-or-cert vls-ohe cls-ohe ssn-vls-platform redline-other"
+      "empty unit-name unit-name unit-name unit-name unit-name overall-status man-10-of-10 man-greater-than-2 vls cls barge-ops qual-or-cert vls-ohe cls-ohe ssn-vls-platform redline-other"
+      "empty unit-name unit-name unit-name unit-name unit-name overall-status man-10-of-10 man-greater-than-2 vls cls barge-ops qual-or-cert vls-ohe cls-ohe ssn-vls-platform redline-other"
+      "empty unit-name unit-name unit-name unit-name unit-name overall-status man-10-of-10 man-greater-than-2 vls cls barge-ops qual-or-cert vls-ohe cls-ohe ssn-vls-platform redline-other";
+  }
+  
+.nmcead-qrt-header > .title { grid-area: title; }
+.nmcead-qrt-header > .empty { grid-area: empty; }
+.nmcead-qrt-header > .unit-name { grid-area: unit-name; }
+.nmcead-qrt-header > .overall-status { grid-area: overall-status; }
+.nmcead-qrt-header > .man { grid-area: man; }
+.nmcead-qrt-header > .man-10-of-10 { grid-area: man-10-of-10; }
+.nmcead-qrt-header > .man-greater-than-2 { grid-area: man-greater-than-2; }
+.nmcead-qrt-header > .vls { grid-area: vls; }
+.nmcead-qrt-header > .cls { grid-area: cls; }
+.nmcead-qrt-header > .barge-ops { grid-area: barge-ops; }
+.nmcead-qrt-header > .train { grid-area: train; }
+.nmcead-qrt-header > .qual-or-cert { grid-area: qual-or-cert; }
+.nmcead-qrt-header > .equip { grid-area: equip; }
+.nmcead-qrt-header > .vls-ohe { grid-area: vls-ohe; }
+.nmcead-qrt-header > .cls-ohe { grid-area: cls-ohe; }
+.nmcead-qrt-header > .ssn-vls-platform { grid-area: ssn-vls-platform; }
+.nmcead-qrt-header > .redline-other { grid-area: redline-other; }
+  
+
+/** Table body **/
+
+.nmcead-qrt-body {
+    display: grid;
+    grid-template-columns: 1fr 5fr repeat(11, 1fr); /* Adds up to 17 */
+    /* grid-template-rows: repeat(22, 1fr); */
+    border: 1px solid black;
+    /* font-size: 1.5rem; */
+    font-weight: bold;
+    text-align: center;
+  
+    min-height: 300px;
+}
+
+.nmcead-qrt-body > * {
+    border: 1px solid black;
+}
+
+
+.nmcead-qrt-body > .ead-row-header,
+.nmcead-qrt-body > .cwd-row-header,
+.nmcead-qrt-body > .homegrown-row-header {
+    border: 1px solid black;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}

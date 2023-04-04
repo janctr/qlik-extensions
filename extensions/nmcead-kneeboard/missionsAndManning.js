@@ -59,7 +59,7 @@ define(["qlik"], function (qlik) {
     })),
   ];
 
-  const missionsAndManningColumns = [
+  const dimensions = [
     "missionsAndManningID",
     "missionsAndManningDivision",
     "missionsAndManningUnitName",
@@ -101,7 +101,7 @@ define(["qlik"], function (qlik) {
   });
 
   return {
-    missionsAndManningColumns,
+    dimensions,
     headers,
   };
 });
