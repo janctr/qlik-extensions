@@ -31,6 +31,39 @@ define([
     $("<style>").html(cssContent).appendTo("head");
   });
 
+  function flatten(arr) {
+    return arr.flat();
+  }
+
+  function getRowsPrototype(division, hyperCube) {
+    const data = hyperCube.qDataPages[0].qMatrix;
+
+    const rows = [];
+    for (const [index, row] of data
+      .filter((row) => row[1].qText === division)
+      .entries()) {
+      const rowWithoutIdAndDivision = row.slice(2);
+
+      const formattedRow = rowWithoutIdAndDivision.map((value) =>
+        value.qNum === "NaN" ? value.qText : value.qNum
+      );
+
+      rows.push(
+        formattedRow.map((row) => {
+          const classes = ["cell"];
+
+          return {
+            value: row,
+            className: classes.join(" "),
+          };
+        })
+      );
+    }
+
+    console.log("getRowsProto: ", rows);
+    return rows;
+  }
+
   function getRows(division, hyperCube) {
     const data = hyperCube.qDataPages[0].qMatrix;
 
@@ -42,7 +75,7 @@ define([
       })
       .map((datum) => {
         return datum
-          .slice(2)
+          .slice(2) // Take out ID and division field
           .map((value) => (value.qNum === "NaN" ? value.qText : value.qNum));
         // .filter((value) => value !== "EAD" && value !== "CWD");
       });
@@ -135,8 +168,31 @@ define([
         $scope.missionsAndManningsHeaders =
           missionsAndManningProperties.headers;
 
-        $scope.eadRows = getRows("EAD", $scope.layout.qHyperCube);
-        $scope.cwdRows = getRows("CWD", $scope.layout.qHyperCube);
+        $scope.missionsManningRowsEad = getRowsPrototype(
+          "EAD",
+          $scope.layout.qHyperCube
+        );
+        $scope.missionsManningRowsCwd = getRowsPrototype(
+          "CWD",
+          $scope.layout.qHyperCube
+        );
+
+        $scope.missionsAndManningRows = flatten(
+          [
+            ...getRowsPrototype("EAD", $scope.layout.qHyperCube),
+            ...getRowsPrototype("CWD", $scope.layout.qHyperCube),
+          ].map((row, index) => {
+            if (index % 2 !== 0) {
+              return row.map((cell) => {
+                return {
+                  value: cell.value,
+                  className: cell.className + " bg-gray",
+                };
+              });
+            }
+            return row;
+          })
+        );
 
         $scope.setCurrentTab = function setCurrentTab(tab) {
           $scope.currentTab = tab;

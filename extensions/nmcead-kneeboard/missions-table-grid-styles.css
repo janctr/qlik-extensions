@@ -1,5 +1,5 @@
 .nmcead-missions-and-manning-header > * {
-  border: 1px solid black
+  
 }
 
 .nmcead-missions-and-manning-header {  
@@ -72,7 +72,7 @@
   grid-template-columns: 1fr 7fr repeat(30, 1fr);
   /* grid-template-columns: repeat(37, 1fr); */
   grid-template-rows: repeat(22, 1fr);
-  border: 1px solid black;
+  
   /* font-size: 1.5rem; */
   font-weight: bold;
   text-align: center;
@@ -81,7 +81,7 @@
 }
 
 .nmcead-body > .ead-row-header {
-  border: 1px solid black;
+  
   grid-column-start: 1;
   grid-column-end: 2;
 
@@ -90,7 +90,7 @@
 }
 
 .nmcead-body > .cwd-row-header {
-  border: 1px solid black;
+  
   grid-column-start: 1;
   grid-column-end: 2;
 
@@ -99,10 +99,11 @@
 }
 
 .row-unit-name {
-  text-align: left;
-  border: 1px solid black;
+  text-align: right;
+  padding: 0.25rem 0.5rem
 }
 
 .row-cell {
-  border: 1px solid black;
+  padding: 0.25rem 0.5rem
 }
+

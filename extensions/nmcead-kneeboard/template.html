@@ -4,15 +4,15 @@
     <h1>Navy Munitions Command, East Asia Division</h1>
   </div>
   <div class="nmcead-kpi-container">
-    <div class="nmcead-kpi">
+    <div class="nmcead-kpi" ng-click="setCurrentTab(1)">
       <div class="nmcead-kpi-header">Infrastructure</div>
       <div class="nmcead-kpi-body status-green">Status: GOOD</div>
     </div>
-    <div class="nmcead-kpi">
+    <div class="nmcead-kpi" ng-click="setCurrentTab(2)">
       <div class="nmcead-kpi-header">Missions/Manning</div>
       <div class="nmcead-kpi-body status-red">Status: Critical</div>
     </div>
-    <div class="nmcead-kpi">
+    <div class="nmcead-kpi" ng-click="setCurrentTab(3)">
       <div class="nmcead-kpi-header">Quick Response Team</div>
       <div class="nmcead-kpi-body status-green">Status: GOOD</div>
     </div>
@@ -63,19 +63,11 @@
       <div class="cwd-row-header vertical-text bg-blue-light-2">CWD</div>
 
       <div
-        ng-repeat="eadCell in eadRows track by $index"
+        ng-repeat="row in missionsAndManningRows track by $index"
         ng-value="{{$index}}"
-        class="{{ ($index % 31 === 0) ? 'row-unit-name' : 'row-cell'}}"
+        class="{{row.className}}"
       >
-        {{eadCell}}
-      </div>
-
-      <div
-        ng-repeat="cwdCell in cwdRows track by $index"
-        ng-value="{{$index}}"
-        class="{{ ($index % 31 === 0) ? 'row-unit-name' : 'row-cell'}}"
-      >
-        {{cwdCell}}
+        {{row.value}}
       </div>
     </div>
   </div>
@@ -122,6 +114,7 @@
     </div>
   </div>
 
+  <!-- Quick Response Team -->
   <div class="nmcead-qrt-container{{isCurrentTab(3) ? ' show': ''}}">
     <div class="nmcead-qrt-header">
       <div

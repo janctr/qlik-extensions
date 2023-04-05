@@ -87,6 +87,12 @@
     align-items: center;
 
     font-size: 1.5rem;
+
+    transition: all 0.15s ease-in-out
+}
+
+.nmcead-kpi:hover {
+    box-shadow: rgba(99, 99, 99, 0.4) 0px 8px 10px 0px;
 }
 
 .nmcead-kpi-header {
@@ -178,11 +184,17 @@
 
 /********************************/
 
-
-
 .vertical-text {
     writing-mode: vertical-rl;
     text-orientation: mixed;
     transform: rotate(-180deg);
     text-align: center;
+}
+
+.bg-gray {
+    background-color: #f2f2f2;
+}
+
+.cell {
+    padding: 0.5rem 0.75rem
 }
