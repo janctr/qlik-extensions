@@ -175,6 +175,15 @@ define([
           })
         );
 
+        $scope.missionsAndManningRowsEadCount = getRowCount(
+          "EAD",
+          $scope.layout.qHyperCube
+        );
+        $scope.missionsAndManningRowsCwdCount = getRowCount(
+          "CWD",
+          $scope.layout.qHyperCube
+        );
+
         /* Infrastructure Table data */
         qlik.currApp().createCube(
           {

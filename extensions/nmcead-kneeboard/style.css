@@ -184,6 +184,8 @@
 
 /********************************/
 
+
+/* Shared styles for tables */
 .vertical-text {
     writing-mode: vertical-rl;
     text-orientation: mixed;
@@ -197,4 +199,18 @@
 
 .cell {
     padding: 0.5rem 0.75rem
+}
+
+/* Shared table header styles */
+.nmcead-missions-and-manning-header > *,
+.nmcead-infrastructure-header > *,
+.nmcead-qrt-header > * {
+    border: 1px solid #f2f2f2;
+    background-color: #808080;
+    color: black;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

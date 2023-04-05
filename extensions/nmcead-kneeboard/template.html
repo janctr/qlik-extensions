@@ -58,9 +58,23 @@
       </div>
     </div>
 
-    <div class="nmcead-body">
-      <div class="ead-row-header vertical-text bg-blue-light-1">EAD</div>
-      <div class="cwd-row-header vertical-text bg-blue-light-2">CWD</div>
+    <div class="nmcead-missions-and-manning-body">
+      <div
+        class="ead-row-header vertical-text bg-blue-light-1"
+        style="
+        grid-row-start: 1;
+        grid-row-end: {{missionsAndManningRowsEadCount + 1}};"
+      >
+        EAD
+      </div>
+      <div
+        class="cwd-row-header vertical-text bg-blue-light-2"
+        style="
+        grid-row-start: {{missionsAndManningRowsEadCount + 1}};
+        grid-row-end: {{missionsAndManningRowsEadCount + missionsAndManningRowsCwdCount + 1}};"
+      >
+        CWD
+      </div>
 
       <div
         ng-repeat="row in missionsAndManningRows track by $index"

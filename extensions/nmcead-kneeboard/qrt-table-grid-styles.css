@@ -1,7 +1,3 @@
-.nmcead-qrt-header > * {
-    border: 1px solid black;
-}
-
 .nmcead-qrt-container > .nmcead-qrt-header {  
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -42,7 +38,6 @@
     display: grid;
     grid-template-columns: 1fr 5fr repeat(11, 1fr); /* Adds up to 17 */
     /* grid-template-rows: repeat(22, 1fr); */
-    border: 1px solid black;
     /* font-size: 1.5rem; */
     font-weight: bold;
     text-align: center;
@@ -58,7 +53,6 @@
 .nmcead-qrt-body > .ead-row-header,
 .nmcead-qrt-body > .cwd-row-header,
 .nmcead-qrt-body > .homegrown-row-header {
-    border: 1px solid black;
     grid-column-start: 1;
     grid-column-end: 2;
 }

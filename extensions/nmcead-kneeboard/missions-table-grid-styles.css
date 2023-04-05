@@ -1,22 +1,10 @@
-.nmcead-missions-and-manning-header > * {
-  
-}
-
 .nmcead-missions-and-manning-header {  
   display: grid;
-  /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; */
   grid-template-columns: repeat(38, 1fr);
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: 0px 0px;
   grid-auto-flow: row;
-  grid-template-areas:
-    /* "empty title title title title title title title title overall-status mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps maintenance-caps maintenance-caps maintenance-caps maintenance-caps maintenance-caps maintenance-caps maintenance-caps maintenance-caps unit-team-manning unit-team-manning unit-team-manning unit-team-manning"
-    "empty title title title title title title title title overall-status mission-cap-item-1 mission-cap-item-2 mission-cap-item-3 mission-cap-item-4 mission-cap-item-5 mission-cap-item-6 mission-cap-item-7 mission-cap-item-8 mission-cap-item-9 mission-cap-item-10 mission-cap-item-11 mission-cap-item-12 mission-cap-item-13 mission-cap-item-14 mission-cap-item-15 mission-cap-item-16 intermediate intermediate intermediate limited limited limited limited limited mil civ mlc fdnh"
-    "empty title title title title title title title title overall-status mission-cap-item-1 mission-cap-item-2 mission-cap-item-3 mission-cap-item-4 mission-cap-item-5 mission-cap-item-6 mission-cap-item-7 mission-cap-item-8 mission-cap-item-9 mission-cap-item-10 mission-cap-item-11 mission-cap-item-12 mission-cap-item-13 mission-cap-item-14 mission-cap-item-15 mission-cap-item-16 intermediate intermediate intermediate limited limited limited limited limited mil civ mlc fdnh"
-    "empty title title title title title title title title overall-status mission-cap-item-1 mission-cap-item-2 mission-cap-item-3 mission-cap-item-4 mission-cap-item-5 mission-cap-item-6 mission-cap-item-7 mission-cap-item-8 mission-cap-item-9 mission-cap-item-10 mission-cap-item-11 mission-cap-item-12 mission-cap-item-13 mission-cap-item-14 mission-cap-item-15 mission-cap-item-16 intermediate-item-1 intermediate-item-2 intermediate-item-3 limited-item-1 limited-item-2 limited-item-3 limited-item-4 limited-item-5 mil civ mlc fdnh"
-    "empty unit-name unit-name unit-name unit-name unit-name unit-name unit-name unit-name overall-status mission-cap-item-1 mission-cap-item-2 mission-cap-item-3 mission-cap-item-4 mission-cap-item-5 mission-cap-item-6 mission-cap-item-7 mission-cap-item-8 mission-cap-item-9 mission-cap-item-10 mission-cap-item-11 mission-cap-item-12 mission-cap-item-13 mission-cap-item-14 mission-cap-item-15 mission-cap-item-16 intermediate-item-1 intermediate-item-2 intermediate-item-3 limited-item-1 limited-item-2 limited-item-3 limited-item-4 limited-item-5 mil civ mlc fdnh"
-    "empty unit-name unit-name unit-name unit-name unit-name unit-name unit-name unit-name overall-status mission-cap-item-1 mission-cap-item-2 mission-cap-item-3 mission-cap-item-4 mission-cap-item-5 mission-cap-item-6 mission-cap-item-7 mission-cap-item-8 mission-cap-item-9 mission-cap-item-10 mission-cap-item-11 mission-cap-item-12 mission-cap-item-13 mission-cap-item-14 mission-cap-item-15 mission-cap-item-16 intermediate-item-1 intermediate-item-2 intermediate-item-3 limited-item-1 limited-item-2 limited-item-3 limited-item-4 limited-item-5 mil civ mlc fdnh"; */
-  
+  grid-template-areas: 
     "empty title title title title title title title overall-status mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps mission-caps maintenance-caps maintenance-caps maintenance-caps maintenance-caps maintenance-caps maintenance-caps maintenance-caps maintenance-caps unit-team-manning unit-team-manning unit-team-manning unit-team-manning"
     "empty title title title title title title title overall-status mission-cap-item-1 mission-cap-item-2 mission-cap-item-3 mission-cap-item-4 mission-cap-item-5 mission-cap-item-6 mission-cap-item-7 mission-cap-item-8 mission-cap-item-9 mission-cap-item-10 mission-cap-item-11 mission-cap-item-12 mission-cap-item-13 mission-cap-item-14 mission-cap-item-15 mission-cap-item-16 mission-cap-item-17 intermediate intermediate intermediate limited limited limited limited limited mil civ mlc fdnh"
     "empty title title title title title title title overall-status mission-cap-item-1 mission-cap-item-2 mission-cap-item-3 mission-cap-item-4 mission-cap-item-5 mission-cap-item-6 mission-cap-item-7 mission-cap-item-8 mission-cap-item-9 mission-cap-item-10 mission-cap-item-11 mission-cap-item-12 mission-cap-item-13 mission-cap-item-14 mission-cap-item-15 mission-cap-item-16 mission-cap-item-17 intermediate intermediate intermediate limited limited limited limited limited mil civ mlc fdnh"
@@ -25,85 +13,63 @@
     "empty unit-name unit-name unit-name unit-name unit-name unit-name unit-name overall-status mission-cap-item-1 mission-cap-item-2 mission-cap-item-3 mission-cap-item-4 mission-cap-item-5 mission-cap-item-6 mission-cap-item-7 mission-cap-item-8 mission-cap-item-9 mission-cap-item-10 mission-cap-item-11 mission-cap-item-12 mission-cap-item-13 mission-cap-item-14 mission-cap-item-15 mission-cap-item-16 mission-cap-item-17 intermediate-item-1 intermediate-item-2 intermediate-item-3 limited-item-1 limited-item-2 limited-item-3 limited-item-4 limited-item-5 mil civ mlc fdnh";  
 }
 
-.empty { grid-area: empty; }
-.title { grid-area: title; }
-.unit-name { grid-area: unit-name; }
-.overall-status { grid-area: overall-status; }
-.mission-caps { grid-area: mission-caps; }
-.maintenance-caps { grid-area: maintenance-caps; }
-.intermediate { grid-area: intermediate; }
-.limited { grid-area: limited; }
-.unit-team-manning { grid-area: unit-team-manning; }
-.mission-cap-item-1 { grid-area: mission-cap-item-1; }
-.mission-cap-item-2 { grid-area: mission-cap-item-2; }
-.mission-cap-item-3 { grid-area: mission-cap-item-3; }
-.mission-cap-item-4 { grid-area: mission-cap-item-4; }
-.mission-cap-item-5 { grid-area: mission-cap-item-5; }
-.mission-cap-item-6 { grid-area: mission-cap-item-6; }
-.mission-cap-item-7 { grid-area: mission-cap-item-7; }
-.mission-cap-item-8 { grid-area: mission-cap-item-8; }
-.mission-cap-item-9 { grid-area: mission-cap-item-9; }
-.mission-cap-item-10 { grid-area: mission-cap-item-10; }
-.mission-cap-item-11 { grid-area: mission-cap-item-11; }
-.mission-cap-item-12 { grid-area: mission-cap-item-12; }
-.mission-cap-item-13 { grid-area: mission-cap-item-13; }
-.mission-cap-item-14 { grid-area: mission-cap-item-14; }
-.mission-cap-item-15 { grid-area: mission-cap-item-15; }
-.mission-cap-item-16 { grid-area: mission-cap-item-16; }
-.mission-cap-item-17 { grid-area: mission-cap-item-17; }
-.intermediate-item-1 { grid-area: intermediate-item-1; }
-.intermediate-item-2 { grid-area: intermediate-item-2; }
-.intermediate-item-3 { grid-area: intermediate-item-3; }
-.limited-item-1 { grid-area: limited-item-1; }
-.limited-item-2 { grid-area: limited-item-2; }
-.limited-item-3 { grid-area: limited-item-3; }
-.limited-item-4 { grid-area: limited-item-4; }
-.limited-item-5 { grid-area: limited-item-5; }
-.mil { grid-area: mil; }
-.civ { grid-area: civ; }
-.mlc { grid-area: mlc; }
-.fdnh { grid-area: fdnh; }
+.nmcead-missions-and-manning-header > .empty { grid-area: empty; }
+.nmcead-missions-and-manning-header > .title { grid-area: title; }
+.nmcead-missions-and-manning-header > .unit-name { grid-area: unit-name; }
+.nmcead-missions-and-manning-header > .overall-status { grid-area: overall-status; }
+.nmcead-missions-and-manning-header > .mission-caps { grid-area: mission-caps; }
+.nmcead-missions-and-manning-header > .maintenance-caps { grid-area: maintenance-caps; }
+.nmcead-missions-and-manning-header > .intermediate { grid-area: intermediate; }
+.nmcead-missions-and-manning-header > .limited { grid-area: limited; }
+.nmcead-missions-and-manning-header > .unit-team-manning { grid-area: unit-team-manning; }
+.nmcead-missions-and-manning-header > .mission-cap-item-1 { grid-area: mission-cap-item-1; }
+.nmcead-missions-and-manning-header > .mission-cap-item-2 { grid-area: mission-cap-item-2; }
+.nmcead-missions-and-manning-header > .mission-cap-item-3 { grid-area: mission-cap-item-3; }
+.nmcead-missions-and-manning-header > .mission-cap-item-4 { grid-area: mission-cap-item-4; }
+.nmcead-missions-and-manning-header > .mission-cap-item-5 { grid-area: mission-cap-item-5; }
+.nmcead-missions-and-manning-header > .mission-cap-item-6 { grid-area: mission-cap-item-6; }
+.nmcead-missions-and-manning-header > .mission-cap-item-7 { grid-area: mission-cap-item-7; }
+.nmcead-missions-and-manning-header > .mission-cap-item-8 { grid-area: mission-cap-item-8; }
+.nmcead-missions-and-manning-header > .mission-cap-item-9 { grid-area: mission-cap-item-9; }
+.nmcead-missions-and-manning-header > .mission-cap-item-10 { grid-area: mission-cap-item-10; }
+.nmcead-missions-and-manning-header > .mission-cap-item-11 { grid-area: mission-cap-item-11; }
+.nmcead-missions-and-manning-header > .mission-cap-item-12 { grid-area: mission-cap-item-12; }
+.nmcead-missions-and-manning-header > .mission-cap-item-13 { grid-area: mission-cap-item-13; }
+.nmcead-missions-and-manning-header > .mission-cap-item-14 { grid-area: mission-cap-item-14; }
+.nmcead-missions-and-manning-header > .mission-cap-item-15 { grid-area: mission-cap-item-15; }
+.nmcead-missions-and-manning-header > .mission-cap-item-16 { grid-area: mission-cap-item-16; }
+.nmcead-missions-and-manning-header > .mission-cap-item-17 { grid-area: mission-cap-item-17; }
+.nmcead-missions-and-manning-header > .intermediate-item-1 { grid-area: intermediate-item-1; }
+.nmcead-missions-and-manning-header > .intermediate-item-2 { grid-area: intermediate-item-2; }
+.nmcead-missions-and-manning-header > .intermediate-item-3 { grid-area: intermediate-item-3; }
+.nmcead-missions-and-manning-header > .limited-item-1 { grid-area: limited-item-1; }
+.nmcead-missions-and-manning-header > .limited-item-2 { grid-area: limited-item-2; }
+.nmcead-missions-and-manning-header > .limited-item-3 { grid-area: limited-item-3; }
+.nmcead-missions-and-manning-header > .limited-item-4 { grid-area: limited-item-4; }
+.nmcead-missions-and-manning-header > .limited-item-5 { grid-area: limited-item-5; }
+.nmcead-missions-and-manning-header > .mil { grid-area: mil; }
+.nmcead-missions-and-manning-header > .civ { grid-area: civ; }
+.nmcead-missions-and-manning-header > .mlc { grid-area: mlc; }
+.nmcead-missions-and-manning-header > .fdnh { grid-area: fdnh; }
 
 
 /************* TABLE BODY **************/
 
-.nmcead-body {
+.nmcead-missions-and-manning-body {
   display: grid;
   grid-template-columns: 1fr 7fr repeat(30, 1fr);
   /* grid-template-columns: repeat(37, 1fr); */
   grid-template-rows: repeat(22, 1fr);
   
-  /* font-size: 1.5rem; */
   font-weight: bold;
   text-align: center;
 
   min-height: 300px;
 }
 
-.nmcead-body > .ead-row-header {
-  
+.nmcead-missions-and-manning-body > .ead-row-header,
+.nmcead-missions-and-manning-body > .cwd-row-header {
   grid-column-start: 1;
   grid-column-end: 2;
-
-  grid-row-start: 1;
-  grid-row-end: 18;
-}
-
-.nmcead-body > .cwd-row-header {
-  
-  grid-column-start: 1;
-  grid-column-end: 2;
-
-  grid-row-start: 18;
-  grid-row-end: 24;
-}
-
-.row-unit-name {
-  text-align: right;
-  padding: 0.25rem 0.5rem
-}
-
-.row-cell {
-  padding: 0.25rem 0.5rem
 }
 
