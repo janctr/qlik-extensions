@@ -104,12 +104,12 @@
         CWD
       </div>
 
-      <div ng-repeat="eadCell in infrastructureRowsEad track by $index">
-        {{ eadCell }}
-      </div>
-
-      <div ng-repeat="cwdCell in infrastructureRowsCwd track by $index">
-        {{ cwdCell }}
+      <div
+        ng-repeat="row in infrastructureRows track by $index"
+        ng-value="{{$index}}"
+        class="{{row.className}}"
+      >
+        {{row.value}}
       </div>
     </div>
   </div>
@@ -154,18 +154,12 @@
         HOME GROWN
       </div>
 
-      <div ng-repeat="eadCell in quickResponseTeamRowsEad track by $index">
-        {{ eadCell }}
-      </div>
-
-      <div ng-repeat="cwdCell in quickResponseTeamRowsCwd track by $index">
-        {{ cwdCell }}
-      </div>
-
       <div
-        ng-repeat="homeGrownCell in quickResponseTeamRowsHomeGrown track by $index"
+        ng-repeat="row in quickResponseTeamRows track by $index"
+        ng-value="{{$index}}"
+        class="{{row.className}}"
       >
-        {{ homeGrownCell }}
+        {{row.value}}
       </div>
     </div>
   </div>

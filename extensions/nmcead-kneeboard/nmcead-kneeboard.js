@@ -35,7 +35,7 @@ define([
     return arr.flat();
   }
 
-  function getRowsPrototype(division, hyperCube) {
+  function getRows(division, hyperCube) {
     const data = hyperCube.qDataPages[0].qMatrix;
 
     const rows = [];
@@ -62,27 +62,6 @@ define([
 
     console.log("getRowsProto: ", rows);
     return rows;
-  }
-
-  function getRows(division, hyperCube) {
-    const data = hyperCube.qDataPages[0].qMatrix;
-
-    console.log("data: ", data);
-
-    const formattedRows = data
-      .filter((row) => {
-        return row[1].qText === division; // This is where the division column is
-      })
-      .map((datum) => {
-        return datum
-          .slice(2) // Take out ID and division field
-          .map((value) => (value.qNum === "NaN" ? value.qText : value.qNum));
-        // .filter((value) => value !== "EAD" && value !== "CWD");
-      });
-
-    console.log("formattedRows: ", formattedRows.flat());
-
-    return formattedRows.flat();
   }
 
   function getRowCount(division, hyperCube) {
@@ -165,22 +144,24 @@ define([
     controller: [
       "$scope",
       function ($scope) {
+        $scope.setCurrentTab = function setCurrentTab(tab) {
+          $scope.currentTab = tab;
+        };
+
+        $scope.currentTab = 2;
+
+        $scope.isCurrentTab = function (tab) {
+          return tab === $scope.currentTab;
+        };
+
+        /* Missions/Manning Table data*/
         $scope.missionsAndManningsHeaders =
           missionsAndManningProperties.headers;
 
-        $scope.missionsManningRowsEad = getRowsPrototype(
-          "EAD",
-          $scope.layout.qHyperCube
-        );
-        $scope.missionsManningRowsCwd = getRowsPrototype(
-          "CWD",
-          $scope.layout.qHyperCube
-        );
-
         $scope.missionsAndManningRows = flatten(
           [
-            ...getRowsPrototype("EAD", $scope.layout.qHyperCube),
-            ...getRowsPrototype("CWD", $scope.layout.qHyperCube),
+            ...getRows("EAD", $scope.layout.qHyperCube),
+            ...getRows("CWD", $scope.layout.qHyperCube),
           ].map((row, index) => {
             if (index % 2 !== 0) {
               return row.map((cell) => {
@@ -194,20 +175,10 @@ define([
           })
         );
 
-        $scope.setCurrentTab = function setCurrentTab(tab) {
-          $scope.currentTab = tab;
-        };
-
-        $scope.currentTab = 2;
-
-        $scope.isCurrentTab = function (tab) {
-          return tab === $scope.currentTab;
-        };
-
-        // infrastructureHyperCube
+        /* Infrastructure Table data */
         qlik.currApp().createCube(
           {
-            qDimensions: [...infrastructureDims],
+            qDimensions: infrastructureDims,
             qMeasures: [],
             qInitialDataFetch: [
               {
@@ -220,8 +191,22 @@ define([
             console.log("infrastructure hypercube: ", reply);
             $scope.infrastructureHeaders = infrastructureProperties.headers;
 
-            $scope.infrastructureRowsEad = getRows("EAD", reply.qHyperCube);
-            $scope.infrastructureRowsCwd = getRows("CWD", reply.qHyperCube);
+            $scope.infrastructureRows = flatten(
+              [
+                ...getRows("EAD", reply.qHyperCube),
+                ...getRows("CWD", reply.qHyperCube),
+              ].map((row, index) => {
+                if (index % 2 !== 0) {
+                  return row.map((cell) => {
+                    return {
+                      value: cell.value,
+                      className: cell.className + " bg-gray",
+                    };
+                  });
+                }
+                return row;
+              })
+            );
 
             $scope.infrastructureRowsEadCount = getRowCount(
               "EAD",
@@ -251,11 +236,22 @@ define([
             $scope.quickResponseTeamHeaders =
               quickResponseTeamProperties.headers;
 
-            $scope.quickResponseTeamRowsEad = getRows("EAD", reply.qHyperCube);
-            $scope.quickResponseTeamRowsCwd = getRows("CWD", reply.qHyperCube);
-            $scope.quickResponseTeamRowsHomeGrown = getRows(
-              "HOME GROWN",
-              reply.qHyperCube
+            $scope.quickResponseTeamRows = flatten(
+              [
+                ...getRows("EAD", reply.qHyperCube),
+                ...getRows("CWD", reply.qHyperCube),
+                ...getRows("HOME GROWN", reply.qHyperCube),
+              ].map((row, index) => {
+                if (index % 2 !== 0) {
+                  return row.map((cell) => {
+                    return {
+                      value: cell.value,
+                      className: cell.className + " bg-gray",
+                    };
+                  });
+                }
+                return row;
+              })
             );
 
             $scope.quickResponseTeamRowsEadCount = getRowCount(
