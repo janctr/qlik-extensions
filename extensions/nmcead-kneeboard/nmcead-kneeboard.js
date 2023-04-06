@@ -130,18 +130,15 @@ define([
     return formattedRows.length;
   }
 
-  const missionAndManningDims = missionsAndManningProperties.dimensions;
-  const infrastructureDims = infrastructureProperties.dimensions;
-
   return {
     template: template,
     initialProperties: {
       qHyperCubeDef: {
-        qDimensions: [...missionAndManningDims],
+        qDimensions: [],
         qMeasures: [],
         qInitialDataFetch: [
           {
-            qWidth: missionAndManningDims.length,
+            qWidth: 0,
             qHeight: 100,
           },
         ],
@@ -202,79 +199,35 @@ define([
         };
 
         /* Missions/Manning Table data*/
-        $scope.missionsAndManningsHeaders =
-          missionsAndManningProperties.headers;
+        const missionAndManningDims = missionsAndManningProperties.dimensions;
+        const missionsAndManningHeaders = missionsAndManningProperties.headers;
 
-        $scope.missionsAndManningRows = flatten(
-          [
-            ...getRows("EAD", $scope.layout.qHyperCube),
-            ...getRows("CWD", $scope.layout.qHyperCube),
-          ].map((row, index) => {
-            const cellColorClass = index % 2 !== 0 ? "cell-gray" : "cell-white";
-
-            return row.map((cell) => {
-              return {
-                value: cell.value,
-                className: cell.className + " " + cellColorClass,
-              };
-            });
-          })
-        );
-
-        $scope.missionsAndManningRowsEadCount = getRowCount(
+        getTableRows(missionAndManningDims, missionsAndManningHeaders, [
           "EAD",
-          $scope.layout.qHyperCube
-        );
-        $scope.missionsAndManningRowsCwdCount = getRowCount(
           "CWD",
-          $scope.layout.qHyperCube
-        );
+        ]).then(({ headers, rows, rowCounts }) => {
+          $scope.missionsAndManningsHeaders = headers;
+          $scope.missionsAndManningRows = rows;
+
+          $scope.missionsAndManningRowsEadCount = rowCounts[0];
+          $scope.missionsAndManningRowsCwdCount = rowCounts[1];
+        });
 
         /* Infrastructure Table data */
-        qlik.currApp().createCube(
-          {
-            qDimensions: infrastructureDims,
-            qMeasures: [],
-            qInitialDataFetch: [
-              {
-                qWidth: infrastructureDims.length,
-                qHeight: 100,
-              },
-            ],
-          },
-          (reply) => {
-            console.log("infrastructure hypercube: ", reply);
-            $scope.infrastructureHeaders = infrastructureProperties.headers;
+        const infrastructureDims = infrastructureProperties.dimensions;
+        const infrastructureHeaders = infrastructureProperties.headers;
+        getTableRows(infrastructureDims, infrastructureHeaders, [
+          "EAD",
+          "CWD",
+        ]).then(({ headers, rows, rowCounts }) => {
+          $scope.infrastructureHeaders = headers;
+          $scope.infrastructureRows = rows;
 
-            $scope.infrastructureRows = flatten(
-              [
-                ...getRows("EAD", reply.qHyperCube),
-                ...getRows("CWD", reply.qHyperCube),
-              ].map((row, index) => {
-                const cellColorClass =
-                  index % 2 !== 0 ? "cell-gray" : "cell-white";
+          $scope.infrastructureRowsEadCount = rowCounts[0];
+          $scope.infrastructureRowsCwdCount = rowCounts[1];
+        });
 
-                return row.map((cell) => {
-                  return {
-                    value: cell.value,
-                    className: cell.className + " " + cellColorClass,
-                  };
-                });
-              })
-            );
-
-            $scope.infrastructureRowsEadCount = getRowCount(
-              "EAD",
-              reply.qHyperCube
-            );
-            $scope.infrastructureRowsCwdCount = getRowCount(
-              "CWD",
-              reply.qHyperCube
-            );
-          }
-        );
-
-        // quickResponseTeam
+        /* QRT Table data */
         const quickResponseTeamDims = quickResponseTeamProperties.dimensions;
         const quickResponseTeamHeaders = quickResponseTeamProperties.headers;
 
