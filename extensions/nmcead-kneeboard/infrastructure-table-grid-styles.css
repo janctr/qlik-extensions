@@ -54,9 +54,11 @@
 
 .nmcead-infrastructure-body {
     display: grid;
-    grid-template-columns: 1fr 6fr repeat(24, 1fr);
-    /* grid-template-rows: repeat(22, 1fr); */
+    /* grid-template-columns: 1fr 6fr repeat(24, 1fr); */
+        /* grid-template-rows: repeat(22, 1fr); */
     /* font-size: 1.5rem; */
+    grid-template-columns: var(--column-width) calc(6*var(--column-width)) repeat(24, var(--column-width));
+
     font-weight: bold;
     text-align: center;
   

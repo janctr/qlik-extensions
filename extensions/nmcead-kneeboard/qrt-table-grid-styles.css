@@ -36,7 +36,7 @@
 
 .nmcead-qrt-body {
     display: grid;
-    grid-template-columns: 1fr 5fr repeat(11, 1fr); /* Adds up to 17 */
+    grid-template-columns: var(--column-width) calc(5*var(--column-width)) repeat(11, var(--column-width)); /* Adds up to 17 */
     /* grid-template-rows: repeat(22, 1fr); */
     /* font-size: 1.5rem; */
     font-weight: bold;
