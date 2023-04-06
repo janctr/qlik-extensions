@@ -78,10 +78,6 @@ define([
     });
   }
 
-  function flatten(arr) {
-    return arr.flat();
-  }
-
   function getRows(division, hyperCube) {
     const data = hyperCube.qDataPages[0].qMatrix;
 
