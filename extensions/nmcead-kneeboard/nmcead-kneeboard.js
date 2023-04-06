@@ -39,6 +39,7 @@ define([
     const data = hyperCube.qDataPages[0].qMatrix;
 
     const rows = [];
+
     for (const [index, row] of data
       .filter((row) => row[1].qText === division)
       .entries()) {
@@ -49,11 +50,12 @@ define([
       );
 
       rows.push(
-        formattedRow.map((row) => {
+        formattedRow.map((cell, index) => {
           const classes = ["cell"];
+          if (index === 0) classes.push("sticky-left");
 
           return {
-            value: row,
+            value: cell,
             className: classes.join(" "),
           };
         })

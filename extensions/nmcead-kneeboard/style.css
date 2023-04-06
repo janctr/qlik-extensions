@@ -55,9 +55,12 @@
     
 }
 
-
-
 /****/
+
+.sticky-left {
+    position: sticky;
+    left: 0;
+}
 
 /** KPI Styles **/
 
@@ -194,6 +197,7 @@
 }
 
 .cell-white {
+    background-color: #FFF;
     border-right: 1px solid #FFF;
     border-left: 1px solid #f2f2f2;
 }
