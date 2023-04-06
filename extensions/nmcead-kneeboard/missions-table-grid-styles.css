@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(38, var(--column-width));
   /* grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr; */
-  grid-template-rows: repeat(6, 2rem);
+  grid-template-rows: repeat(6, var(--row-height));
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas: 

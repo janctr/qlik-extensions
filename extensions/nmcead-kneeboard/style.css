@@ -1,5 +1,6 @@
 :root {
     --column-width: 3rem;
+    --row-height: 2.5rem;
 }
 
 * {
@@ -56,6 +57,11 @@
 }
 
 /****/
+
+.sticky-top {
+    position: sticky;
+    top: 0;
+}
 
 .sticky-left {
     position: sticky;
