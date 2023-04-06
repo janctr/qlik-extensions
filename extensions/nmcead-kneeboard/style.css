@@ -1,3 +1,7 @@
+:root {
+    --column-width: 3rem;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -51,13 +55,7 @@
     
 }
 
-.bg-grey-1 {
 
-}
-
-.bg-grey-2 {
-
-}
 
 /****/
 
@@ -120,50 +118,40 @@
 /*** Tab Styles ***/
 
 .nmcead-tabs {
-
+    margin-bottom: 1rem;
 }
 
 .nmcead-tabs > .nmcead-tab-header-container {
     display: flex;
-    gap: -1rem;
+    gap: 1rem;
 }
 
-.nmcead-tabs > .nmcead-tab-header-container > .tab-header:first-child {
-    z-index: 3
-}
+.nmcead-tabs > .nmcead-tab-header-container > .tab-header {
+    border: 2px solid steelblue;
+    border-radius: 7px;
 
-.nmcead-tabs > .nmcead-tab-header-container > .tab-header:nth-child(2) {
-    z-index: 2;
-    left: -5px;
-}
-
-.nmcead-tabs > .nmcead-tab-header-container > .tab-header:nth-child(3) {
-    z-index: 1;
-    left: -10px;
+    padding: 0.5rem 1.25rem;
+    overflow: hidden;
+    position: relative;
+    
+    background-color: #FFF;
+    color: steelblue;
+    text-align: center;
+    transition: all 0.25s ease-in-out;
+    
+    min-width: 125px;
 }
 
 .nmcead-tabs > .nmcead-tab-header-container > .tab-header.current {
     z-index: 1000;
     background-color: steelblue;
-}
-
-.nmcead-tabs > .nmcead-tab-header-container > .tab-header {
-    border: 1px solid black;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 3px;
-
-    padding: 0.5rem 1rem;
-    overflow: hidden;
-    position: relative;
-    
-    background-color: #FFF;
-
-    transition: all 0.25s ease-in-out;
+    color: #fff;
 }
 
 .nmcead-tabs > .nmcead-tab-header-container > .tab-header:hover {
     cursor: pointer;
     background-color: lightslategray;
+    color: #fff;
 }
 
 
@@ -193,12 +181,21 @@
     text-align: center;
 }
 
-.bg-gray {
-    background-color: #f2f2f2;
+.cell {
+    padding: 0.5rem 0.75rem;
+    border-right: 1px solid #f2f2f2;
+    border-left: 1px solid #f2f2f2;
 }
 
-.cell {
-    padding: 0.5rem 0.75rem
+.cell-gray {
+    background-color: #f2f2f2;
+    border-right: 1px solid #FFF;
+    border-left: 1px solid #FFF;
+}
+
+.cell-white {
+    border-right: 1px solid #FFF;
+    border-left: 1px solid #f2f2f2;
 }
 
 /* Shared table header styles */
@@ -206,9 +203,11 @@
 .nmcead-infrastructure-header > *,
 .nmcead-qrt-header > * {
     border: 1px solid #f2f2f2;
-    background-color: #808080;
+    background-color: #b5b5b5;
     color: black;
+
     font-weight: bold;
+    font-size: 1rem;
 
     display: flex;
     align-items: center;

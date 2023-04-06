@@ -1,6 +1,6 @@
 .nmcead-qrt-container > .nmcead-qrt-header {  
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(17, var(--column-width));
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
     gap: 0px 0px;
     grid-auto-flow: row;
@@ -44,11 +44,6 @@
   
     min-height: 300px;
 }
-
-.nmcead-qrt-body > * {
-    border: 1px solid black;
-}
-
 
 .nmcead-qrt-body > .ead-row-header,
 .nmcead-qrt-body > .cwd-row-header,

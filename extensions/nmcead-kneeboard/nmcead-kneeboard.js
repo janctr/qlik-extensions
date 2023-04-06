@@ -163,15 +163,14 @@ define([
             ...getRows("EAD", $scope.layout.qHyperCube),
             ...getRows("CWD", $scope.layout.qHyperCube),
           ].map((row, index) => {
-            if (index % 2 !== 0) {
-              return row.map((cell) => {
-                return {
-                  value: cell.value,
-                  className: cell.className + " bg-gray",
-                };
-              });
-            }
-            return row;
+            const cellColorClass = index % 2 !== 0 ? "cell-gray" : "cell-white";
+
+            return row.map((cell) => {
+              return {
+                value: cell.value,
+                className: cell.className + " " + cellColorClass,
+              };
+            });
           })
         );
 
@@ -205,15 +204,15 @@ define([
                 ...getRows("EAD", reply.qHyperCube),
                 ...getRows("CWD", reply.qHyperCube),
               ].map((row, index) => {
-                if (index % 2 !== 0) {
-                  return row.map((cell) => {
-                    return {
-                      value: cell.value,
-                      className: cell.className + " bg-gray",
-                    };
-                  });
-                }
-                return row;
+                const cellColorClass =
+                  index % 2 !== 0 ? "cell-gray" : "cell-white";
+
+                return row.map((cell) => {
+                  return {
+                    value: cell.value,
+                    className: cell.className + " " + cellColorClass,
+                  };
+                });
               })
             );
 
@@ -251,15 +250,15 @@ define([
                 ...getRows("CWD", reply.qHyperCube),
                 ...getRows("HOME GROWN", reply.qHyperCube),
               ].map((row, index) => {
-                if (index % 2 !== 0) {
-                  return row.map((cell) => {
-                    return {
-                      value: cell.value,
-                      className: cell.className + " bg-gray",
-                    };
-                  });
-                }
-                return row;
+                const cellColorClass =
+                  index % 2 !== 0 ? "cell-gray" : "cell-white";
+
+                return row.map((cell) => {
+                  return {
+                    value: cell.value,
+                    className: cell.className + " " + cellColorClass,
+                  };
+                });
               })
             );
 

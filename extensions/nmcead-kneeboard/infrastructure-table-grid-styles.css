@@ -1,6 +1,6 @@
 .nmcead-infrastructure-container > .nmcead-infrastructure-header  {  
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(31, var(--column-width));
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
     gap: 0px 0px;
     grid-auto-flow: row;
@@ -61,8 +61,4 @@
     text-align: center;
   
     min-height: 300px;
-}
-
-.nmcead-infrastructure-body > * {
-    border: 1px solid black;
 }

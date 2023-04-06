@@ -1,6 +1,6 @@
 .nmcead-missions-and-manning-header {  
   display: grid;
-  grid-template-columns: repeat(38, 1fr);
+  grid-template-columns: repeat(38, var(--column-width));
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: 0px 0px;
   grid-auto-flow: row;
@@ -57,7 +57,8 @@
 
 .nmcead-missions-and-manning-body {
   display: grid;
-  grid-template-columns: 1fr 7fr repeat(30, 1fr);
+  /* grid-template-columns: 1fr 7fr repeat(30, 1fr); */
+  grid-template-columns: var(--column-width) calc(7*var(--column-width)) repeat(30, var(--column-width));
   /* grid-template-columns: repeat(37, 1fr); */
   grid-template-rows: repeat(22, 1fr);
   
