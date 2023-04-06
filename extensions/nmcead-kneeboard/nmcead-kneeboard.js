@@ -31,6 +31,53 @@ define([
     $("<style>").html(cssContent).appendTo("head");
   });
 
+  function getTableRows(tableDimensions, headers, divisions) {
+    console.log("getTableRows");
+
+    return new Promise((resolve, reject) => {
+      qlik.currApp().createCube(
+        {
+          qDimensions: tableDimensions,
+          qMeasures: [],
+          qInitialDataFetch: [
+            {
+              qWidth: tableDimensions.length,
+              qHeight: 100,
+            },
+          ],
+        },
+        (reply) => {
+          const flatRows = divisions
+            .map((division) => getRows(division, reply.qHyperCube))
+            .flat()
+            .map((divisionRows, index) => {
+              // Set the class names
+              const cellColorClass =
+                index % 2 !== 0 ? "cell-gray" : "cell-white";
+
+              return divisionRows.map((row) => {
+                return {
+                  value: row.value,
+                  className: row.className + " " + cellColorClass,
+                };
+              });
+            })
+            .flat();
+
+          const rowCounts = divisions.map((division) =>
+            getRowCount(division, reply.qHyperCube)
+          );
+
+          resolve({
+            headers,
+            rows: flatRows,
+            rowCounts,
+          });
+        }
+      );
+    });
+  }
+
   function flatten(arr) {
     return arr.flat();
   }
@@ -62,7 +109,6 @@ define([
       );
     }
 
-    console.log("getRowsProto: ", rows);
     return rows;
   }
 
@@ -86,7 +132,6 @@ define([
 
   const missionAndManningDims = missionsAndManningProperties.dimensions;
   const infrastructureDims = infrastructureProperties.dimensions;
-  const quickResponseTeamDims = quickResponseTeamProperties.dimensions;
 
   return {
     template: template,
@@ -230,54 +275,20 @@ define([
         );
 
         // quickResponseTeam
-        qlik.currApp().createCube(
-          {
-            qDimensions: [...quickResponseTeamDims],
-            qMeasures: [],
-            qInitialDataFetch: [
-              {
-                qWidth: quickResponseTeamDims.length,
-                qHeight: 100,
-              },
-            ],
-          },
-          (reply) => {
-            console.log("quickResponseTeam hypercube: ", reply);
-            $scope.quickResponseTeamHeaders =
-              quickResponseTeamProperties.headers;
+        const quickResponseTeamDims = quickResponseTeamProperties.dimensions;
+        const quickResponseTeamHeaders = quickResponseTeamProperties.headers;
 
-            $scope.quickResponseTeamRows = flatten(
-              [
-                ...getRows("EAD", reply.qHyperCube),
-                ...getRows("CWD", reply.qHyperCube),
-                ...getRows("HOME GROWN", reply.qHyperCube),
-              ].map((row, index) => {
-                const cellColorClass =
-                  index % 2 !== 0 ? "cell-gray" : "cell-white";
-
-                return row.map((cell) => {
-                  return {
-                    value: cell.value,
-                    className: cell.className + " " + cellColorClass,
-                  };
-                });
-              })
-            );
-
-            $scope.quickResponseTeamRowsEadCount = getRowCount(
-              "EAD",
-              reply.qHyperCube
-            );
-            $scope.quickResponseTeamRowsCwdCount = getRowCount(
-              "CWD",
-              reply.qHyperCube
-            );
-            $scope.quickResponseTeamRowHomeGrownCount = getRowCount(
-              "HOME GROWN",
-              reply.qHyperCube
-            );
-          }
-        );
+        getTableRows(quickResponseTeamDims, quickResponseTeamHeaders, [
+          "EAD",
+          "CWD",
+          "HOME GROWN",
+        ]).then(({ headers, rows, rowCounts }) => {
+          $scope.quickResponseTeamHeaders = headers;
+          $scope.quickResponseTeamRows = rows;
+          $scope.quickResponseTeamRowsEadCount = rowCounts[0];
+          $scope.quickResponseTeamRowsCwdCount = rowCounts[1];
+          $scope.quickResponseTeamRowHomeGrownCount = rowCounts[2];
+        });
       },
     ],
   };
