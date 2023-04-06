@@ -58,7 +58,11 @@ define([
               return divisionRows.map((row) => {
                 return {
                   value: row.value,
-                  className: row.className + " " + cellColorClass,
+                  className: [
+                    row.className,
+                    cellColorClass,
+                    getColor(row),
+                  ].join(" "),
                 };
               });
             })
@@ -124,6 +128,18 @@ define([
     console.log("row count: ", formattedRows.length);
 
     return formattedRows.length;
+  }
+
+  // Functions to determine cell color
+  function getColor(cellValue) {
+    console.log("cellValue: ", cellValue);
+    if (isNaN(Number(cellValue.value))) return "";
+
+    const randomCellValue = Math.random();
+
+    if (randomCellValue < 0.33) return "cell-red";
+    else if (randomCellValue < 0.66) return "cell-yellow";
+    return "cell-green";
   }
 
   return {

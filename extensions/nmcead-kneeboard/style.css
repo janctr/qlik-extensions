@@ -1,6 +1,15 @@
 :root {
     --column-width: 3rem;
     --row-height: 2.5rem;
+
+    --danger-color: #df4759;
+    --danger-color-2: #d9534f;
+
+    --warning-color: #ffc107;
+    --warning-color-2: #f0ad4e;
+
+    --success-color: #42ba96;
+    --success-color-2: #5cb85c;
 }
 
 * {
@@ -208,6 +217,18 @@
     border-left: 1px solid #f2f2f2;
 }
 
+.cell-red {
+    background-color: var(--danger-color-2);
+}
+
+.cell-yellow {
+    background-color: var(--warning-color-2);
+}
+
+.cell-green {
+    background-color: var(--success-color-2);
+}
+
 /* Shared table header styles */
 .nmcead-missions-and-manning-header > *,
 .nmcead-infrastructure-header > *,
@@ -222,4 +243,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.nmcead-missions-and-manning-body,
+.nmcead-infrastructure-body,
+.nmcead-qrt-body {
+    row-gap: 1px;
 }
