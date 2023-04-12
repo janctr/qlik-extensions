@@ -229,6 +229,10 @@
     background-color: var(--success-color-2);
 }
 
+.cell-empty {
+    background-color: gray;
+}
+
 /* Shared table header styles */
 .nmcead-missions-and-manning-header > *,
 .nmcead-infrastructure-header > *,

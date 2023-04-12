@@ -132,14 +132,16 @@ define([
 
   // Functions to determine cell color
   function getColor(cellValue) {
-    console.log("cellValue: ", cellValue);
-    if (isNaN(Number(cellValue.value))) return "";
+    const { value } = cellValue;
 
-    const randomCellValue = Math.random();
+    if (isNaN(Number(value))) return "";
 
-    if (randomCellValue < 0.33) return "cell-red";
-    else if (randomCellValue < 0.66) return "cell-yellow";
-    return "cell-green";
+    // TODO: Get range of number
+
+    if (value > 90) return "cell-green";
+    else if (value > 80) return "cell-yellow";
+    else if (value > 1) return "cell-red";
+    return "cell-empty";
   }
 
   return {
@@ -208,6 +210,11 @@ define([
 
         $scope.isCurrentTab = function (tab) {
           return tab === $scope.currentTab;
+        };
+
+        $scope.getCellDisplayValue = function (value) {
+          if (typeof value === "string") return value;
+          return "";
         };
 
         /* Missions/Manning Table data*/

@@ -26,3 +26,13 @@ ID, division, unitName, overallStatus, missionVLS, missionCLS, missionSM, missio
 22, 'CWD', 'Point Loma', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 23, 'CWD', 'Indian Island', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ]
+
+
+// Crosstables
+
+MissionsAndManningCrossTable:
+
+CROSSTABLE (ColumnName, StatusValue, 7)
+LOAD missionsAndManningID, missionsAndManningDivision, missionsAndManningUnitName, 0 as condition1, 0 as condition2, 0 as condition3, 0 as condition4, *
+Resident MissionsAndManning
+
