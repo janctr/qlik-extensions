@@ -41,6 +41,12 @@
       >
         QRT
       </div>
+      <div
+        class="tab-header{{isCurrentTab(4) ? ' current': ''}}"
+        ng-click="setCurrentTab(4)"
+      >
+        PROTOTYPE: MaM
+      </div>
     </div>
   </div>
   <!----------->
@@ -170,6 +176,46 @@
 
       <div
         ng-repeat="row in quickResponseTeamRows track by $index"
+        ng-value="{{$index}}"
+        class="{{row.className}}"
+      >
+        {{getCellDisplayValue(row.value)}}
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="nmcead-missions-manning-container{{isCurrentTab(4) ? ' show': ''}}"
+  >
+    <div class="nmcead-missions-and-manning-header">
+      <div
+        ng-repeat="header in missionsAndManningsHeaders track by $index"
+        class="{{header.className}}"
+      >
+        {{header.value}}
+      </div>
+    </div>
+
+    <div class="nmcead-missions-and-manning-body">
+      <div
+        class="ead-row-header vertical-text bg-blue-light-1"
+        style="
+        grid-row-start: 1;
+        grid-row-end: {{missionsAndManningRowsEadCount + 1}};"
+      >
+        EAD
+      </div>
+      <div
+        class="cwd-row-header vertical-text bg-blue-light-2"
+        style="
+        grid-row-start: {{missionsAndManningRowsEadCount + 1}};
+        grid-row-end: {{missionsAndManningRowsEadCount + missionsAndManningRowsCwdCount + 1}};"
+      >
+        CWD
+      </div>
+
+      <div
+        ng-repeat="row in missionsAndManningRows track by $index"
         ng-value="{{$index}}"
         class="{{row.className}}"
       >

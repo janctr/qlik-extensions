@@ -93,6 +93,10 @@ define(["qlik"], function (qlik) {
     "CIV",
     "MLC",
     "FDNH",
+    // "iconSet",
+    // "condition1",
+    // "condition2",
+    // "condition3",
   ].map((column) => {
     return {
       qNullSupression: false,
