@@ -35,6 +35,27 @@ define([
     return [id, division, unitName, columnName].join(" - ");
   }
 
+  function getCellHashFields(cellObject) {
+    const id =
+      cellObject["missionsAndManningID"] ||
+      cellObject["infrastructureID"] ||
+      cellObject["qrtID"];
+    const division =
+      cellObject["missionsAndManningDivision"] ||
+      cellObject["infrastructureDivision"] ||
+      cellObject["qrtDivision"];
+    const unitName =
+      cellObject["missionsAndManningUnitName"] ||
+      cellObject["infrastructureUnitName"] ||
+      cellObject["qrtUnitName"];
+
+    return {
+      id,
+      division,
+      unitName,
+    };
+  }
+
   function figureOutColor({
     value,
     iconSet,
@@ -42,17 +63,12 @@ define([
     condition2,
     condition3,
   }) {
-    console.log(
-      "figureOutColor:",
-      value,
-      iconSet,
-      condition1,
-      condition2,
-      condition3
-    );
-
     if (!iconSet) {
       return "";
+    }
+
+    if (value === null) {
+      return "cell-default";
     }
 
     const colors = iconSet.split(",");
@@ -60,15 +76,48 @@ define([
       (condition) => !!condition
     ); // Takes out condition 3 if not there
 
-    console.log("colors: ", colors);
-    console.log("conditions: ", conditions);
     // Using >=
 
     for (let i = 0; i < conditions.length; i++) {
-      if (value >= conditions[i]) return colors[i];
+      if (value >= conditions[i]) return `cell-${colors[i]}`;
     }
 
-    return colors.slice(-1); // Return the last color
+    return `cell-${colors.slice(-1)[0]}`; // Return the last color
+  }
+
+  function qlikRowsToObjects(hyperCube) {
+    console.log("qlkRowsToObjects hypercube:", hyperCube);
+
+    const matrix = hyperCube.qDataPages[0].qMatrix;
+    const headers = hyperCube.qDimensionInfo.map(
+      ({ qFallbackTitle }) => qFallbackTitle
+    );
+
+    const cells = [];
+    for (const row of matrix) {
+      const cellObject = {};
+      let currentHeaderIndex = 0;
+
+      for (const col of row) {
+        let value;
+
+        if (col.qIsNull) {
+          value = null;
+        } else if (col.qNum === "NaN") {
+          value = col.qText;
+        } else {
+          value = col.qNum;
+        }
+
+        cellObject[headers[currentHeaderIndex]] = value;
+
+        currentHeaderIndex++;
+      }
+
+      cells.push(cellObject);
+    }
+
+    return cells;
   }
 
   function getTableRules(tableJoinDimensions) {
@@ -164,24 +213,72 @@ define([
     });
   }
 
-  function getTableRowsProto(tableDimensions, headers) {
+  function getTableRowsProto(tableDimensions, headers, cellRuleMap) {
+    console.log("getTableRowsProto invoked");
     // This prototype returns all rows in a table.
     // The forma is a 1-dimensional array filled with objects, with each object representing a row
-    qlik.currApp().createCube(
-      {
-        qDimensions: missionsAndMannigJoinDimensions,
-        qMeasure: [],
-        qInitialDataFetch: [
-          {
-            qWidth: missionsAndMannigJoinDimensions.length,
-            qHeight: 1000,
-          },
-        ],
-      },
-      (reply) => {
-        console.log("prototype: ", reply);
-      }
-    );
+    return new Promise((resolve, reject) => {
+      const dimensions = missionsAndManningProperties.dimensions;
+      const headers = missionsAndManningProperties.headers;
+      console.log("creating cube...");
+
+      qlik.currApp().createCube(
+        {
+          qDimensions: dimensions,
+          qMeasure: [],
+          qInitialDataFetch: [
+            {
+              qWidth: dimensions.length,
+              qHeight: 100,
+            },
+          ],
+        },
+        (reply) => {
+          console.log("got cube, heres reply: ", reply);
+          const cellObjects = qlikRowsToObjects(reply.qHyperCube);
+          // TODO: Get the id/div/unitname etc involved in a has from the cell
+          const rows = [];
+
+          for (const [index, cellObject] of cellObjects.entries()) {
+            const cellHashFields = getCellHashFields(cellObject);
+            const cellColorClass = index % 2 !== 0 ? "cell-gray" : "cell-white";
+
+            const rowHeadersWithoutIdAndDivision = dimensions
+              .map((dimension) => {
+                return dimension.qDef.qFieldDefs[0];
+              })
+              .slice(2);
+
+            for (const rowHeader of rowHeadersWithoutIdAndDivision) {
+              const cellHash = createCellHash({
+                id: cellHashFields.id,
+                division: cellHashFields.division,
+                unitName: cellHashFields.unitName,
+                columnName: rowHeader,
+              });
+
+              const value = cellObject[rowHeader];
+
+              console.log("cellRuleMap value: ", cellRuleMap.get(cellHash));
+
+              rows.push({
+                value,
+                className: [
+                  // row.className, TODO: look up how to set this
+                  // cellColorClass, TODO: get rid of this since all of the cells will have a color
+                  // getColor(row), TODO: remove this
+                  "cell",
+                  cellRuleMap.get(cellHash),
+                ].join(" "),
+              });
+            }
+          }
+
+          console.log("turned to objects: ", cellObjects);
+          resolve({ cellObjects, rows });
+        }
+      );
+    });
   }
 
   function getRowsProto(division, hyperCube, dimensions) {}
@@ -206,7 +303,7 @@ define([
             .map((divisionRows, index) => {
               // Set the class names
               const cellColorClass =
-                index % 2 !== 0 ? "cell-gray" : "cell-white";
+                index % 2 !== 0 ? "cell-row-gray" : "cell-row-white";
 
               return divisionRows.map((row) => {
                 return {
@@ -417,13 +514,12 @@ define([
         });
 
         /* PROTOTYPE: Missions/Manning Table */
-        getTableRules()
-          .then(({ cellRuleMap }) => {
-            console.log("getTableRules: ", reply);
-          })
-          .catch((err) => {
-            console.log("ERROR!!: ", err);
+        getTableRules().then(({ cellRuleMap }) => {
+          console.log("getTableRules done: ", cellRuleMap);
+          getTableRowsProto(null, null, cellRuleMap).then(({ rows }) => {
+            $scope.missionsAndManningRowsProto = rows;
           });
+        });
       },
     ],
   };

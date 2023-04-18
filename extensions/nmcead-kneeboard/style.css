@@ -205,13 +205,13 @@
     border-left: 1px solid #f2f2f2;
 }
 
-.cell-gray {
+.cell-row-gray {
     background-color: #f2f2f2;
     border-right: 1px solid #FFF;
     border-left: 1px solid #FFF;
 }
 
-.cell-white {
+.cell-row-white {
     background-color: #FFF;
     border-right: 1px solid #FFF;
     border-left: 1px solid #f2f2f2;
@@ -232,6 +232,30 @@
 .cell-empty {
     background-color: gray;
 }
+
+/** CONDITION CELL FORMATTING RULES */
+
+.cell-red {
+    background-color: var(--danger-color-2);
+}
+
+.cell-yellow {
+    background-color: var(--warning-color-2);
+}
+
+.cell-green {
+    background-color: var(--success-color-2);
+}
+
+.cell-gray {
+    background-color: gray;
+}
+
+.cell-default {
+    background-color: #FFF;
+}
+
+/*********************************************
 
 /* Shared table header styles */
 .nmcead-missions-and-manning-header > *,
