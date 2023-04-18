@@ -10,6 +10,11 @@
 
     --success-color: #42ba96;
     --success-color-2: #5cb85c;
+
+    /* Icon paths */
+    /appcontent/ab8d99d8-3859-4d60-be52-92eeedee463a/circle-green.png
+    /appcontent/ab8d99d8-3859-4d60-be52-92eeedee463a/circle-red.png
+    /appcontent/ab8d99d8-3859-4d60-be52-92eeedee463a/circle-yellow.png
 }
 
 * {
@@ -237,14 +242,32 @@
 
 .cell-red {
     background-color: var(--danger-color-2);
+
+    background-image: url(/appcontent/ab8d99d8-3859-4d60-be52-92eeedee463a/circle-red.png);
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: 50%;
 }
 
 .cell-yellow {
     background-color: var(--warning-color-2);
+
+    background-image: url(/appcontent/ab8d99d8-3859-4d60-be52-92eeedee463a/circle-yellow.png);
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: 50%;
 }
 
 .cell-green {
     background-color: var(--success-color-2);
+
+    background-image: url(/appcontent/ab8d99d8-3859-4d60-be52-92eeedee463a/circle-green.png);
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: 50%;
 }
 
 .cell-gray {
