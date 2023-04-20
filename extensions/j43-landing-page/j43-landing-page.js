@@ -6,6 +6,27 @@ define([
 ], function (qlik, $, cssContent, template) {
   "use strict";
   $("<style>").html(cssContent).appendTo("head");
+
+  const sheets = qlik.navigation.sheets.map(
+    ({ qInfo: { qId }, qMeta: { title } }) => ({ label: title, value: qId })
+  );
+
+  function isWebLink(x) {
+    return x.linkType === "web-link";
+  }
+
+  function isSheetLink(x) {
+    return x.linkType === "sheet-link";
+  }
+
+  function getSheetUrl({ isSipr, sheetId }) {
+    const appId = qlik.currApp().id;
+
+    return `https://qlik.advana.data${
+      isSipr && ".smil"
+    }.mil/sense/app/${appId}/sheet/${sheetId}`;
+  }
+
   return {
     template: template,
     initialProperties: {
@@ -14,8 +35,8 @@ define([
         qMeasures: [],
         qInitialDataFetch: [
           {
-            qWidth: 10,
-            qHeight: 50,
+            qWidth: 0,
+            qHeight: 0,
           },
         ],
       },
@@ -24,25 +45,53 @@ define([
       type: "items",
       component: "accordion",
       items: {
-        dimensions: {
-          uses: "dimensions",
+        menuItems: {
+          type: "array",
+          translation: "Links",
+          ref: "menuItems",
           min: 1,
-        },
-        measures: {
-          uses: "measures",
-          min: 0,
-        },
-        sorting: {
-          uses: "sorting",
-        },
-        settings: {
-          uses: "settings",
+          allowAdd: true,
+          allowRemove: true,
+          allowMove: true,
+          addTranslation: "Add Link",
+          grouped: true,
+          itemTitleRef: "label",
           items: {
-            initFetchRows: {
-              ref: "qHyperCubeDef.qInitialDataFetch.0.qHeight",
-              label: "Initial fetch rows",
-              type: "number",
-              defaultValue: 50,
+            label: {
+              type: "string",
+              ref: "label",
+              label: "Label",
+            },
+            menuItemType: {
+              type: "string",
+              component: "dropdown",
+              ref: "linkType",
+              label: "Link Type",
+              options: [
+                {
+                  label: "Sheet Link",
+                  value: "sheet-link",
+                },
+                {
+                  label: "Website URL",
+                  value: "web-link",
+                },
+              ],
+            },
+            href: {
+              type: "string",
+              ref: "href",
+              label: "URL",
+              show: isWebLink,
+            },
+            sheet: {
+              type: "string",
+              component: "dropdown",
+              ref: "sheetId",
+              label: "Sheet",
+              defaultValue: 0,
+              options: sheets,
+              show: isSheetLink,
             },
           },
         },
@@ -54,12 +103,17 @@ define([
       exportData: true,
     },
     paint: function () {
-      //setup scope.table
-      if (!this.$scope.table) {
-        this.$scope.table = qlik.table(this);
-      }
       return qlik.Promise.resolve();
     },
-    controller: ["$scope", function (/*$scope*/) {}],
+    controller: [
+      "$scope",
+      function ($scope) {
+        $scope.title = "Hello world";
+
+        const layout = $scope.layout;
+        $scope.menuItems = layout.menuItems;
+        $scope.getSheetUrl = getSheetUrl;
+      },
+    ],
   };
 });
