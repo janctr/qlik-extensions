@@ -1,0 +1,21 @@
+.qv-object-j43-landing-page-prototype div.qv-object-content-container {
+	overflow: auto;
+}
+.qv-object-j43-landing-page-prototype td,
+.qv-object-j43-landing-page-prototype th {
+	border-top: 0px solid #fff;
+	border-bottom: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: middle;
+	cursor: default;
+	font-size: 12px;
+}
+.qv-object-j43-landing-page-prototype td.numeric {
+	text-align: right;
+}
+.qv-object-j43-landing-page-prototype button {
+	width: 100%;
+}
