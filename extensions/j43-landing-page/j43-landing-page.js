@@ -2,10 +2,14 @@ define([
   "qlik",
   "jquery",
   "text!./style.css",
+  "text!./parallax.css",
   "text!./template.html",
-], function (qlik, $, cssContent, template) {
+], function (qlik, $, cssContent, parallaxCss, template) {
   "use strict";
-  $("<style>").html(cssContent).appendTo("head");
+
+  [cssContent, parallaxCss].forEach((cssModule) => {
+    $("<style>").html(cssModule).appendTo("head");
+  });
 
   const sheets = qlik.navigation.sheets.map(
     ({ qInfo: { qId }, qMeta: { title } }) => ({ label: title, value: qId })
