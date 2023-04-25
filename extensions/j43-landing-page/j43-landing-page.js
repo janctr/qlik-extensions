@@ -45,6 +45,20 @@ define([
       type: "items",
       component: "accordion",
       items: {
+        pageSettings: {
+          type: "items",
+          label: "Page Settings",
+          translation: "Page Settings",
+          ref: "pageSettings",
+          items: {
+            pageTitle: {
+              type: "string",
+              ref: "pageSettings.pageTitle",
+              label: "Page title",
+              defaultValue: "My great title",
+            },
+          },
+        },
         menuItems: {
           type: "array",
           translation: "Links",
@@ -93,6 +107,11 @@ define([
               options: sheets,
               show: isSheetLink,
             },
+            iconUrl: {
+              type: "string",
+              ref: "iconUrl",
+              label: "Icon URL",
+            },
           },
         },
       },
@@ -108,11 +127,25 @@ define([
     controller: [
       "$scope",
       function ($scope) {
-        $scope.title = "Hello world";
-
         const layout = $scope.layout;
+        console.log("layout: ", layout);
+        $scope.pageTitle = layout.pageSettings.pageTitle;
         $scope.menuItems = layout.menuItems;
         $scope.getSheetUrl = getSheetUrl;
+        /* menuItems looks like:
+            [
+                {
+                    label: 'Google',
+                    linkType: 'sheet-link' | 'web-link',
+                    href: 'google.com',
+                    sheetId: NON-NULL if linkType === 'sheet-link'
+                    iconUrl: 'imgur.com/sdf86
+                },
+                {
+                    ...
+                }
+            ]
+        */
       },
     ],
   };
