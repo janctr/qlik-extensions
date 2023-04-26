@@ -189,11 +189,33 @@ define([
       function ($scope) {
         const layout = $scope.layout;
         console.log("layout: ", layout);
+        /* Extension settings */
         $scope.pageTitle = layout.pageSettings.pageTitle;
         $scope.isSipr = layout.pageSettings.isSipr;
+        $scope.pageTitleBackgroundColor =
+          layout.pageSettings.pageTitleBackgroundColor;
+        $scope.pageTitleTextColor = layout.pageSettings.pageTitleTextColor;
+        /*********************/
         $scope.menuItems = layout.menuItems;
         $scope.getSheetUrl = getSheetUrl;
         $scope.getHref = getHref;
+
+        layout.menuItems.forEach((menuItem) => {
+          $("<style>").html(menuItem.customCss).appendTo("head");
+        });
+
+        if ($scope.pageTitleBackgroundColor) {
+          console.log("Changing title bg color");
+          $(".j43-page-title").css(
+            "background-color",
+            $scope.pageTitleBackgroundColor
+          );
+        }
+
+        if ($scope.pageTitleTextColor) {
+          $(".j43-page-title").css("color", $scope.pageTitleTextColor);
+        }
+
         /* menuItems looks like:
             [
                 {
