@@ -27,8 +27,19 @@ define([
     const appId = qlik.currApp().id;
 
     return `https://qlik.advana.data${
-      isSipr && ".smil"
+      isSipr ? ".smil" : ""
     }.mil/sense/app/${appId}/sheet/${sheetId}`;
+  }
+
+  function getHref({ menuItem, isSipr }) {
+    switch (menuItem.linkType) {
+      case "web-link":
+        return menuItem.href;
+      case "sheet-link":
+        return getSheetUrl({ isSipr, sheetId: menuItem.sheetId });
+      default:
+        return "invalid link";
+    }
   }
 
   return {
@@ -59,7 +70,28 @@ define([
               type: "string",
               ref: "pageSettings.pageTitle",
               label: "Page title",
-              defaultValue: "My great title",
+              defaultValue: "Title",
+            },
+            pageTitleBackgroundColor: {
+              type: "string",
+              ref: "pageSettings.pageTitleBackgroundColor",
+              label: "Title Background Color",
+            },
+            pageTitleTextColor: {
+              type: "string",
+              ref: "pageSettings.pageTitleTextColor",
+              label: "Title Text Color",
+            },
+            isSipr: {
+              type: "boolean",
+              component: "radiobuttons",
+              label: "NIPR/SIPR",
+              defaultValue: false,
+              ref: "pageSettings.isSipr",
+              options: [
+                { value: false, label: "NIPR" },
+                { value: true, label: "SIPR" },
+              ],
             },
           },
         },
@@ -73,12 +105,17 @@ define([
           allowMove: true,
           addTranslation: "Add Link",
           grouped: true,
-          itemTitleRef: "label",
+          itemTitleRef: "cardTitle",
           items: {
-            label: {
+            cardTitle: {
               type: "string",
-              ref: "label",
-              label: "Label",
+              ref: "cardTitle",
+              label: "Card Title",
+            },
+            cardSubtitle: {
+              type: "string",
+              ref: "cardSubtitle",
+              label: "Card Subtitle",
             },
             menuItemType: {
               type: "string",
@@ -102,7 +139,7 @@ define([
               label: "URL",
               show: isWebLink,
             },
-            sheet: {
+            sheetId: {
               type: "string",
               component: "dropdown",
               ref: "sheetId",
@@ -115,6 +152,25 @@ define([
               type: "string",
               ref: "iconUrl",
               label: "Icon URL",
+            },
+            cardDescription: {
+              type: "string",
+              component: "textarea",
+              label: "Description (back of card)",
+              rows: 10,
+              ref: "cardDescription",
+            },
+            cardClass: {
+              type: "string",
+              label: "Class name (applied to markup)",
+              ref: "cardClass",
+            },
+            customCss: {
+              type: "string",
+              component: "textarea",
+              label: "Custom styling (CSS)",
+              rows: 10,
+              ref: "customCss",
             },
           },
         },
@@ -134,16 +190,22 @@ define([
         const layout = $scope.layout;
         console.log("layout: ", layout);
         $scope.pageTitle = layout.pageSettings.pageTitle;
+        $scope.isSipr = layout.pageSettings.isSipr;
         $scope.menuItems = layout.menuItems;
         $scope.getSheetUrl = getSheetUrl;
+        $scope.getHref = getHref;
         /* menuItems looks like:
             [
                 {
-                    label: 'Google',
+                    cardTitle: 'Google',
                     linkType: 'sheet-link' | 'web-link',
                     href: 'google.com',
                     sheetId: NON-NULL if linkType === 'sheet-link'
-                    iconUrl: 'imgur.com/sdf86
+                    iconUrl: 'imgur.com/sdf86,
+                    cardDescription: 'abcedf',
+                    cardClass: 'fuels',
+                    customCss: 'h1 { margin: 0; }
+
                 },
                 {
                     ...

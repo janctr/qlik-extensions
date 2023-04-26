@@ -1,15 +1,8 @@
-/* *{
-    margin: 0;
-    padding: 0;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-  } */
-
 .col {
     cursor: pointer;
     /* width: 265px; */
+    /* flex: 1; */
     aspect-ratio: 3/5;
-    flex: 1;
     min-width: 265px;
 }
 
@@ -35,6 +28,7 @@
     backface-visibility: hidden;
     text-align: center;
     min-height: 442px;
+    max-width: 300px;
     height: auto;
     border-radius: 10px;
     color: #fff;
@@ -96,6 +90,10 @@
     z-index: 2;
 }
 
+.back > .inner {
+    padding: 1rem;
+}
+
 .container .back {
     -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg);
@@ -130,7 +128,8 @@
     position: relative;
 }
 
-.back .inner p:after {
+.front .inner p:after {
+/* , .back .inner p:after { */
     content: '';
     width: 4rem;
     height: 2px;
@@ -147,6 +146,35 @@
     color: rgba(255, 255, 255, 0.7);
     font-family: 'Montserrat';
     font-weight: 300;
+}
+
+.back button {
+    /* Remove styling */
+    background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor:default;
+	outline: inherit;
+    /* * */
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 4px;
+    background-color:rgba(0, 0, 0, 0.25);
+    color: #FFF;
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    width: 50%;
+
+    transition: all .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.back button:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 @media screen and (max-width: 64rem) {
