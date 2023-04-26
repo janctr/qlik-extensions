@@ -42,6 +42,13 @@ define([
     }
   }
 
+  function getBackgroundImageUrl({ menuItem }) {
+    const appId = qlik.currApp().id;
+    const filename = menuItem.coverImageUrl;
+
+    return `url(/appcontent/${appId}/${filename})`;
+  }
+
   return {
     template: template,
     initialProperties: {
@@ -148,10 +155,15 @@ define([
               options: sheets,
               show: isSheetLink,
             },
-            iconUrl: {
+            cardClass: {
               type: "string",
-              ref: "iconUrl",
-              label: "Icon URL",
+              label: "HTML class (applied to markup)",
+              ref: "cardClass",
+            },
+            coverImageUrl: {
+              type: "string",
+              ref: "coverImageUrl",
+              label: "Cover Image URL (File name)",
             },
             cardDescription: {
               type: "string",
@@ -159,11 +171,6 @@ define([
               label: "Description (back of card)",
               rows: 10,
               ref: "cardDescription",
-            },
-            cardClass: {
-              type: "string",
-              label: "Class name (applied to markup)",
-              ref: "cardClass",
             },
             customCss: {
               type: "string",
@@ -200,8 +207,26 @@ define([
         $scope.getSheetUrl = getSheetUrl;
         $scope.getHref = getHref;
 
-        layout.menuItems.forEach((menuItem) => {
-          $("<style>").html(menuItem.customCss).appendTo("head");
+        $(document).ready(() => {
+          for (const menuItem of layout.menuItems) {
+            $("<style>").html(menuItem.customCss).appendTo("head");
+
+            if (menuItem.cardClass) {
+              const menuItemEl = $("." + menuItem.cardClass);
+
+              if (menuItem.coverImageUrl) {
+                console.log(
+                  "Setting background image: ",
+                  menuItem.coverImageUrl,
+                  getBackgroundImageUrl({ menuItem })
+                );
+                $("." + menuItem.cardClass + " > .front").css(
+                  "background-image",
+                  getBackgroundImageUrl({ menuItem })
+                );
+              }
+            }
+          }
         });
 
         if ($scope.pageTitleBackgroundColor) {

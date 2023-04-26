@@ -197,6 +197,11 @@
 }
 
 /**************************************/
+.cover-image {
+    background-position-x: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 
 /* Fuels */
 .fuels > .front {
@@ -264,3 +269,4 @@
     text-align: left;
 }
 /**********/
+
