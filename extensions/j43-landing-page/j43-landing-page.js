@@ -172,10 +172,24 @@ define([
               rows: 10,
               ref: "cardDescription",
             },
+            cardFrontStyles: {
+              type: "string",
+              component: "textarea",
+              label: "Custom CSS (Front of Card)",
+              rows: 10,
+              ref: "cardFrontStyles",
+            },
+            cardBackStyles: {
+              type: "string",
+              component: "textarea",
+              label: "Custom CSS (Back of card)",
+              rows: 10,
+              ref: "cardBackStyles",
+            },
             customCss: {
               type: "string",
               component: "textarea",
-              label: "Custom styling (CSS)",
+              label: "Custom CSS (Applied to page)",
               rows: 10,
               ref: "customCss",
             },
@@ -188,7 +202,7 @@ define([
       export: true,
       exportData: true,
     },
-    paint: function () {
+    paint: function ($element, layout) {
       return qlik.Promise.resolve();
     },
     controller: [
@@ -212,19 +226,30 @@ define([
             $("<style>").html(menuItem.customCss).appendTo("head");
 
             if (menuItem.cardClass) {
-              const menuItemEl = $("." + menuItem.cardClass);
-
+              /* Apply custom background image */
               if (menuItem.coverImageUrl) {
-                console.log(
-                  "Setting background image: ",
-                  menuItem.coverImageUrl,
-                  getBackgroundImageUrl({ menuItem })
-                );
-                $("." + menuItem.cardClass + " > .front").css(
+                $(`.${menuItem.cardClass} > .front`).css(
                   "background-image",
                   getBackgroundImageUrl({ menuItem })
                 );
               }
+            }
+
+            /* Apply custom front/back styles */
+            if (menuItem.cardFrontStyles) {
+              const cardFrontEl = $(`.${menuItem.cardClass} > .front`);
+              cardFrontEl.attr(
+                "style",
+                cardFrontEl.attr("style") + ";" + menuItem.cardFrontStyles
+              );
+            }
+
+            if (menuItem.cardBackStyles) {
+              const cardBackEl = $(`.${menuItem.cardClass} > .back`);
+              cardBackEl.attr(
+                "style",
+                cardBackEl.attr("style") + ";" + menuItem.cardBackStyles
+              );
             }
           }
         });
