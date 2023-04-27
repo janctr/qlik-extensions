@@ -26,6 +26,7 @@
 }
 
 .j43-card-wrapper {
+    box-sizing: border-box;
     height: 93%;
     padding: 1rem;
 }
@@ -35,6 +36,7 @@
     background-color: #FFF;
     display: flex;
     flex-wrap: wrap;
+    height: 100%;
     gap: 0.5rem;
     justify-content: center;
 }
