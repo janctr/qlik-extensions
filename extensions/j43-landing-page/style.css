@@ -10,193 +10,31 @@
     --pddoc-image: url(/appcontent/0695026d-95cb-40bc-8db3-f19e944f9994/j43-ddoc-3.jpg);
 }
 
-.qv-object-j43-landing-page-prototype div.qv-object-content-container {
-	overflow: auto;
-}
-.qv-object-j43-landing-page-prototype td,
-.qv-object-j43-landing-page-prototype th {
-	border-top: 0px solid #fff;
-	border-bottom: 1px solid #ddd;
-	border-right: 1px solid #ddd;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	vertical-align: middle;
-	cursor: default;
-	font-size: 12px;
-}
-.qv-object-j43-landing-page-prototype td.numeric {
-	text-align: right;
-}
-.qv-object-j43-landing-page-prototype button {
-	width: 100%;
-}
-
 .j43-page-title {
-    box-sizing: border-box;
-    margin: 0.5rem auto 1rem;
-    padding: 0.25rem;
-    font-size: 2rem;
-    text-align: center;
-
-    width: 100%;
-
-    display: flex;
     align-items: center;
-    justify-content: center;
-
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     background-color: steelblue;
-    color: #FFF;
-}
-
-.link-wrapper {
-    height: 85%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.link-container {
-    max-width: 500px;
-    width: 40%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 5px;
-    row-gap: 5px;
-}
-
-.link-container > .card {
-    
-}
-
-.link-container > a {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     box-sizing: border-box;
-
-    padding: 1rem;
-    display: block;
-    border-radius: 5px;
-    aspect-ratio: 3/2;
-    background-color: var(--primary-bg-color);
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.5rem;
-    padding: 0.25rem 0.5rem;
-    transition: all 0.25s ease-in-out;
+    color: #FFF;
+    display: flex;
+    font-size: 2rem;
+    height:7%;
+    justify-content: center;
+    padding: 0.25rem;
+    text-align: center;
+    width: 100%;
 }
-
-.link-container > a:hover {
-    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
-}
-
 
 .j43-card-wrapper {
-
+    height: 93%;
+    padding: 1rem;
 }
 
 .j43-card-container {
+    align-items: center;
     background-color: #FFF;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-wrap: wrap;
     gap: 0.5rem;
-}
-
-.j43-card {
-    display: block;
-    box-sizing: border-box;
-    /* Clear anchor tag styling */
-    text-decoration: none;
-    color: #000;
-
-    /****************************/
-
-    width: 265px;
-    aspect-ratio: 3/5;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-
-    transition: all 0.2s ease-in-out;
-}
-
-.j43-card:hover {
-    cursor: pointer;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px 2px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-}
-
-.j43-card-header {
-    width: 100%;
-    height: 50%;
-
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.j43-card-body {
-    width: 100%;
-    height: 50%;
-    box-sizing: border-box;
-
-    text-align: center;
-    font-size: 2.5rem;
-    padding: 1rem;
-}
-
-
-.pddoc > .j43-card-header {
-    background-image: var(--pddoc-image);
-    background-position-x: center;
-}
-
-.fuels > .j43-card-header {
-    /* background-image: var(--fuels-image); */
-}
-
-.munitions > .j43-card-header {
-    background-image: var(--munitions-image);
-}
-
-.jloc > .j43-card-header {
-    /* background-image: var(--jloc-image); */
-}
-
-.multinational > .j43-card-header {
-    background-image: var(--multinational-image);
-}
-
-.full-image {
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.full-image::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    filter: brightness(40%);
-}
-
-.full-image > .j43-card-header {
-    height: 0;
-}
-
-.full-image > .j43-card-body {
-    height: 100%;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    color: #FFF;
-    font-size: 2.5rem;
-    text-shadow: 3px 2px black;
-}
-
-.full-image.fuels {
-    background-image: var(--fuels-image);
-}
-
-.full-image.jloc {
-    background-image: var(--jloc-image);
-    background-position-x: center;
 }
