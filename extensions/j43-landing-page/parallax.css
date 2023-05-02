@@ -148,6 +148,30 @@
     font-weight: 300;
 }
 
+.back .card-back-title {
+    position: absolute;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.back .card-back-title:after {
+    position: absolute;
+    content: '';
+    width: 4rem;
+    height: 2px;
+    background-color: #C6D4DF;
+    display: block;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    bottom: -0.75rem;
+
+}
+
 .back button {
     /* Remove styling */
     background: none;

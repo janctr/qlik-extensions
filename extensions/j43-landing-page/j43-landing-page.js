@@ -165,6 +165,11 @@ define([
               ref: "coverImageUrl",
               label: "Cover Image URL (File name)",
             },
+            cardBackTitle: {
+              type: "string",
+              ref: "cardBackTitle",
+              label: "Title (back of card)",
+            },
             cardDescription: {
               type: "string",
               component: "textarea",
