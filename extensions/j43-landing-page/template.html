@@ -3,12 +3,10 @@
 
   <div class="j43-card-wrapper">
     <div class="j43-card-container">
-      <a
-        href="{{getHref({menuItem, isSipr: isSipr})}}"
-        class="col"
-        ng-repeat="menuItem in menuItems"
-      >
-        <div class="container {{ menuItem.cardClass }}">
+      <div class="col" ng-repeat="menuItem in menuItems">
+        <div
+          class="container {{ menuItem.cardClass || makeClassFromTitle(menuItem) }}"
+        >
           <div class="front cover-image">
             <div class="inner">
               <p ng-bind-html="menuItem.cardTitle"></p>
@@ -20,10 +18,10 @@
             <div class="inner">
               <p>{{ menuItem.cardDescription }}</p>
             </div>
-            <button>VISIT</button>
+            <a>VISIT</a>
           </div>
         </div>
-      </a>
+      </div>
     </div>
   </div>
 </div>

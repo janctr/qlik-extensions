@@ -58,8 +58,12 @@
     border-radius: 10px;
 }
 
-.container:hover .front,
-.container:hover .back {
+/* .container:hover .front, */
+/* .container:hover .back, */
+.container.hover .front,
+.container.hover .back,
+.container.keep-hovered .front,
+.container.keep-hovered .back {
     -webkit-transition: -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
     transition: -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
     -o-transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
@@ -108,14 +112,18 @@
     transform-style: preserve-3d;
 }
 
-.container:hover .back {
+/* .container:hover .back, */
+.container.hover .back,
+.container.keep-hovered .back {
     -webkit-transform: rotateY(0deg);
     transform: rotateY(0deg);
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
 }
 
-.container:hover .front {
+/* .container:hover .front, */
+.container.hover .front,
+.container.keep-hovered .front {
     -webkit-transform: rotateY(-180deg);
     transform: rotateY(-180deg);
     -webkit-transform-style: preserve-3d;
@@ -172,7 +180,7 @@
 
 }
 
-.back button {
+.back button, .back a {
     /* Remove styling */
     background: none;
 	color: inherit;
@@ -196,7 +204,7 @@
     transition: all .7s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
 
-.back button:hover {
+.back button:hover, .back a:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.5);
 }

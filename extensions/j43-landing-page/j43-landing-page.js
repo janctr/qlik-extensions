@@ -49,6 +49,17 @@ define([
     return `url(/appcontent/${appId}/${filename})`;
   }
 
+  function makeClassFromTitle(menuItem) {
+    if (!menuItem.cardTitle && !menuItem.cardSubtitle) return false;
+
+    let className = menuItem.cardTitle || menuItem.cardSubtitle;
+
+    return className
+      .split(" ")
+      .map((s) => s.trim())
+      .join("-");
+  }
+
   return {
     template: template,
     initialProperties: {
@@ -165,6 +176,40 @@ define([
               ref: "coverImageUrl",
               label: "Cover Image URL (File name)",
             },
+            isFlippable: {
+              type: "boolean",
+              ref: "isFlippable",
+              label: "Can Card Flip",
+              component: "radiobuttons",
+              defaultValue: true,
+              options: [
+                {
+                  label: "Yes",
+                  value: true,
+                },
+                {
+                  label: "No",
+                  value: false,
+                },
+              ],
+            },
+            clickToFollowLink: {
+              type: "boolean",
+              ref: "clickToFollowLink",
+              label: "Can click card to follow link.",
+              component: "radiobuttons",
+              defaultValue: true,
+              options: [
+                {
+                  label: "Yes",
+                  value: true,
+                },
+                {
+                  label: "No",
+                  value: false,
+                },
+              ],
+            },
             cardBackTitle: {
               type: "string",
               ref: "cardBackTitle",
@@ -225,18 +270,57 @@ define([
         $scope.menuItems = layout.menuItems;
         $scope.getSheetUrl = getSheetUrl;
         $scope.getHref = getHref;
+        $scope.makeClassFromTitle = makeClassFromTitle;
 
         $(document).ready(() => {
           for (const menuItem of layout.menuItems) {
             $("<style>").html(menuItem.customCss).appendTo("head");
 
-            if (menuItem.cardClass) {
+            const cardClass =
+              menuItem.cardClass || makeClassFromTitle(menuItem);
+
+            if (cardClass) {
               /* Apply custom background image */
               if (menuItem.coverImageUrl) {
                 $(`.${menuItem.cardClass} > .front`).css(
                   "background-image",
                   getBackgroundImageUrl({ menuItem })
                 );
+              }
+
+              if (menuItem.isFlippable) {
+                /* Toggle hover class for cards on hover */
+                $(`.container.${cardClass}`).hover(function () {
+                  $(this).toggleClass("hover");
+                });
+                /* Make it so when you click on a card it stays flipped */
+                $(`.container.${cardClass}`).click(function () {
+                  $(this).toggleClass("keep-hovered");
+                });
+              }
+
+              if (
+                menuItem.clickToFollowLink &&
+                (menuItem.href || menuItem.sheetId)
+              ) {
+                $(`.${cardClass}`)
+                  .parent()
+                  .click(function () {
+                    window.location = getHref({
+                      menuItem,
+                      isSipr: $scope.isSipr,
+                    });
+                  });
+              } else if (menuItem.href || menuItem.sheetId) {
+                $(`.${menuItem.cardClass} > .back > a`).attr(
+                  "href",
+                  getHref({
+                    menuItem,
+                    isSipr: $scope.isSipr,
+                  })
+                );
+              } else {
+                // No link for this card
               }
             }
 
