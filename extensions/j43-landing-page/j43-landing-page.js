@@ -222,6 +222,28 @@ define([
               rows: 10,
               ref: "cardDescription",
             },
+            cardVisitButtonText: {
+              type: "string",
+              ref: "cardVisitButtonText",
+              label: "Text for the link on back of card",
+            },
+            cardIsVisitButtonEnabled: {
+              type: "boolean",
+              component: "radiobuttons",
+              label: "Enable 'VISIT' button",
+              ref: "cardIsVisitButtonEnabled",
+              defaultValue: true,
+              options: [
+                {
+                  label: "Enabled",
+                  value: true,
+                },
+                {
+                  label: "Disabled",
+                  value: false,
+                },
+              ],
+            },
             cardFrontStyles: {
               type: "string",
               component: "textarea",

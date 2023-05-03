@@ -18,7 +18,9 @@
             <div class="inner">
               <p>{{ menuItem.cardDescription }}</p>
             </div>
-            <a>VISIT</a>
+            <a ng-if="menuItem.cardIsVisitButtonEnabled"
+              >{{ menuItem.cardVisitButtonText ||"VISIT"}}</a
+            >
           </div>
         </div>
       </div>
