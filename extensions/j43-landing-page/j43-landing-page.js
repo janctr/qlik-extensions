@@ -100,6 +100,11 @@ define([
               ref: "pageSettings.pageTitleTextColor",
               label: "Title Text Color",
             },
+            pageBackgroundColor: {
+              type: "string",
+              ref: "pageSettings.pageBackgroundColor",
+              label: "Background Color",
+            },
             isSipr: {
               type: "boolean",
               component: "radiobuttons",
@@ -295,6 +300,11 @@ define([
         $scope.makeClassFromTitle = makeClassFromTitle;
 
         $(document).ready(() => {
+          $(".j43-card-wrapper").css(
+            "background-color",
+            layout.pageSettings.pageBackgroundColor
+          );
+
           for (const menuItem of layout.menuItems) {
             $("<style>").html(menuItem.customCss).appendTo("head");
 

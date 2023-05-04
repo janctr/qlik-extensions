@@ -33,7 +33,7 @@
 
 .j43-card-container {
     align-items: center;
-    background-color: #FFF;
+    /* background-color: #FFF; */
     display: flex;
     flex-wrap: wrap;
     height: 100%;
