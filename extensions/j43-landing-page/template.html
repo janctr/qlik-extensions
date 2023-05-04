@@ -17,6 +17,9 @@
         >
           <div class="front cover-image">
             <div class="inner">
+              <span class="coming-soon-banner" ng-if="menuItem.isComingSoon"
+                >COMING SOON</span
+              >
               <p ng-bind-html="menuItem.cardTitle"></p>
               <span ng-bind-html="menuItem.cardSubtitle"></span>
             </div>

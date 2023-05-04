@@ -130,6 +130,17 @@ define([
           grouped: true,
           itemTitleRef: "cardTitle",
           items: {
+            isComingSoon: {
+              type: "boolean",
+              component: "radiobuttons",
+              ref: "isComingSoon",
+              label: "Coming soon banner:",
+              defaultValue: false,
+              options: [
+                { label: "Yes", value: true },
+                { label: "No", value: false },
+              ],
+            },
             cardTitle: {
               type: "string",
               ref: "cardTitle",
