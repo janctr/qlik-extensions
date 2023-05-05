@@ -15,12 +15,16 @@ define([
     ({ qInfo: { qId }, qMeta: { title } }) => ({ label: title, value: qId })
   );
 
-  function isWebLink(x) {
-    return x.linkType === "web-link";
+  function isWebLink(menuItem) {
+    return menuItem.linkType === "web-link";
   }
 
-  function isSheetLink(x) {
-    return x.linkType === "sheet-link";
+  function isSheetLink(menuItem) {
+    return menuItem.linkType === "sheet-link";
+  }
+
+  function isNotLink(menuItem) {
+    return menuItem.linkType === "no-link";
   }
 
   function getSheetUrl({ isSipr, sheetId }) {
@@ -348,6 +352,7 @@ define([
 
               if (
                 menuItem.clickToFollowLink &&
+                !isNotLink(menuItem) &&
                 (menuItem.href || menuItem.sheetId)
               ) {
                 $(`.${cardClass}`)
@@ -358,7 +363,10 @@ define([
                       isSipr: $scope.isSipr,
                     });
                   });
-              } else if (menuItem.href || menuItem.sheetId) {
+              } else if (
+                !isNotLink(menuItem) &&
+                (menuItem.href || menuItem.sheetId)
+              ) {
                 $(`.${menuItem.cardClass} > .back > a`).attr(
                   "href",
                   getHref({

@@ -14,7 +14,7 @@
     height: 100%;
     position: relative;
     overflow: auto;
-    padding-top: 26px;
+    padding-top: 1rem;
 }
 
 .j43-header {
@@ -29,8 +29,9 @@
     max-width: 100px;
     box-sizing: border-box;
     position: absolute;
-    top: -50%;
-    left: 10px;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
     z-index: 5;
 }
 
