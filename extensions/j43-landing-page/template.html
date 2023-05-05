@@ -16,10 +16,13 @@
           class="container {{ menuItem.cardClass || makeClassFromTitle(menuItem) }}"
         >
           <div class="front cover-image">
+            <div
+              ng-if="menuItem.isComingSoon"
+              class="coming-soon-ribbon ribbon-top-left"
+            >
+              <span>COMING SOON</span>
+            </div>
             <div class="inner">
-              <span class="coming-soon-banner" ng-if="menuItem.isComingSoon"
-                >COMING SOON</span
-              >
               <p ng-bind-html="menuItem.cardTitle"></p>
               <span ng-bind-html="menuItem.cardSubtitle"></span>
             </div>
