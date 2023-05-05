@@ -165,6 +165,10 @@ define([
                   label: "Website URL",
                   value: "web-link",
                 },
+                {
+                  label: "None",
+                  value: "no-link",
+                },
               ],
             },
             href: {
