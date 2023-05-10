@@ -66,6 +66,14 @@ define([
       .join("-");
   }
 
+  function navigateToSheet(sheetId) {
+    qlik.navigation.gotoSheet(sheetId);
+  }
+
+  function navigateToUrl(url) {
+    window.location = url;
+  }
+
   return {
     template: template,
     initialProperties: {
@@ -358,25 +366,42 @@ define([
                 !isNotLink(menuItem) &&
                 (menuItem.href || menuItem.sheetId)
               ) {
-                $(`.${cardClass}`)
-                  .parent()
-                  .click(function () {
-                    window.location = getHref({
-                      menuItem,
-                      isSipr: $scope.isSipr,
-                    });
-                  });
+                /* Determine the onClick callback */
+                let handler;
+                if (menuItem.sheetId && isSheetLink(menuItem)) {
+                  handler = function () {
+                    navigateToSheet(menuItem.sheetId);
+                  };
+                } else {
+                  handler = function () {
+                    navigateToUrl(
+                      getHref({
+                        menuItem,
+                        isSipr: $scope.isSipr,
+                      })
+                    );
+                  };
+                }
+
+                /* Assign onClick event handler */
+                $(`.${cardClass}`).parent().click(handler);
               } else if (
                 !isNotLink(menuItem) &&
                 (menuItem.href || menuItem.sheetId)
               ) {
-                $(`.${menuItem.cardClass} > .back > a`).attr(
-                  "href",
-                  getHref({
-                    menuItem,
-                    isSipr: $scope.isSipr,
-                  })
-                );
+                if (menuItem.sheetId && isSheetLink(menuItem)) {
+                  $(`.${menuItem.cardClass} > .back > a`).click(function () {
+                    navigateToSheet(menuItem.sheetId);
+                  });
+                } else {
+                  $(`.${menuItem.cardClass} > .back > a`).attr(
+                    "href",
+                    getHref({
+                      menuItem,
+                      isSipr: $scope.isSipr,
+                    })
+                  );
+                }
               } else {
                 // No link for this card
               }
