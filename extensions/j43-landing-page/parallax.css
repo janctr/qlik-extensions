@@ -298,6 +298,21 @@
 .jloc > .back {
     /* font-size: 1rem; */
     /* text-align: left; */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: center;
+}
+
+.jloc .easter-egg {
+    z-index: -1;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    border-radius: 10px;
+    top: 100%;
+    opacity: 0;
+
+    transition: all 1.5s ease-in-out
 }
 
 /***********/

@@ -11,6 +11,8 @@ define([
     $("<style>").html(cssModule).appendTo("head");
   });
 
+  const appId = qlik.currApp().id;
+
   const sheets = qlik.navigation.sheets.map(
     ({ qInfo: { qId }, qMeta: { title } }) => ({ label: title, value: qId })
   );
@@ -316,6 +318,7 @@ define([
         $scope.menuItems = layout.menuItems;
         $scope.getSheetUrl = getSheetUrl;
         $scope.getHref = getHref;
+        $scope.pacomLogoUrl = `/appcontent/${appId}/usindopacom-logo.png`;
         $scope.makeClassFromTitle = makeClassFromTitle;
 
         $(document).ready(() => {
@@ -396,6 +399,28 @@ define([
               );
             }
           }
+
+          /* Apply easter egg */
+          $(".jloc > .back").append(
+            $(
+              `<div 
+                class="easter-egg"
+                style="
+                height:100%;
+                width:100%; 
+                position: absolute;
+                background-image: url('/appcontent/${appId}/kobe.jpg');"></div>`
+            )
+          );
+
+          $(".jloc > .back").on("keyup", function (event) {
+            console.log("yoyo: ", event);
+            if (event.keyCode === 56) {
+              $(".easter-egg").css("top", 0);
+              $(".easter-egg").css("opacity", 1);
+            }
+          });
+          /********************/
         });
 
         if ($scope.pageTitleBackgroundColor) {

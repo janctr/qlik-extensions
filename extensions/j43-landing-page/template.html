@@ -1,10 +1,7 @@
 <div class="j43-app" qv-extension>
   <header class="j43-header">
     <div class="j43-logo-container">
-      <img
-        class="j43-logo"
-        src="/appcontent/0695026d-95cb-40bc-8db3-f19e944f9994/usindopacom-logo.png"
-      />
+      <img class="j43-logo" src="{{pacomLogoUrl}}" />
     </div>
     <h1 class="j43-page-title">{{ pageTitle }}</h1>
   </header>
@@ -15,7 +12,7 @@
         <div
           class="container {{ menuItem.cardClass || makeClassFromTitle(menuItem) }}"
         >
-          <div class="front cover-image">
+          <div class="front cover-image" tabindex="0">
             <div
               ng-if="menuItem.isComingSoon"
               class="coming-soon-ribbon ribbon-top-left"
@@ -27,7 +24,7 @@
               <span ng-bind-html="menuItem.cardSubtitle"></span>
             </div>
           </div>
-          <div class="back">
+          <div class="back" tabindex="0">
             <h5 class="card-back-title">{{menuItem.cardBackTitle}}</h5>
             <div class="inner">
               <p>{{ menuItem.cardDescription }}</p>
