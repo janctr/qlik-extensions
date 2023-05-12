@@ -15,7 +15,7 @@
           <div class="front cover-image" tabindex="0">
             <div
               ng-if="menuItem.isComingSoon"
-              class="coming-soon-ribbon ribbon-top-left"
+              class="coming-soon-ribbon ribbon-top-left {{menuItem.ribbonColor}}"
             >
               <span ng-bind-html="menuItem.ribbonLabel"></span>
             </div>

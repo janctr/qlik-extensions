@@ -161,6 +161,18 @@ define([
               label: "Ribbon Label",
               defaultValue: "COMING SOON",
             },
+            ribbonColor: {
+              type: "string",
+              component: "dropdown",
+              ref: "ribbonColor",
+              label: "Ribbon Color",
+              defaultValue: "ribbon-blue",
+              options: [
+                { label: "Blue", value: "ribbon-blue" },
+                { label: "Red", value: "ribbon-red" },
+                { label: "Gray", value: "ribbon-grey" },
+              ],
+            },
             cardTitle: {
               type: "string",
               ref: "cardTitle",
