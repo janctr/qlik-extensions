@@ -155,6 +155,12 @@ define([
                 { label: "No", value: false },
               ],
             },
+            ribbonLabel: {
+              type: "string",
+              ref: "ribbonLabel",
+              label: "Ribbon Label",
+              defaultValue: "COMING SOON",
+            },
             cardTitle: {
               type: "string",
               ref: "cardTitle",
