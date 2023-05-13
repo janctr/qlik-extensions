@@ -74,6 +74,10 @@ define([
     window.location = url;
   }
 
+  function navigateToUrlInNewTab(url) {
+    window.open(url, "_blank");
+  }
+
   return {
     template: template,
     initialProperties: {
@@ -392,7 +396,7 @@ define([
                   };
                 } else {
                   handler = function () {
-                    navigateToUrl(
+                    navigateToUrlInNewTab(
                       getHref({
                         menuItem,
                         isSipr: $scope.isSipr,

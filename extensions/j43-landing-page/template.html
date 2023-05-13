@@ -29,7 +29,10 @@
             <div class="inner">
               <p>{{ menuItem.cardDescription }}</p>
             </div>
-            <a ng-if="menuItem.cardIsVisitButtonEnabled"
+            <a
+              ng-if="menuItem.cardIsVisitButtonEnabled"
+              target="_blank"
+              rel="noopener noreferrer"
               >{{ menuItem.cardVisitButtonText ||"VISIT"}}</a
             >
           </div>
