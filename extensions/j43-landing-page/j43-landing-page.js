@@ -163,7 +163,7 @@ define([
               type: "string",
               ref: "ribbonLabel",
               label: "Ribbon Label",
-              defaultValue: "COMING SOON",
+              defaultValue: "IN DEVELOPMENT",
             },
             ribbonColor: {
               type: "string",
@@ -426,6 +426,15 @@ define([
                 }
               } else {
                 // No link for this card
+              }
+
+              /* Make font smaller if too much text */
+              if (menuItem.isComingSoon) {
+                if (menuItem.ribbonLabel && menuItem.ribbonLabel.length >= 14) {
+                  $(`.${menuItem.cardClass} .coming-soon-ribbon`).toggleClass(
+                    "font-smaller"
+                  );
+                }
               }
             }
 

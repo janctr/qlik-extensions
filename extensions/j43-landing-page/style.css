@@ -120,14 +120,20 @@
     position: absolute;
     display: block;
     width: 225px;
-    padding: 15px 0;
+    padding: 15px 0; /* Affects size of container */
     background-color: #3498db;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     color: #FFF;
-    font: 700 18px/1 'Lato', sans-serif;
+    font: 700 18px/1 'Lato', sans-serif; /* Affects size of container */
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
     text-transform: uppercase;
     text-align: center;
+}
+
+/* When the text gets too long make font smaller (slightly complicated) */
+.coming-soon-ribbon.font-smaller span {
+    font: 700 14px/1 'Lato', sans-serif; /* Affects size of container */
+    padding: 17px 0; /* Affects size of container */
 }
 
 .ribbon-top-left {
