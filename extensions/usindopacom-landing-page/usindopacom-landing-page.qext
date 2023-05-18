@@ -1,0 +1,15 @@
+{
+	"name": "USINDOPACOM Landing Page",
+	"description": "Template for making landing page that serves as central hub for links to various applications.",
+	"icon": "table",
+	"type": "visualization",
+	"version": "2.0.0",
+	"author": "Jan Iverson Eligio",
+	"homepage": "",
+	"keywords": "qlik-sense, visualization", "landing", "page",
+	"license": "",
+	"repository": "https://github.com/janctr/qlik-extensions/",
+	"dependencies": {
+		"qlik-sense": ">=3.0.x"
+	}
+}
