@@ -109,19 +109,31 @@ define([
               defaultValue: "Title",
             },
             pageTitleBackgroundColor: {
-              type: "string",
               ref: "pageSettings.pageTitleBackgroundColor",
               label: "Title Background Color",
+              component: "color-picker",
+              type: "object",
+              defaultValue: {
+                color: "#004A7C",
+              },
             },
             pageTitleTextColor: {
-              type: "string",
               ref: "pageSettings.pageTitleTextColor",
               label: "Title Text Color",
+              component: "color-picker",
+              type: "object",
+              defaultValue: {
+                color: "#FFFFFF",
+              },
             },
             pageBackgroundColor: {
-              type: "string",
               ref: "pageSettings.pageBackgroundColor",
               label: "Background Color",
+              component: "color-picker",
+              type: "object",
+              defaultValue: {
+                color: "#FFFFFF",
+              },
             },
             isSipr: {
               type: "boolean",
@@ -342,8 +354,9 @@ define([
         $scope.pageTitle = layout.pageSettings.pageTitle;
         $scope.isSipr = layout.pageSettings.isSipr;
         $scope.pageTitleBackgroundColor =
-          layout.pageSettings.pageTitleBackgroundColor;
-        $scope.pageTitleTextColor = layout.pageSettings.pageTitleTextColor;
+          layout.pageSettings.pageTitleBackgroundColor.color;
+        $scope.pageTitleTextColor =
+          layout.pageSettings.pageTitleTextColor.color;
         /*********************/
         $scope.menuItems = layout.menuItems;
         $scope.getSheetUrl = getSheetUrl;
@@ -354,7 +367,7 @@ define([
         $(document).ready(() => {
           $(".j43-card-wrapper").css(
             "background-color",
-            layout.pageSettings.pageBackgroundColor
+            layout.pageSettings.pageBackgroundColor.color
           );
 
           for (const menuItem of layout.menuItems) {
