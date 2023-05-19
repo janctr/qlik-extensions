@@ -3,7 +3,7 @@ define([
   "jquery",
   "text!./style.css",
   "text!./parallax.css",
-  "text!./template.html",
+  "text!./index.html",
 ], function (qlik, $, cssContent, parallaxCss, template) {
   "use strict";
 
@@ -150,13 +150,13 @@ define([
           items: {
             isComingSoon: {
               type: "boolean",
-              component: "radiobuttons",
+              component: "switch",
               ref: "isComingSoon",
               label: "Coming soon banner:",
               defaultValue: false,
               options: [
-                { label: "Yes", value: true },
-                { label: "No", value: false },
+                { label: "Enabled", value: true },
+                { label: "Disabled", value: false },
               ],
             },
             ribbonLabel: {
@@ -235,16 +235,16 @@ define([
             isFlippable: {
               type: "boolean",
               ref: "isFlippable",
-              label: "Can Card Flip",
-              component: "radiobuttons",
+              label: "Card flip",
+              component: "switch",
               defaultValue: true,
               options: [
                 {
-                  label: "Yes",
+                  label: "Enabled",
                   value: true,
                 },
                 {
-                  label: "No",
+                  label: "Disabled",
                   value: false,
                 },
               ],
@@ -252,16 +252,16 @@ define([
             clickToFollowLink: {
               type: "boolean",
               ref: "clickToFollowLink",
-              label: "Can click card to follow link.",
-              component: "radiobuttons",
+              label: "Click anywhere to open link",
+              component: "switch",
               defaultValue: true,
               options: [
                 {
-                  label: "Yes",
+                  label: "Enabled",
                   value: true,
                 },
                 {
-                  label: "No",
+                  label: "Disabled",
                   value: false,
                 },
               ],
@@ -285,8 +285,8 @@ define([
             },
             cardIsVisitButtonEnabled: {
               type: "boolean",
-              component: "radiobuttons",
-              label: "Enable 'VISIT' button",
+              component: "switch",
+              label: "'VISIT' button",
               ref: "cardIsVisitButtonEnabled",
               defaultValue: true,
               options: [
@@ -470,7 +470,6 @@ define([
           );
 
           $(".jloc > .back").on("keyup", function (event) {
-            console.log("yoyo: ", event);
             if (event.keyCode === 56) {
               $(".easter-egg").css("top", 0);
               $(".easter-egg").css("opacity", 1);
@@ -480,7 +479,6 @@ define([
         });
 
         if ($scope.pageTitleBackgroundColor) {
-          console.log("Changing title bg color");
           $(".j43-page-title").css(
             "background-color",
             $scope.pageTitleBackgroundColor
@@ -490,25 +488,6 @@ define([
         if ($scope.pageTitleTextColor) {
           $(".j43-page-title").css("color", $scope.pageTitleTextColor);
         }
-
-        /* menuItems looks like:
-            [
-                {
-                    cardTitle: 'Google',
-                    linkType: 'sheet-link' | 'web-link',
-                    href: 'google.com',
-                    sheetId: NON-NULL if linkType === 'sheet-link'
-                    iconUrl: 'imgur.com/sdf86,
-                    cardDescription: 'abcedf',
-                    cardClass: 'fuels',
-                    customCss: 'h1 { margin: 0; }
-
-                },
-                {
-                    ...
-                }
-            ]
-        */
       },
     ],
   };
