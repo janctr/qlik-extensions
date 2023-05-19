@@ -6,7 +6,7 @@
 	"version": "2.0.0",
 	"author": "Jan Iverson Eligio",
 	"homepage": "",
-	"keywords": "qlik-sense, visualization", "landing", "page",
+	"keywords": "qlik-sense, visualization, landing, page",
 	"license": "",
 	"repository": "https://github.com/janctr/qlik-extensions/",
 	"dependencies": {
