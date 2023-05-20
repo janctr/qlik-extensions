@@ -4,12 +4,15 @@ define([
   "text!./style.css",
   "text!./parallax.css",
   "text!./index.html",
-], function (qlik, $, cssContent, parallaxCss, template) {
+  "./About",
+], function (qlik, $, cssContent, parallaxCss, template, About) {
   "use strict";
 
   [cssContent, parallaxCss].forEach((cssModule) => {
     $("<style>").html(cssModule).appendTo("head");
   });
+
+  About(); // Initialize About panel
 
   const appId = qlik.currApp().id;
 
@@ -332,6 +335,16 @@ define([
               label: "Custom CSS (Applied to page)",
               rows: 10,
               ref: "customCss",
+            },
+          },
+        },
+        aboutSection: {
+          type: "items",
+          translation: "About",
+          items: {
+            about: {
+              component: "About",
+              translation: "About",
             },
           },
         },

@@ -30,7 +30,7 @@
               ng-bind-html="menuItem.cardBackTitle"
             ></h5>
             <div class="inner">
-              <p>{{ menuItem.cardDescription }}</p>
+              <p ng-bind-html="menuItem.cardDescription"></p>
             </div>
             <a
               ng-if="menuItem.cardIsVisitButtonEnabled"
