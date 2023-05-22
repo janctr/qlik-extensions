@@ -62,12 +62,10 @@
     box-sizing: border-box;
     height: 90%;
     padding: 1rem;
-    /* margin-top: 1rem; */
 }
 
 .pacom-card-container {
     align-items: center;
-    /* background-color: #FFF; */
     display: flex;
     flex-wrap: wrap;
     height: 100%;
@@ -93,20 +91,11 @@
 }
 
 .coming-soon-ribbon {
-    /* source: https://codepen.io/nxworld/pen/oLdoWb */
-    /* position: absolute;
-    top: -54px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: lightseagreen;
-    padding: 0.25rem;
-    box-sizing: border-box; */
     z-index: 2;
     width: 150px;
     height: 150px;
     overflow: hidden;
     position: absolute;
-
 }
 
 .coming-soon-ribbon:before, .coming-soon-ribbon:after {
