@@ -20,7 +20,7 @@ define(["jquery", "./util"], function ($, Util) {
       layout.pageSettings.pageTitleBackgroundColor.color;
     const pageTitleTextColor = layout.pageSettings.pageTitleTextColor.color;
 
-    $(".j43-card-wrapper").css(
+    $(".pacom-wrapper").css(
       "background-color",
       layout.pageSettings.pageBackgroundColor.color
     );
@@ -145,11 +145,11 @@ define(["jquery", "./util"], function ($, Util) {
     /********************/
 
     if (pageTitleBackgroundColor) {
-      $(".j43-page-title").css("background-color", pageTitleBackgroundColor);
+      $(".pacom-page-title").css("background-color", pageTitleBackgroundColor);
     }
 
     if (pageTitleTextColor) {
-      $(".j43-page-title").css("color", pageTitleTextColor);
+      $(".pacom-page-title").css("color", pageTitleTextColor);
     }
   }
 

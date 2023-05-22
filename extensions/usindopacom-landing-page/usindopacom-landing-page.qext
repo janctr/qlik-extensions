@@ -8,7 +8,7 @@
 	"homepage": "",
 	"keywords": "qlik-sense, visualization, landing, page",
 	"license": "",
-	"repository": "https://github.com/janctr/qlik-extensions/",
+	"repository": "https://github.com/janctr/qlik-extensions/tree/master/extensions/usindopacom-landing-page",
 	"dependencies": {
 		"qlik-sense": ">=3.0.x"
 	}

@@ -4,12 +4,18 @@ define([
 ], function (components, componentUtils) {
   return function () {
     if (!components.hasComponent("About")) {
-      let copyright =
-        "" +
-        '<div style="padding:4px;">' +
-        "Copyright Jan, no changes allowed, free to use" +
-        "</div>" +
-        "";
+      let copyright = `<div class="pacom-about">
+          <h4>Description</h4>
+          <p>
+            This is a reusable and customizable landing page that links to differents apps made for the J4.
+          </p>
+          <h4>Copyright</h4>
+          <p>This qlik extension and its content is copyright of Jan Iverson Eligio (c) 2023. All rights reserved.</p>
+          <h4>Source</h4>
+          <p>You can view the source code here: 
+            <a href="https://github.com/janctr/qlik-extensions/tree/master/extensions/usindopacom-landing-page">repository</a>
+          </p>
+        </div>`;
 
       let html = copyright;
 

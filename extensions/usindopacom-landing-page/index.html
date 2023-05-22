@@ -1,13 +1,13 @@
-<div class="j43-app" qv-extension>
-  <header class="j43-header">
-    <div class="j43-logo-container">
-      <img class="j43-logo" src="{{pacomLogoUrl}}" />
+<div class="pacom-app" qv-extension>
+  <header class="pacom-header">
+    <div class="pacom-logo-container">
+      <img class="pacom-logo" src="{{pacomLogoUrl}}" />
     </div>
-    <h1 class="j43-page-title">{{ pageTitle }}</h1>
+    <h1 class="pacom-page-title">{{ pageTitle }}</h1>
   </header>
 
-  <div class="j43-card-wrapper">
-    <div class="j43-card-container">
+  <div class="pacom-wrapper">
+    <div class="pacom-card-container">
       <div class="col" ng-repeat="menuItem in menuItems">
         <div
           class="container {{ menuItem.cardClass || makeClassFromTitle(menuItem) }}"
