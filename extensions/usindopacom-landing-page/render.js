@@ -19,11 +19,17 @@ define(["jquery", "./util"], function ($, Util) {
     const pageTitleBackgroundColor =
       layout.pageSettings.pageTitleBackgroundColor.color;
     const pageTitleTextColor = layout.pageSettings.pageTitleTextColor.color;
+    const pageBackgroundColor = layout.pageSettings.pageBackgroundColor.color;
 
-    $(".pacom-wrapper").css(
-      "background-color",
-      layout.pageSettings.pageBackgroundColor.color
-    );
+    $(".pacom-wrapper").css("background-color", pageBackgroundColor);
+
+    if (pageTitleBackgroundColor) {
+      $(".pacom-page-title").css("background-color", pageTitleBackgroundColor);
+    }
+
+    if (pageTitleTextColor) {
+      $(".pacom-page-title").css("color", pageTitleTextColor);
+    }
 
     for (const menuItem of layout.menuItems) {
       $("<style>").html(menuItem.customCss).appendTo("head");
@@ -33,13 +39,14 @@ define(["jquery", "./util"], function ($, Util) {
       if (cardClass) {
         /* Apply custom background image */
         if (menuItem.coverImageUrl) {
-          $(`.${menuItem.cardClass} > .front`).css(
+          $(`.${cardClass} > .front`).css(
             "background-image",
             getBackgroundImageUrl({ menuItem })
           );
         }
 
         if (menuItem.isFlippable) {
+          $(`.container.${cardClass}`).off(); // Unassign any event handlers
           /* Toggle hover class for cards on hover */
           $(`.container.${cardClass}`).hover(function () {
             $(this).toggleClass("hover");
@@ -73,17 +80,18 @@ define(["jquery", "./util"], function ($, Util) {
           }
 
           /* Assign onClick event handler */
+          $(`.${cardClass}`).parent().off();
           $(`.${cardClass}`).parent().click(handler);
         } else if (
           !isNotLink(menuItem) &&
           (menuItem.href || menuItem.sheetId)
         ) {
           if (menuItem.sheetId && isSheetLink(menuItem)) {
-            $(`.${menuItem.cardClass} > .back > a`).click(function () {
+            $(`.${cardClass} > .back > a`).click(function () {
               navigateToSheet(menuItem.sheetId);
             });
           } else {
-            $(`.${menuItem.cardClass} > .back > a`).attr(
+            $(`.${cardClass} > .back > a`).attr(
               "href",
               getHref({
                 menuItem,
@@ -98,16 +106,21 @@ define(["jquery", "./util"], function ($, Util) {
         /* Make font smaller if too much text */
         if (menuItem.isComingSoon) {
           if (menuItem.ribbonLabel && menuItem.ribbonLabel.length >= 14) {
-            $(`.${menuItem.cardClass} .coming-soon-ribbon`).toggleClass(
-              "font-smaller"
-            );
+            if (
+              !$(`.${cardClass} .coming-soon-ribbon`).hasClass("font-smaller")
+            ) {
+              /* Too many nested ifs, but necessary because double renders may toggle this on then off again.*/
+              $(`.${cardClass} .coming-soon-ribbon`).toggleClass(
+                "font-smaller"
+              );
+            }
           }
         }
       }
 
       /* Apply custom front/back styles */
       if (menuItem.cardFrontStyles) {
-        const cardFrontEl = $(`.${menuItem.cardClass} > .front`);
+        const cardFrontEl = $(`.${cardClass} > .front`);
         cardFrontEl.attr(
           "style",
           cardFrontEl.attr("style") + ";" + menuItem.cardFrontStyles
@@ -115,7 +128,7 @@ define(["jquery", "./util"], function ($, Util) {
       }
 
       if (menuItem.cardBackStyles) {
-        const cardBackEl = $(`.${menuItem.cardClass} > .back`);
+        const cardBackEl = $(`.${cardClass} > .back`);
         cardBackEl.attr(
           "style",
           cardBackEl.attr("style") + ";" + menuItem.cardBackStyles
@@ -124,33 +137,27 @@ define(["jquery", "./util"], function ($, Util) {
     }
 
     /* Apply easter egg */
-    $(".jloc > .back").append(
-      $(
-        `<div 
-              class="easter-egg"
-              style="
-              height:100%;
-              width:100%; 
-              position: absolute;
-              background-image: url('/appcontent/${appId}/kobe.jpg');"></div>`
-      )
-    );
+    if (!$(".easter-egg").length) {
+      $(".jloc > .back").append(
+        $(
+          `<div 
+                  class="easter-egg"
+                  style="
+                  height:100%;
+                  width:100%; 
+                  position: absolute;
+                  background-image: url('/appcontent/${appId}/kobe.jpg');"></div>`
+        )
+      );
 
-    $(".jloc > .back").on("keyup", function (event) {
-      if (event.keyCode === 56) {
-        $(".easter-egg").css("top", 0);
-        $(".easter-egg").css("opacity", 1);
-      }
-    });
+      $(".jloc > .back").on("keyup", function (event) {
+        if (event.keyCode === 56) {
+          $(".easter-egg").css("top", 0);
+          $(".easter-egg").css("opacity", 1);
+        }
+      });
+    }
     /********************/
-
-    if (pageTitleBackgroundColor) {
-      $(".pacom-page-title").css("background-color", pageTitleBackgroundColor);
-    }
-
-    if (pageTitleTextColor) {
-      $(".pacom-page-title").css("color", pageTitleTextColor);
-    }
   }
 
   return {
