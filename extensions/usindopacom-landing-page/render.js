@@ -21,6 +21,8 @@ define(["jquery", "./util"], function ($, Util) {
     const pageTitleTextColor = layout.pageSettings.pageTitleTextColor.color;
     const pageBackgroundColor = layout.pageSettings.pageBackgroundColor.color;
 
+    $(`header#${layout.qInfo.qId}_title`).css("display", "none"); // Remove title
+
     $(".pacom-wrapper").css("background-color", pageBackgroundColor);
 
     if (pageTitleBackgroundColor) {
