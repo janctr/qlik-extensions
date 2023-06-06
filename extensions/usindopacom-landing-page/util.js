@@ -5,6 +5,21 @@ define(["qlik"], function (qlik) {
     ({ qInfo: { qId }, qMeta: { title } }) => ({ label: title, value: qId })
   );
 
+  function getObjectId(layout) {
+    // You can use this to target elements specific to an object
+    return layout.qInfo.qId;
+  }
+
+  function getObjectTitleId(layout) {
+    // `header#${layout.qInfo.qId}_title` - targets the area at the top that leave unwanted whitespace;
+    return `${layout.qInfo.qId}_title`;
+  }
+
+  function getObjectContentId(layout) {
+    // `#${layout.qInfo.qId}_content` - targets the body of the object
+    return `${layout.qInfo.qId}_content`;
+  }
+
   function isWebLink(menuItem) {
     return menuItem.linkType === "web-link";
   }
@@ -75,6 +90,9 @@ define(["qlik"], function (qlik) {
     getSheetUrl,
     getHref,
     getBackgroundImageUrl,
+    getObjectId,
+    getObjectContentId,
+    getObjectTitleId,
     makeClassFromTitle,
     navigateToSheet,
     navigateToUrl,

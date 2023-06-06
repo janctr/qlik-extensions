@@ -8,29 +8,45 @@ define(["jquery", "./util"], function ($, Util) {
     getSheetUrl,
     getHref,
     getBackgroundImageUrl,
+    getObjectContentId,
+    getObjectTitleId,
     makeClassFromTitle,
     navigateToSheet,
     navigateToUrl,
     navigateToUrlInNewTab,
   } = Util;
 
-  function render(layout) {
+  return function render(layout) {
+    function qualifySelector(selector) {
+      const contentId = `#${getObjectContentId(layout)}`; // Prepend to every query
+
+      return `${contentId} ${selector}`;
+    }
+
+    const pageTitle = layout.pageSettings.pageTitle;
     const isSipr = layout.pageSettings.isSipr;
     const pageTitleBackgroundColor =
       layout.pageSettings.pageTitleBackgroundColor.color;
     const pageTitleTextColor = layout.pageSettings.pageTitleTextColor.color;
     const pageBackgroundColor = layout.pageSettings.pageBackgroundColor.color;
 
-    $(`header#${layout.qInfo.qId}_title`).css("display", "none"); // Remove title
+    $(`header#${getObjectTitleId(layout)}`).css("display", "none"); // Remove title (The default qlik one that leaves ugly white space at the top)
 
-    $(".pacom-wrapper").css("background-color", pageBackgroundColor);
+    $(qualifySelector(".pacom-page-title")).text(pageTitle); // Set page title if it has changed
+    $(qualifySelector(".pacom-wrapper")).css(
+      "background-color",
+      pageBackgroundColor
+    );
 
     if (pageTitleBackgroundColor) {
-      $(".pacom-page-title").css("background-color", pageTitleBackgroundColor);
+      $(qualifySelector(".pacom-page-title")).css(
+        "background-color",
+        pageTitleBackgroundColor
+      );
     }
 
     if (pageTitleTextColor) {
-      $(".pacom-page-title").css("color", pageTitleTextColor);
+      $(qualifySelector(".pacom-page-title")).css("color", pageTitleTextColor);
     }
 
     for (const menuItem of layout.menuItems) {
@@ -41,20 +57,20 @@ define(["jquery", "./util"], function ($, Util) {
       if (cardClass) {
         /* Apply custom background image */
         if (menuItem.coverImageUrl) {
-          $(`.${cardClass} > .front`).css(
+          $(qualifySelector(`.${cardClass} > .front`)).css(
             "background-image",
             getBackgroundImageUrl({ menuItem })
           );
         }
 
         if (menuItem.isFlippable) {
-          $(`.container.${cardClass}`).off(); // Unassign any event handlers
+          $(qualifySelector(`.container.${cardClass}`)).off(); // Unassign any event handlers
           /* Toggle hover class for cards on hover */
-          $(`.container.${cardClass}`).hover(function () {
+          $(qualifySelector(`.container.${cardClass}`)).hover(function () {
             $(this).toggleClass("hover");
           });
           /* Make it so when you click on a card it stays flipped */
-          $(`.container.${cardClass}`).click(function () {
+          $(qualifySelector(`.container.${cardClass}`)).click(function () {
             $(this).toggleClass("keep-hovered");
           });
         }
@@ -82,18 +98,22 @@ define(["jquery", "./util"], function ($, Util) {
           }
 
           /* Assign onClick event handler */
-          $(`.${cardClass}`).parent().off();
-          $(`.${cardClass}`).parent().click(handler);
+          $(qualifySelector(`.${cardClass}`))
+            .parent()
+            .off();
+          $(qualifySelector(`.${cardClass}`))
+            .parent()
+            .click(handler);
         } else if (
           !isNotLink(menuItem) &&
           (menuItem.href || menuItem.sheetId)
         ) {
           if (menuItem.sheetId && isSheetLink(menuItem)) {
-            $(`.${cardClass} > .back > a`).click(function () {
+            $(qualifySelector(`.${cardClass} > .back > a`)).click(function () {
               navigateToSheet(menuItem.sheetId);
             });
           } else {
-            $(`.${cardClass} > .back > a`).attr(
+            $(qualifySelector(`.${cardClass} > .back > a`)).attr(
               "href",
               getHref({
                 menuItem,
@@ -109,12 +129,14 @@ define(["jquery", "./util"], function ($, Util) {
         if (menuItem.isComingSoon) {
           if (menuItem.ribbonLabel && menuItem.ribbonLabel.length >= 14) {
             if (
-              !$(`.${cardClass} .coming-soon-ribbon`).hasClass("font-smaller")
+              !$(qualifySelector(`.${cardClass} .coming-soon-ribbon`)).hasClass(
+                "font-smaller"
+              )
             ) {
               /* Too many nested ifs, but necessary because double renders may toggle this on then off again.*/
-              $(`.${cardClass} .coming-soon-ribbon`).toggleClass(
-                "font-smaller"
-              );
+              $(
+                qualifySelector(`.${cardClass} .coming-soon-ribbon`)
+              ).toggleClass("font-smaller");
             }
           }
         }
@@ -122,7 +144,7 @@ define(["jquery", "./util"], function ($, Util) {
 
       /* Apply custom front/back styles */
       if (menuItem.cardFrontStyles) {
-        const cardFrontEl = $(`.${cardClass} > .front`);
+        const cardFrontEl = $(qualifySelector(`.${cardClass} > .front`));
         cardFrontEl.attr(
           "style",
           cardFrontEl.attr("style") + ";" + menuItem.cardFrontStyles
@@ -130,7 +152,7 @@ define(["jquery", "./util"], function ($, Util) {
       }
 
       if (menuItem.cardBackStyles) {
-        const cardBackEl = $(`.${cardClass} > .back`);
+        const cardBackEl = $(qualifySelector(`.${cardClass} > .back`));
         cardBackEl.attr(
           "style",
           cardBackEl.attr("style") + ";" + menuItem.cardBackStyles
@@ -139,8 +161,8 @@ define(["jquery", "./util"], function ($, Util) {
     }
 
     /* Apply easter egg */
-    if (!$(".easter-egg").length) {
-      $(".jloc > .back").append(
+    if (!$(qualifySelector(".easter-egg")).length) {
+      $(qualifySelector(".jloc > .back")).append(
         $(
           `<div 
                   class="easter-egg"
@@ -152,7 +174,7 @@ define(["jquery", "./util"], function ($, Util) {
         )
       );
 
-      $(".jloc > .back").on("keyup", function (event) {
+      $(qualifySelector(".jloc > .back")).on("keyup", function (event) {
         if (event.keyCode === 56) {
           $(".easter-egg").css("top", 0);
           $(".easter-egg").css("opacity", 1);
@@ -160,9 +182,5 @@ define(["jquery", "./util"], function ($, Util) {
       });
     }
     /********************/
-  }
-
-  return {
-    render,
   };
 });

@@ -12,28 +12,14 @@ define([
   $,
   properties,
   Util,
-  Render,
+  render,
   template,
   cssContent, // Stylesheets are automatically imported
   parallaxCss
 ) {
   "use strict";
 
-  const { render } = Render;
-  const {
-    appId,
-    sheets,
-    isWebLink,
-    isSheetLink,
-    isNotLink,
-    getSheetUrl,
-    getHref,
-    getBackgroundImageUrl,
-    makeClassFromTitle,
-    navigateToSheet,
-    navigateToUrl,
-    navigateToUrlInNewTab,
-  } = Util;
+  const { appId, getSheetUrl, getHref, makeClassFromTitle } = Util; // Import helpers
 
   return {
     template: template,
