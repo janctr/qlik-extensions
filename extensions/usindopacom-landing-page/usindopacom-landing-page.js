@@ -4,18 +4,18 @@ define([
   "./properties",
   "./util",
   "./render",
-  "text!./style.css",
-  "text!./parallax.css",
   "text!./index.html",
+  "css!./style.css",
+  "css!./parallax.css",
 ], function (
   qlik,
   $,
   properties,
   Util,
   Render,
-  cssContent,
-  parallaxCss,
-  template
+  template,
+  cssContent, // Stylesheets are automatically imported
+  parallaxCss
 ) {
   "use strict";
 
@@ -34,10 +34,6 @@ define([
     navigateToUrl,
     navigateToUrlInNewTab,
   } = Util;
-
-  [cssContent, parallaxCss].forEach((cssModule) => {
-    $("<style>").html(cssModule).appendTo("head");
-  });
 
   return {
     template: template,

@@ -1,46 +1,35 @@
 <div class="pacom-app" qv-extension>
-  <header class="pacom-header">
-    <div class="pacom-logo-container">
-      <img class="pacom-logo" src="{{pacomLogoUrl}}" />
-    </div>
-    <h1 class="pacom-page-title">{{ pageTitle }}</h1>
-  </header>
-
-  <div class="pacom-wrapper">
-    <div class="pacom-card-container">
-      <div class="col" ng-repeat="menuItem in menuItems">
-        <div
-          class="container {{ menuItem.cardClass || makeClassFromTitle(menuItem) }}"
-        >
-          <div class="front cover-image" tabindex="0">
-            <div
-              ng-if="menuItem.isComingSoon"
-              class="coming-soon-ribbon ribbon-top-left {{menuItem.ribbonColor}}"
-            >
-              <span ng-bind-html="menuItem.ribbonLabel"></span>
-            </div>
-            <div class="inner">
-              <p ng-bind-html="menuItem.cardTitle"></p>
-              <span ng-bind-html="menuItem.cardSubtitle"></span>
-            </div>
-          </div>
-          <div class="back" tabindex="0">
-            <h5
-              class="card-back-title"
-              ng-bind-html="menuItem.cardBackTitle"
-            ></h5>
-            <div class="inner">
-              <p ng-bind-html="menuItem.cardDescription"></p>
-            </div>
-            <a
-              ng-if="menuItem.cardIsVisitButtonEnabled"
-              target="_blank"
-              rel="noopener noreferrer"
-              >{{ menuItem.cardVisitButtonText ||"VISIT"}}</a
-            >
-          </div>
+    <header class="pacom-header">
+        <div class="pacom-logo-container">
+            <img class="pacom-logo" src="{{pacomLogoUrl}}" />
         </div>
-      </div>
+        <h1 class="pacom-page-title">{{ pageTitle }}</h1>
+    </header>
+
+    <div class="pacom-wrapper">
+        <div class="pacom-card-container">
+            <div class="col" ng-repeat="menuItem in menuItems">
+                <div class="container {{ menuItem.cardClass || makeClassFromTitle(menuItem) }}">
+                    <div class="front cover-image" tabindex="0">
+                        <div ng-if="menuItem.isComingSoon"
+                            class="coming-soon-ribbon ribbon-top-left {{menuItem.ribbonColor}}">
+                            <span ng-bind-html="menuItem.ribbonLabel"></span>
+                        </div>
+                        <div class="inner">
+                            <p ng-bind-html="menuItem.cardTitle"></p>
+                            <span ng-bind-html="menuItem.cardSubtitle"></span>
+                        </div>
+                    </div>
+                    <div class="back" tabindex="0">
+                        <h5 class="card-back-title" ng-bind-html="menuItem.cardBackTitle"></h5>
+                        <div class="inner">
+                            <p ng-bind-html="menuItem.cardDescription"></p>
+                        </div>
+                        <a ng-if="menuItem.cardIsVisitButtonEnabled" target="_blank" rel="noopener noreferrer">{{
+                            menuItem.cardVisitButtonText ||"VISIT"}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
