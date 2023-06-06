@@ -55,6 +55,43 @@ define(["./About", "./util"], function (About, Util) {
           color: "#FFFFFF",
         },
       },
+      customCardDimensions: {
+        ref: "pageSettings.customCardDimensions",
+        type: "boolean",
+        component: "switch",
+        label: "Enable custom dimension definition.",
+        defaultValue: false,
+        options: [
+          { label: "Enabled", value: true },
+          { label: "Disabled", value: false },
+        ],
+      },
+      cardHeight: {
+        show: function (layout) {
+          return !!layout.pageSettings.customCardDimensions;
+        },
+        ref: "pageSettings.cardHeight",
+        component: "slider",
+        type: "integer",
+        label: "Define the height (px) for all cards",
+        defaultValue: 442,
+        min: 0,
+        max: 1000,
+        step: 1,
+      },
+      cardWidth: {
+        show: function (layout) {
+          return !!layout.pageSettings.customCardDimensions;
+        },
+        ref: "pageSettings.cardWidth",
+        component: "slider",
+        type: "integer",
+        label: "Define the width (px) for all cards",
+        defaultValue: 300,
+        min: 0,
+        max: 1000,
+        step: 1,
+      },
       isSipr: {
         type: "boolean",
         component: "radiobuttons",

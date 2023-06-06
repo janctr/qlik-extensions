@@ -1,6 +1,6 @@
 .col {
     cursor: pointer;
-    aspect-ratio: 3/5;
+    /* aspect-ratio: 3/5; */
     min-width: 265px;
 }
 
