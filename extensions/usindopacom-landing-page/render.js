@@ -29,6 +29,7 @@ define(["jquery", "./util"], function ($, Util) {
       layout.pageSettings.pageTitleBackgroundColor.color;
     const pageTitleTextColor = layout.pageSettings.pageTitleTextColor.color;
     const pageBackgroundColor = layout.pageSettings.pageBackgroundColor.color;
+    const customCardDimensions = layout.pageSettings.customCardDimensions;
 
     $(`header#${getObjectTitleId(layout)}`).css("display", "none"); // Remove title (The default qlik one that leaves ugly white space at the top)
 
@@ -47,6 +48,21 @@ define(["jquery", "./util"], function ($, Util) {
 
     if (pageTitleTextColor) {
       $(qualifySelector(".pacom-page-title")).css("color", pageTitleTextColor);
+    }
+
+    // Change dimensions of each card
+    if (customCardDimensions) {
+      const { cardHeight, cardWidth } = layout.pageSettings;
+
+      if (!Number.isNaN(cardHeight)) {
+        $(qualifySelector(".front")).css("min-height", `${cardHeight}px`);
+        $(qualifySelector(".back")).css("min-height", `${cardHeight}px`);
+      }
+
+      if (!Number.isNaN(cardWidth)) {
+        $(qualifySelector(".front")).css("width", `${cardWidth}px`);
+        $(qualifySelector(".back")).css("width", `${cardWidth}px`);
+      }
     }
 
     for (const menuItem of layout.menuItems) {
