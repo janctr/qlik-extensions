@@ -1,18 +1,5 @@
 define(["./About", "./util"], function (About, Util) {
-  const {
-    appId,
-    sheets,
-    isWebLink,
-    isSheetLink,
-    isNotLink,
-    getSheetUrl,
-    getHref,
-    getBackgroundImageUrl,
-    makeClassFromTitle,
-    navigateToSheet,
-    navigateToUrl,
-    navigateToUrlInNewTab,
-  } = Util;
+  const { sheets, isWebLink, isSheetLink } = Util;
 
   About(); // Initialize About panel
 

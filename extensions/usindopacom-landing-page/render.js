@@ -1,18 +1,14 @@
 define(["jquery", "./util"], function ($, Util) {
   const {
     appId,
-    sheets,
-    isWebLink,
     isSheetLink,
     isNotLink,
-    getSheetUrl,
     getHref,
     getBackgroundImageUrl,
     getObjectContentId,
     getObjectTitleId,
     makeClassFromTitle,
     navigateToSheet,
-    navigateToUrl,
     navigateToUrlInNewTab,
   } = Util;
 
