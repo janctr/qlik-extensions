@@ -92,6 +92,13 @@ define(["./About", "./util"], function (About, Util) {
         max: 1000,
         step: 1,
       },
+      logoImage: {
+        type: "string",
+        label: "Logo Image",
+        component: "media",
+        ref: "pageSettings.logoMedia",
+        layoutRef: "pageSettings.logoMedia",
+      },
       isSipr: {
         type: "boolean",
         component: "radiobuttons",
@@ -201,6 +208,13 @@ define(["./About", "./util"], function (About, Util) {
         type: "string",
         ref: "coverImageUrl",
         label: "Cover Image URL (File name)",
+      },
+      coverImageMedia: {
+        type: "string",
+        label: "Or choose from library: ",
+        component: "media",
+        ref: "coverImageMedia",
+        layoutRef: "coverImageMedia",
       },
       isFlippable: {
         type: "boolean",

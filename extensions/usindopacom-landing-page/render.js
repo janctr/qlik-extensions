@@ -18,6 +18,8 @@ define(["jquery", "./util"], function ($, Util) {
 
   return function render(layout) {
     function qualifySelector(selector) {
+      // Use this when making jQuery selections
+      // so other qlik objects are not targeted
       const contentId = `#${getObjectContentId(layout)}`; // Prepend to every query
 
       return `${contentId} ${selector}`;
@@ -29,6 +31,7 @@ define(["jquery", "./util"], function ($, Util) {
       layout.pageSettings.pageTitleBackgroundColor.color;
     const pageTitleTextColor = layout.pageSettings.pageTitleTextColor.color;
     const pageBackgroundColor = layout.pageSettings.pageBackgroundColor.color;
+    const logoUrl = layout.pageSettings.logoMedia;
     const customCardDimensions = layout.pageSettings.customCardDimensions;
 
     $(`header#${getObjectTitleId(layout)}`).css("display", "none"); // Remove title (The default qlik one that leaves ugly white space at the top)
@@ -38,6 +41,13 @@ define(["jquery", "./util"], function ($, Util) {
       "background-color",
       pageBackgroundColor
     );
+
+    // Set top left logo image
+    const logoPath = !!logoUrl
+      ? logoUrl
+      : `/appcontent/${appId}/usindopacom-logo.png`;
+
+    $(qualifySelector(".pacom-logo")).attr("src", logoPath);
 
     if (pageTitleBackgroundColor) {
       $(qualifySelector(".pacom-page-title")).css(
@@ -76,6 +86,13 @@ define(["jquery", "./util"], function ($, Util) {
           $(qualifySelector(`.${cardClass} > .front`)).css(
             "background-image",
             getBackgroundImageUrl({ menuItem })
+          );
+        }
+
+        if (menuItem.coverImageMedia) {
+          $(qualifySelector(`.${cardClass} > .front`)).css(
+            "background-image",
+            `url(${menuItem.coverImageMedia})`
           );
         }
 
