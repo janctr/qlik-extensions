@@ -28,6 +28,7 @@ define(["jquery", "./util"], function ($, Util) {
     const pageTitleTextColor = layout.pageSettings.pageTitleTextColor.color;
     const pageBackgroundColor = layout.pageSettings.pageBackgroundColor.color;
     const logoUrl = layout.pageSettings.logoMedia;
+    const logoLink = layout.pageSettings.logoLink;
     const customCardDimensions = layout.pageSettings.customCardDimensions;
 
     $(`header#${getObjectTitleId(layout)}`).css("display", "none"); // Remove title (The default qlik one that leaves ugly white space at the top)
@@ -44,6 +45,14 @@ define(["jquery", "./util"], function ($, Util) {
       : `/appcontent/${appId}/usindopacom-logo.png`;
 
     $(qualifySelector(".pacom-logo")).attr("src", logoPath);
+
+    // Set logo link if not empty or null
+    $(qualifySelector(".pacom-logo")).off(); // Clear event handlers
+    if (logoLink) {
+      $(qualifySelector(".pacom-logo")).click(function () {
+        navigateToUrlInNewTab(logoLink);
+      });
+    }
 
     if (pageTitleBackgroundColor) {
       $(qualifySelector(".pacom-page-title")).css(

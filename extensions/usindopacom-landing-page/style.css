@@ -37,6 +37,12 @@
 .pacom-logo {
     display: block;
     width: 100%;
+    transition: filter .5s ease-in-out;
+}
+
+.pacom-logo:hover {
+    cursor: pointer;
+    filter: contrast(150%);
 }
 
 .pacom-page-title {

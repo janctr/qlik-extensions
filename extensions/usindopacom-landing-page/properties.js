@@ -79,6 +79,11 @@ define(["./About", "./util"], function (About, Util) {
         max: 1000,
         step: 1,
       },
+      logoLink: {
+        ref: "pageSettings.logoLink",
+        label: "Logo Link",
+        type: "string",
+      },
       logoImage: {
         type: "string",
         label: "Logo Image",
