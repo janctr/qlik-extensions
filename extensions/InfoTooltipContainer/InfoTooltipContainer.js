@@ -1,7 +1,8 @@
-define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./infoIconStyle.css"],
-	function ( qlik, $, props, template, iconCss) {
+define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./infoIconStyle.css", "text!./tooltipAndModalStyle.css"],
+	function ( qlik, $, props, template, iconCss, tooltipModalCss) {
 		"use strict";
 		$("<style>").html(iconCss).appendTo("head");
+		$("<style>").html(tooltipModalCss).appendTo("head");
 		//let propsCache;
 		/*function getMasterObjects() {
 			return new Promise(function (res, rej) {
@@ -22,6 +23,20 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./infoI
 			}
 		}
 		*/
+
+		function setTooltipOverflow() {
+			$('.tooltipContainer-tooltip').parents('.qv-inner-object').css('overflow', 'visible');
+		}
+
+		function toggleHoverButtonZIndex($element, moveUp) {
+			let newIdx = moveUp ? 7 : 0;
+			$element.parents('.object-wrapper').find('.qv-object-nav').css('z-index', newIdx);
+		}
+
+		function toggleExtensionZIndex($element, moveUp) {
+			let newIdx = moveUp ? 2 : 1;
+			$element.parents('.qv-object').css('z-index', newIdx);
+		}
 
 		function handleCustomDropdownProps(propsObj, propName, dropdownClass, propertiesApi) {
 			let selectTag = $(dropdownClass);
@@ -60,6 +75,7 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./infoI
 			definition: props,
 			
 			paint: function ($element, layout) {
+				console.log('$element', $element);
 				const myInfoIcon = $element.find(".infoIcon");
 				if(layout.iconprops.colorStr) {
 					myInfoIcon.css('color', layout.iconprops.colorStr);
@@ -67,6 +83,13 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./infoI
 				if(layout.iconprops.opacity) {
 					myInfoIcon.css('opacity', layout.iconprops.opacity);
 				}
+				if(layout.iconprops.topOffset || layout.iconprops.topOffset === 0) {
+					myInfoIcon.parent().css('top', layout.iconprops.topOffset + 'px');
+				}
+				if(layout.iconprops.rightOffset || layout.iconprops.rightOffset === 0){
+					myInfoIcon.parent().css('right', layout.iconprops.rightOffset + 'px');
+				}
+
 				let backendApi = this.backendApi;
 				this.backendApi.getProperties().then(function(reply) {
 					reply.onChangeHandler = function() {
@@ -86,6 +109,48 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./infoI
 						$('#' + this.$scope.localId), this.$scope.containerId
 					);
 				}
+
+				if(layout.tooltipprops?.type === 'tip' || layout.tooltipprops?.type === 'both') {
+					let tooltipClass = $element.find('.tooltipContainer-tooltip');
+					let tooltipTextClass = tooltipClass.find('.tooltipContainer-tooltiptext');
+					if(!layout.tooltipprops?.tipText) {
+						tooltipTextClass.html('&nbsp;&nbsp;');
+					}else {
+						tooltipTextClass.html(layout.tooltipprops?.tipText);
+					}
+					tooltipClass.removeClass();
+					tooltipTextClass.removeClass();
+					tooltipClass.addClass('tooltipContainer-tooltip');
+					tooltipTextClass.addClass('tooltipContainer-tooltiptext');
+					switch(layout.tooltipprops?.tipPos) {
+						case 'u': 
+							tooltipClass.addClass('tooltipContainer-tooltip-top');
+							tooltipTextClass.addClass('tooltipContainer-tooltiptext-top');
+							break;
+						case 'd':
+							tooltipClass.addClass('tooltipContainer-tooltip-bottom');
+							tooltipTextClass.addClass('tooltipContainer-tooltiptext-bottom');
+							break;
+						case 'l': 
+							tooltipClass.addClass('tooltipContainer-tooltip-left');
+							tooltipTextClass.addClass('tooltipContainer-tooltiptext-left');
+							break;
+						default:
+							tooltipClass.addClass('tooltipContainer-tooltip-right');
+							tooltipTextClass.addClass('tooltipContainer-tooltiptext-right');
+							break;
+
+					}
+					setTooltipOverflow();
+					$element.find('.tooltipContainer-tooltip').hover(function() {
+						toggleHoverButtonZIndex($element, false);
+						toggleExtensionZIndex($element, true);
+					}, function() {
+						toggleHoverButtonZIndex($element, true);
+						toggleExtensionZIndex($element, false);
+					});
+				}
+
 				return qlik.Promise.resolve();
 			},
 			controller: ['$scope', function ( $scope) {
@@ -111,7 +176,8 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./infoI
 					return !!$scope.containerId;
 				}
 				$scope.localId = Math.floor(Math.random() * 16777215).toString(16);
-				console.log('container.objectId', $scope.containerId);				
+				console.log('container.objectId', $scope.containerId);
+				console.log('$scope', $scope);
 			}]
 		};
 

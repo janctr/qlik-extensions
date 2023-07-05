@@ -2,37 +2,10 @@
 define(["qlik", './container'], function (qlik, Container) {
 	'use strict';
 	Container();
-	/*
-	function getMasterObjects() {
-		return new Promise(function (res, rej) {
-			qlik.currApp().getList('MasterObject', function (reply) {
-				res(reply.qItems.map(
-					({ qInfo: { qId }, qMeta: { title } }) => ({ label: title, value: qId })
-				));
-			});
-		});
-	}
-	*/
-	//let masterObjectPromise = getMasterObjects();
 	const settingsProperties = {
 		type: 'items',
+		label: 'Container Appearance',
 		items: {
-			/*
-			containerObj: {
-				label: 'Container',
-				type: 'items',
-				items: {
-					masterItem: {
-						type: 'string',
-						label: 'Master Item',
-						component: 'dropdown',
-						ref: 'containerprops.masterItem',
-						defaultValue: '',
-						options: []
-					}
-				}
-			},
-			*/
 			iconAppearance: {
 				label: 'Icon Appearance',
 				type: 'items',
@@ -53,6 +26,32 @@ define(["qlik", './container'], function (qlik, Container) {
 						max: 1,
 						step: 0.025,
 						defaultValue: 0.4
+					},
+					iconPosition: {
+						type: 'items',
+						label: 'Icon Margins',
+						items: {
+							top: {
+								label: 'Top',
+								type: 'integer',
+								component: 'slider',
+								ref: 'iconprops.topOffset',
+								min: 0,
+								max: 250,
+								step: 1,
+								defaultValue: 0
+							},
+							right: {
+								label: 'Right',
+								type: 'integer',
+								component: 'slider',
+								ref: 'iconprops.rightOffset',
+								min: 0,
+								max: 250,
+								step: 1,
+								defaultValue: 0
+							}
+						}
 					}
 				}
 			},
@@ -61,10 +60,75 @@ define(["qlik", './container'], function (qlik, Container) {
 			}
 		}
 	}
+	const tooltipProperties = {
+		type: 'items',
+		label: 'Tooltip Settings',
+		items: {
+			tooltipType: {
+				type: 'string',
+				label: 'Tooltip Type',
+				ref: 'tooltipprops.type',
+				component: 'dropdown',
+				options: [{
+					value: 'tip',
+					label: 'Hover Tooltip'
+				}, {
+					value: 'modal',
+					label: 'Click Modal'
+				}, {
+					value: 'both',
+					label: 'Tooltip and Modal'
+				}],
+				defaultValue: 'tip'
+			},
+			tooltipText: {
+				type: 'string',
+				label: 'Tooltip Text',
+				expression: 'optional',
+				ref: 'tooltipprops.tipText',
+				show: function(e) {
+					return !e.tooltipprops || e.tooltipprops?.type === 'tip' || e.tooltipprops?.type === 'both';
+				}
+			},
+			modalText: {
+				type: 'string',
+				label: 'Modal Text',
+				expression: 'optional',
+				show: function(e) {
+					return e.tooltipprops?.type === 'modal' || e.tooltipprops?.type === 'both';
+				},
+				ref: 'tooltipprops.modalText'
+			},
+			tooltipPosition: {
+				type: 'string',
+				label: 'Tooltip Position',
+				ref: 'tooltipprops.tipPos',
+				component: 'dropdown',
+				options: [{
+					value: 'r',
+					label: 'Right'
+				}, {
+					value: 'l',
+					label: 'Left'
+				}, {
+					value: 'u',
+					label: 'Up'
+				}, {
+					value: 'd',
+					label: 'Down'
+				}],
+				defaultValue: 'r',
+				show: function(e) {
+					return !e.tooltipprops || e.tooltipprops?.type === 'tip' || e.tooltipprops?.type === 'both';
+				}
+			}
+
+		}
+	}
 
 	const containerSection = {
 		type: "items",
-		translation: "Container",
+		translation: "Container Content",
 		items: {
 		  container: {
 			component: "Container",
@@ -78,6 +142,7 @@ define(["qlik", './container'], function (qlik, Container) {
 			component: "accordion",
 			items: {
 				appearanceProps: settingsProperties,
+				tooltipProps: tooltipProperties,
 				containerSection
 			}
 	}

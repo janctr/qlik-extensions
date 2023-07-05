@@ -1,0 +1,92 @@
+.tooltipContainer-tooltip {
+    position: absolute;
+	top: 0;
+	right: 0;
+    z-index: 7;
+}
+.tooltipContainer-tooltip .tooltipContainer-tooltiptext {
+    visibility:hidden;
+    width: max-content;
+    max-width: 20rem;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 0.5rem;
+    padding: 0.4rem;
+    position: absolute;
+    font-family: 'QlikView Sans', sans-serif;
+    z-index: 8;
+    opacity: 1;
+}
+
+.tooltipContainer-tooltip .tooltipContainer-tooltiptext-top {
+    bottom: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.tooltipContainer-tooltip .tooltipContainer-tooltiptext-bottom {
+    top: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.tooltipContainer-tooltip .tooltipContainer-tooltiptext-left {
+    right: calc(100% + 5px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.tooltipContainer-tooltip .tooltipContainer-tooltiptext-right {
+    left: calc(100% + 5px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.tooltipContainer-tooltip-top .tooltipContainer-tooltiptext-top::after {
+    content: " ";
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+    position: absolute;
+}
+
+.tooltipContainer-tooltip-bottom .tooltipContainer-tooltiptext-bottom::after {
+    content: " ";
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+    position: absolute;
+}
+
+.tooltipContainer-tooltip-left .tooltipContainer-tooltiptext-left::after {
+    content: " ";
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent black;
+    position: absolute;
+}
+
+.tooltipContainer-tooltip-right .tooltipContainer-tooltiptext-right::after {
+    content: " ";
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+    position: absolute;
+}
+
+.tooltipContainer-tooltip:hover .tooltipContainer-tooltiptext {
+    visibility: visible;
+}
