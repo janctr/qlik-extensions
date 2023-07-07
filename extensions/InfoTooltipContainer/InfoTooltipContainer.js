@@ -89,7 +89,9 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 				if(layout.iconprops.rightOffset || layout.iconprops.rightOffset === 0){
 					myInfoIcon.parent().css('right', layout.iconprops.rightOffset + 'px');
 				}
-
+				if(layout.iconprops.iconSize > 0) {
+					myInfoIcon.css('font-size', layout.iconprops.iconSize + 'px');
+				}
 				let backendApi = this.backendApi;
 				this.backendApi.getProperties().then(function(reply) {
 					reply.onChangeHandler = function() {

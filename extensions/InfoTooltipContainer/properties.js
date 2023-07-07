@@ -32,7 +32,7 @@ define(["qlik", './container'], function (qlik, Container) {
 						label: 'Icon Margins',
 						items: {
 							top: {
-								label: 'Top',
+								label: 'Margin Top',
 								type: 'integer',
 								component: 'slider',
 								ref: 'iconprops.topOffset',
@@ -42,7 +42,7 @@ define(["qlik", './container'], function (qlik, Container) {
 								defaultValue: 0
 							},
 							right: {
-								label: 'Right',
+								label: 'Margin Right',
 								type: 'integer',
 								component: 'slider',
 								ref: 'iconprops.rightOffset',
@@ -52,6 +52,16 @@ define(["qlik", './container'], function (qlik, Container) {
 								defaultValue: 0
 							}
 						}
+					},
+					iconSize: {
+						type: 'integer',
+						component: 'slider',
+						label: 'Icon Size',
+						ref: 'iconprops.iconSize',
+						min: 1,
+						max: 100,
+						step: 1,
+						defaultValue: 16
 					}
 				}
 			},

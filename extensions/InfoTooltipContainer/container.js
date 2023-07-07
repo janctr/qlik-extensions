@@ -22,7 +22,7 @@ define(["qlik", "jquery",
 
     return function () {
       if (!components.hasComponent("Container")) {
-        let dropdown = `<h4>Master Item</h4><div class="container-dropdown">
+        let dropdown = `<h4 style="padding: 8px 10px;">Master Item</h4><div class="container-dropdown" style="padding: 8px 10px;">
             <select class="lui-select">
             </select>
           </div>`;
