@@ -1,5 +1,5 @@
-define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./infoIconStyle.css", "text!./tooltipAndModalStyle.css"],
-	function ( qlik, $, props, template, iconCss, tooltipModalCss) {
+define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modalLayer.html", "text!./infoIconStyle.css", "text!./tooltipAndModalStyle.css"],
+	function ( qlik, $, props, template, modalLayer, iconCss, tooltipModalCss) {
 		"use strict";
 		$("<style>").html(iconCss).appendTo("head");
 		$("<style>").html(tooltipModalCss).appendTo("head");
@@ -113,11 +113,17 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./infoI
 				if(layout.tooltipprops?.type === 'tip' || layout.tooltipprops?.type === 'both') {
 					let tooltipClass = $element.find('.tooltipContainer-tooltip');
 					let tooltipTextClass = tooltipClass.find('.tooltipContainer-tooltiptext');
+					if(layout.tooltipprops?.type === 'tip') {
+						myInfoIcon.off('click');
+						myInfoIcon.removeClass('infoIconModal');
+					}
+
 					if(!layout.tooltipprops?.tipText) {
 						tooltipTextClass.html('&nbsp;&nbsp;');
 					}else {
 						tooltipTextClass.html(layout.tooltipprops?.tipText);
 					}
+
 					tooltipClass.removeClass();
 					tooltipTextClass.removeClass();
 					tooltipClass.addClass('tooltipContainer-tooltip');
@@ -150,6 +156,39 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./infoI
 						toggleExtensionZIndex($element, false);
 					});
 				}
+				if(layout.tooltipprops?.type === 'modal' || layout.tooltipprops?.type === 'both') {
+					let $modal = $('#modal' + this.$scope.localId);
+					if($modal.is(':empty')) {
+						this.$scope.attachModal();
+						$modal = $modal = $('#modal' + this.$scope.localId);
+						console.log('$modal', $modal);
+					}
+					if(layout.tooltipprops?.type === 'modal') {
+						myInfoIcon.off('hover');
+					}
+					myInfoIcon.addClass('infoIconModal');
+					let titleElement = $modal.find('.lui-dialog__title');
+					if(layout.tooltipprops?.modalTitle) {
+						titleElement.html(layout.tooltipprops.modalTitle);
+					}
+					else {
+						titleElement.html('');
+					}
+					let textElement = $modal.find('.lui-dialog__body');
+					if(layout.tooltipprops?.modalText) {
+						textElement.html(layout.tooltipprops?.modalText);
+					}
+					else {
+						textElement.html('');
+					}
+					$modal.find('.modal-close').click(function() {
+						$modal.hide();
+					});
+					myInfoIcon.on('click', function() {
+						console.log('click test');
+						$modal.show();
+					});
+				}
 
 				return qlik.Promise.resolve();
 			},
@@ -178,6 +217,15 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./infoI
 				$scope.localId = Math.floor(Math.random() * 16777215).toString(16);
 				console.log('container.objectId', $scope.containerId);
 				console.log('$scope', $scope);
+				let modalDiv = $('<div id="modal' + $scope.localId + '"></div>');
+				modalDiv.html(modalLayer);
+				modalDiv.addClass('infoModalLayer');
+				console.log('Modal', modalDiv);
+				$scope.attachModal = function() {
+					$('body').append(modalDiv);
+				}
+				$scope.attachModal();
+				$('#modal'+$scope.localId).hide();
 			}]
 		};
 

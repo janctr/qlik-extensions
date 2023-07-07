@@ -90,3 +90,10 @@
 .tooltipContainer-tooltip:hover .tooltipContainer-tooltiptext {
     visibility: visible;
 }
+
+.infoModalLayer > .lui-dialog {
+    position: absolute;
+    width: 50vw;
+    top: 25vh;
+    right: 25vw;
+}

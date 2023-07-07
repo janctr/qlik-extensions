@@ -90,6 +90,15 @@ define(["qlik", './container'], function (qlik, Container) {
 					return !e.tooltipprops || e.tooltipprops?.type === 'tip' || e.tooltipprops?.type === 'both';
 				}
 			},
+			modalTitle: {
+				type: 'string',
+				label: 'Modal Title',
+				expression: 'optional',
+				show: function(e) {
+					return e.tooltipprops?.type === 'modal' || e.tooltipprops?.type === 'both';
+				},
+				ref: 'tooltipprops.modalTitle'
+			},
 			modalText: {
 				type: 'string',
 				label: 'Modal Text',
