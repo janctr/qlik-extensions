@@ -43,7 +43,7 @@
     transform: translateY(-50%);
 }
 
-.tooltipContainer-tooltip-top .tooltipContainer-tooltiptext-top::after {
+.tooltipContainer-tooltip.tooltipContainer-tooltiptext-top::after {
     content: " ";
     top: 100%;
     left: 50%;
@@ -54,7 +54,7 @@
     position: absolute;
 }
 
-.tooltipContainer-tooltip-bottom .tooltipContainer-tooltiptext-bottom::after {
+.tooltipContainer-tooltip .tooltipContainer-tooltiptext-bottom::after {
     content: " ";
     bottom: 100%;
     left: 50%;
@@ -65,7 +65,7 @@
     position: absolute;
 }
 
-.tooltipContainer-tooltip-left .tooltipContainer-tooltiptext-left::after {
+.tooltipContainer-tooltip .tooltipContainer-tooltiptext-left::after {
     content: " ";
     top: 50%;
     left: 100%;
@@ -76,7 +76,7 @@
     position: absolute;
 }
 
-.tooltipContainer-tooltip-right .tooltipContainer-tooltiptext-right::after {
+.tooltipContainer-tooltip .tooltipContainer-tooltiptext-right::after {
     content: " ";
     top: 50%;
     right: 100%;

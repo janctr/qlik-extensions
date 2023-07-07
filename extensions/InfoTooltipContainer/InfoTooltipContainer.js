@@ -3,40 +3,6 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 		"use strict";
 		$("<style>").html(iconCss).appendTo("head");
 		$("<style>").html(tooltipModalCss).appendTo("head");
-		//let propsCache;
-		/*function getMasterObjects() {
-			return new Promise(function (res, rej) {
-				qlik.currApp().getAppObjectList('masterobject', function (reply) {
-					res(reply.qItems.map(
-						({ qInfo: { qId }, qMeta: { title } }) => ({ label: title, value: qId })
-					));
-				});
-			});
-		*/
-		/*async function getProperties() {
-			const model = await qlik.currApp().getList('MasterObject');
-			let masterOpts = model.layout.qAppObjectList.qItems.map(({ qInfo: { qId }, qMeta: { title } }) => ({ label: title, value: qId }));
-			for(const option of masterOpts) {
-				let myOption = $('<option></option>').text(option.label);
-				myOption.attr('value', option.value);
-				$('.container-dropdown > select').append(myOption);
-			}
-		}
-		*/
-
-		function setTooltipOverflow() {
-			$('.tooltipContainer-tooltip').parents('.qv-inner-object').css('overflow', 'visible');
-		}
-
-		function toggleHoverButtonZIndex($element, moveUp) {
-			let newIdx = moveUp ? 7 : 0;
-			$element.parents('.object-wrapper').find('.qv-object-nav').css('z-index', newIdx);
-		}
-
-		function toggleExtensionZIndex($element, moveUp) {
-			let newIdx = moveUp ? 2 : 1;
-			$element.parents('.qv-object').css('z-index', newIdx);
-		}
 
 		function handleCustomDropdownProps(propsObj, propName, dropdownClass, propertiesApi) {
 			let selectTag = $(dropdownClass);
@@ -63,6 +29,139 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 				});
 			}
 		}
+		/*Extract properties related to icon style and apply to the icon's css*/
+		function applyIconStyles(icon, layout) {
+			if(layout.iconprops.colorStr) {
+				icon.css('color', layout.iconprops.colorStr);
+			}
+			if(layout.iconprops.opacity) {
+				icon.css('opacity', layout.iconprops.opacity);
+			}
+			if(layout.iconprops.topOffset || layout.iconprops.topOffset === 0) {
+				icon.parent().css('top', layout.iconprops.topOffset + 'px');
+			}
+			if(layout.iconprops.rightOffset || layout.iconprops.rightOffset === 0){
+				icon.parent().css('right', layout.iconprops.rightOffset + 'px');
+			}
+			if(layout.iconprops.iconSize > 0) {
+				icon.css('font-size', layout.iconprops.iconSize + 'px');
+			}
+		}
+
+		function displayContainedObject(scope, layout) {
+			/*check for changes to object reference for container */
+			let nextContainerObject = scope.getContainerProps(layout);
+			if(nextContainerObject.objectId !== scope.containerId) {
+				scope.container = nextContainerObject;
+				scope.containerId = nextContainerObject.objectId;
+			}
+			else if(!scope.initialDisplay) {
+				return;
+			}
+			if(scope.containerId) {
+				qlik.currApp().getObject(
+					$('#' + scope.localId), scope.containerId
+				).then(function(model){
+					scope.initialDisplay = false;
+				});
+			}
+		}
+
+		function setTooltipOverflow() {
+			$('.tooltipContainer-tooltip').parents('.qv-inner-object').css('overflow', 'visible');
+		}
+
+		function toggleHoverButtonZIndex($element, moveUp) {
+			let newIdx = moveUp ? 7 : 0;
+			$element.parents('.object-wrapper').find('.qv-object-nav').css('z-index', newIdx);
+		}
+
+		function toggleExtensionZIndex($element, moveUp) {
+			let newIdx = moveUp ? 2 : 1;
+			$element.parents('.qv-object').css('z-index', newIdx);
+		}
+
+		function applyTooltipProps(icon, $element, layout) {
+			if(layout.tooltipprops?.type === 'tip' || layout.tooltipprops?.type === 'both') {
+				let tooltipClass = $element.find('.tooltipContainer-tooltip');
+				let tooltipTextClass = tooltipClass.find('.tooltipContainer-tooltiptext');
+				//disable modal functions if tooltip only
+				if(layout.tooltipprops?.type === 'tip') {
+					icon.off('click');
+					icon.removeClass('infoIconModal');
+				}
+
+				if(!layout.tooltipprops?.tipText) {
+					tooltipTextClass.html('&nbsp;&nbsp;');
+				}else {
+					tooltipTextClass.html(layout.tooltipprops?.tipText);
+				}
+				//clear positioning classes, re-add based on props
+				tooltipClass.removeClass();
+				tooltipTextClass.removeClass();
+				tooltipClass.addClass('tooltipContainer-tooltip');
+				tooltipTextClass.addClass('tooltipContainer-tooltiptext');
+				switch(layout.tooltipprops?.tipPos) {
+					case 'u': 
+						tooltipTextClass.addClass('tooltipContainer-tooltiptext-top');
+						break;
+					case 'd':
+						tooltipTextClass.addClass('tooltipContainer-tooltiptext-bottom');
+						break;
+					case 'l': 
+						tooltipTextClass.addClass('tooltipContainer-tooltiptext-left');
+						break;
+					default:
+						tooltipTextClass.addClass('tooltipContainer-tooltiptext-right');
+						break;
+
+				}
+				setTooltipOverflow();
+				$element.find('.tooltipContainer-tooltip').hover(function() {
+					//on hover, bring extension z-index forward, and move qlik hover button z-index back
+					toggleHoverButtonZIndex($element, false);
+					toggleExtensionZIndex($element, true);
+				}, function() {
+					toggleHoverButtonZIndex($element, true);
+					toggleExtensionZIndex($element, false);
+				});
+			}
+		}
+
+		function applyModalProps(icon, scope, layout) {
+			if(layout.tooltipprops?.type === 'modal' || layout.tooltipprops?.type === 'both') {
+				let $modal = $('#modal' + scope.localId);
+				if($modal.is(':empty')) {
+					scope.attachModal();
+					$modal = $modal = $('#modal' + scope.localId);
+				}
+				if(layout.tooltipprops?.type === 'modal') {
+					//disable tooltip if modal only
+					icon.parent().off('hover');
+				}
+				icon.addClass('infoIconModal');
+				let titleElement = $modal.find('.lui-dialog__title');
+				if(layout.tooltipprops?.modalTitle) {
+					titleElement.html(layout.tooltipprops.modalTitle);
+				}
+				else {
+					titleElement.html('');
+				}
+				let textElement = $modal.find('.lui-dialog__body');
+				if(layout.tooltipprops?.modalText) {
+					textElement.html(layout.tooltipprops?.modalText);
+				}
+				else {
+					textElement.html('');
+				}
+				$modal.find('.modal-close').click(function() {
+					$modal.hide();
+				});
+				icon.on('click', function() {
+					$modal.show();
+				});
+			}
+		}
 
 		let extObj =  {
 			template: template,
@@ -75,23 +174,8 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 			definition: props,
 			
 			paint: function ($element, layout) {
-				console.log('$element', $element);
 				const myInfoIcon = $element.find(".infoIcon");
-				if(layout.iconprops.colorStr) {
-					myInfoIcon.css('color', layout.iconprops.colorStr);
-				}
-				if(layout.iconprops.opacity) {
-					myInfoIcon.css('opacity', layout.iconprops.opacity);
-				}
-				if(layout.iconprops.topOffset || layout.iconprops.topOffset === 0) {
-					myInfoIcon.parent().css('top', layout.iconprops.topOffset + 'px');
-				}
-				if(layout.iconprops.rightOffset || layout.iconprops.rightOffset === 0){
-					myInfoIcon.parent().css('right', layout.iconprops.rightOffset + 'px');
-				}
-				if(layout.iconprops.iconSize > 0) {
-					myInfoIcon.css('font-size', layout.iconprops.iconSize + 'px');
-				}
+				applyIconStyles(myInfoIcon, layout);
 				let backendApi = this.backendApi;
 				this.backendApi.getProperties().then(function(reply) {
 					reply.onChangeHandler = function() {
@@ -100,98 +184,9 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 					backendApi.setProperties(reply);
 				});
 
-				let nextContainerObject = this.$scope.getContainerProps(layout);
-				if(nextContainerObject.objectId !== this.$scope.containerId) {
-					this.$scope.container = nextContainerObject;
-					this.$scope.containerId = nextContainerObject.objectId;
-				}
-				console.log('localId: ', this.$scope.localId);
-				if(this.$scope.containerId) {
-					qlik.currApp().getObject(
-						$('#' + this.$scope.localId), this.$scope.containerId
-					);
-				}
-
-				if(layout.tooltipprops?.type === 'tip' || layout.tooltipprops?.type === 'both') {
-					let tooltipClass = $element.find('.tooltipContainer-tooltip');
-					let tooltipTextClass = tooltipClass.find('.tooltipContainer-tooltiptext');
-					if(layout.tooltipprops?.type === 'tip') {
-						myInfoIcon.off('click');
-						myInfoIcon.removeClass('infoIconModal');
-					}
-
-					if(!layout.tooltipprops?.tipText) {
-						tooltipTextClass.html('&nbsp;&nbsp;');
-					}else {
-						tooltipTextClass.html(layout.tooltipprops?.tipText);
-					}
-
-					tooltipClass.removeClass();
-					tooltipTextClass.removeClass();
-					tooltipClass.addClass('tooltipContainer-tooltip');
-					tooltipTextClass.addClass('tooltipContainer-tooltiptext');
-					switch(layout.tooltipprops?.tipPos) {
-						case 'u': 
-							tooltipClass.addClass('tooltipContainer-tooltip-top');
-							tooltipTextClass.addClass('tooltipContainer-tooltiptext-top');
-							break;
-						case 'd':
-							tooltipClass.addClass('tooltipContainer-tooltip-bottom');
-							tooltipTextClass.addClass('tooltipContainer-tooltiptext-bottom');
-							break;
-						case 'l': 
-							tooltipClass.addClass('tooltipContainer-tooltip-left');
-							tooltipTextClass.addClass('tooltipContainer-tooltiptext-left');
-							break;
-						default:
-							tooltipClass.addClass('tooltipContainer-tooltip-right');
-							tooltipTextClass.addClass('tooltipContainer-tooltiptext-right');
-							break;
-
-					}
-					setTooltipOverflow();
-					$element.find('.tooltipContainer-tooltip').hover(function() {
-						toggleHoverButtonZIndex($element, false);
-						toggleExtensionZIndex($element, true);
-					}, function() {
-						toggleHoverButtonZIndex($element, true);
-						toggleExtensionZIndex($element, false);
-					});
-				}
-				if(layout.tooltipprops?.type === 'modal' || layout.tooltipprops?.type === 'both') {
-					let $modal = $('#modal' + this.$scope.localId);
-					if($modal.is(':empty')) {
-						this.$scope.attachModal();
-						$modal = $modal = $('#modal' + this.$scope.localId);
-						console.log('$modal', $modal);
-					}
-					if(layout.tooltipprops?.type === 'modal') {
-						myInfoIcon.off('hover');
-					}
-					myInfoIcon.addClass('infoIconModal');
-					let titleElement = $modal.find('.lui-dialog__title');
-					if(layout.tooltipprops?.modalTitle) {
-						titleElement.html(layout.tooltipprops.modalTitle);
-					}
-					else {
-						titleElement.html('');
-					}
-					let textElement = $modal.find('.lui-dialog__body');
-					if(layout.tooltipprops?.modalText) {
-						textElement.html(layout.tooltipprops?.modalText);
-					}
-					else {
-						textElement.html('');
-					}
-					$modal.find('.modal-close').click(function() {
-						$modal.hide();
-					});
-					myInfoIcon.on('click', function() {
-						console.log('click test');
-						$modal.show();
-					});
-				}
-
+				displayContainedObject(this.$scope, layout);
+				applyTooltipProps(myInfoIcon, $element, layout);
+				applyModalProps(myInfoIcon, this.$scope, layout);
 				return qlik.Promise.resolve();
 			},
 			controller: ['$scope', function ( $scope) {
@@ -217,6 +212,7 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 					return !!$scope.containerId;
 				}
 				$scope.localId = Math.floor(Math.random() * 16777215).toString(16);
+				$scope.initialDisplay = true;
 				console.log('container.objectId', $scope.containerId);
 				console.log('$scope', $scope);
 				let modalDiv = $('<div id="modal' + $scope.localId + '"></div>');
