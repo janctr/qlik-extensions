@@ -1,9 +1,10 @@
-define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modalLayer.html", "text!./infoIconStyle.css", "text!./tooltipAndModalStyle.css"],
-	function ( qlik, $, props, template, modalLayer, iconCss, tooltipModalCss) {
+define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modalLayer.html", "text!./infoIconStyle.css",
+			"text!./tooltipAndModalStyle.css", "text!./watermarkStyle.css"],
+	function ( qlik, $, props, template, modalLayer, iconCss, tooltipModalCss, watermarkCss) {
 		"use strict";
 		$("<style>").html(iconCss).appendTo("head");
 		$("<style>").html(tooltipModalCss).appendTo("head");
-
+		$("<style>").html(watermarkCss).appendTo("head");
 		function handleCustomDropdownProps(propsObj, propName, dropdownClass, propertiesApi) {
 			let selectTag = $(dropdownClass);
 			if(typeof(selectTag) !== undefined) {
@@ -31,19 +32,20 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 		}
 		/*Extract properties related to icon style and apply to the icon's css*/
 		function applyIconStyles(icon, layout) {
-			if(layout.iconprops.colorStr) {
-				icon.css('color', layout.iconprops.colorStr);
-			}
-			if(layout.iconprops.opacity) {
+			//if(layout.iconprops.colorStr) {
+			//	icon.css('color', layout.iconprops.colorStr);
+			//}
+			icon.css('color', typeof layout.iconprops?.colorStr !== 'undefined' ? layout.iconprops?.colorStr : '#000');
+			if(layout.iconprops?.opacity || layout.iconprops?.opacity === 0) {
 				icon.css('opacity', layout.iconprops.opacity);
 			}
-			if(layout.iconprops.topOffset || layout.iconprops.topOffset === 0) {
+			if(layout.iconprops?.topOffset || layout.iconprops?.topOffset === 0) {
 				icon.parent().css('top', layout.iconprops.topOffset + 'px');
 			}
-			if(layout.iconprops.rightOffset || layout.iconprops.rightOffset === 0){
+			if(layout.iconprops?.rightOffset || layout.iconprops?.rightOffset === 0){
 				icon.parent().css('right', layout.iconprops.rightOffset + 'px');
 			}
-			if(layout.iconprops.iconSize > 0) {
+			if(layout.iconprops?.iconSize > 0) {
 				icon.css('font-size', layout.iconprops.iconSize + 'px');
 			}
 		}
@@ -64,6 +66,24 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 				).then(function(model){
 					scope.initialDisplay = false;
 				});
+			}
+		}
+
+		function displayWatermark($element, layout) {
+			let watermarkContainer = $element.find('.tooltipContainer-watermarkContainer');
+			if(layout.watermarkprops?.enabled) {
+				let watermarkTag = watermarkContainer.find('.tooltipContainer-watermark');
+				watermarkTag.html(layout.watermarkprops.textStr || '');
+				watermarkTag.css('color', layout.watermarkprops.textColor || '#000');
+				watermarkTag.css('font-size', (layout.watermarkprops.textSize > 0 ? layout.watermarkprops.textSize : 24) + 'px');
+				watermarkTag.css('opacity', typeof layout.watermarkprops.textOpacity !== 'undefined' ? layout.watermarkprops.textOpacity : 0.4);
+				if(layout.watermarkprops?.rotation || layout.watermarkprops?.rotation === 0) {
+					watermarkTag.css('transform', 'rotate(' + layout.watermarkprops.rotation + 'deg)');
+				}
+				watermarkContainer.show();
+			}
+			else {
+				watermarkContainer.hide();
 			}
 		}
 
@@ -187,6 +207,7 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 				displayContainedObject(this.$scope, layout);
 				applyTooltipProps(myInfoIcon, $element, layout);
 				applyModalProps(myInfoIcon, this.$scope, layout);
+				displayWatermark($element, layout);
 				return qlik.Promise.resolve();
 			},
 			controller: ['$scope', function ( $scope) {

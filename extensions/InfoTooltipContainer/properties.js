@@ -145,6 +145,76 @@ define(["qlik", './container'], function (qlik, Container) {
 		}
 	}
 
+	const watermarkProperties = {
+		type: 'items',
+		label: 'Watermark Properties',
+		items: {
+			watermarkEnabled: {
+				type: 'boolean',
+				label: 'Use Watermark',
+				ref: 'watermarkprops.enabled',
+				defaultValue: false
+			},
+			watermarkText: {
+				type: 'string',
+				label: 'Watermark Text',
+				expression: 'optional',
+				ref: 'watermarkprops.textStr',
+				show: function(e) {
+					return e.watermarkprops?.enabled;
+				}
+			},
+			watermarkSize: {
+				type: 'integer',
+				label: 'Text Size',
+				ref: 'watermarkprops.textSize',
+				component: 'slider',
+				min: 1,
+				max: 256,
+				step: 1,
+				defaultValue: 24,
+				show: function(e) {
+					return e.watermarkprops?.enabled;
+				}
+			},
+			watermarkColor: {
+				type: 'string',
+				label: 'Text Color',
+				ref: 'watermarkprops.textColor',
+				expression: 'optional',
+				show: function(e) {
+					return e.watermarkprops?.enabled;
+				}
+			},
+			watermarkOpacity: {
+				type: 'number',
+				label: 'Text opacity',
+				ref: 'watermarkprops.textOpacity',
+				component: 'slider',
+				min: 0,
+				max: 1,
+				step: 0.025,
+				defaultValue: 0.4,
+				show: function(e) {
+					return e.watermarkprops?.enabled;
+				}
+			},
+			watermarkRotationDegrees: {
+				type: 'integer',
+				label: 'Text Rotation',
+				ref: 'watermarkprops.rotation',
+				component: 'slider',
+				min: -180,
+				max: 180,
+				step: 1,
+				defaultValue: 0,
+				show: function(e) {
+					return e.watermarkprops?.enabled;
+				}
+			}
+		}
+	};
+
 	const containerSection = {
 		type: "items",
 		translation: "Container Content",
@@ -162,7 +232,8 @@ define(["qlik", './container'], function (qlik, Container) {
 			items: {
 				appearanceProps: settingsProperties,
 				tooltipProps: tooltipProperties,
-				containerSection
+				containerSection,
+				watermarkProps: watermarkProperties
 			}
 	}
 
