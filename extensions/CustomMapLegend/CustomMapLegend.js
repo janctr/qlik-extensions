@@ -14,13 +14,13 @@ define(["qlik", "jquery", "css!./style.css", "text!./template.html"], function (
       $(".legend-items").remove();
     }
 
-    const legendItems = layout.legendItems.map((legendItem) => {
-      return $(`
+    const legendItems = layout.legendItems.map((legendItem) =>
+      $(`
             <div class="legend-item">
                 <span class="legend-item-image"><img src="${legendItem.image}" /></span>
                 <span class="legend-item-label">${legendItem.label}</span>
-            </div>`);
-    });
+            </div>`)
+    );
 
     const readinessGradient = `
       <div class="legend-gradient-container">
@@ -48,11 +48,9 @@ define(["qlik", "jquery", "css!./style.css", "text!./template.html"], function (
       .parent()
       .parent();
 
-    if (qlik.navigation.getMode() === "edit") {
-      mapLegendContainerObject.css("visibility", "visible");
-    } else {
-      mapLegendContainerObject.css("visibility", "hidden");
-    }
+    const visibility =
+      qlik.navigation.getMode() === "edit" ? "visible" : "hidden";
+    mapLegendContainerObject.css("visibility", visibility);
   }
 
   return {

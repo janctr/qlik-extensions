@@ -68,6 +68,7 @@ define(["qlik", "jquery", "text!./style.css", "text!./index.html"], function (
       customTextColor,
       isCustomStyling,
       title,
+      customCss,
     } = layout.appearance;
 
     console.log("preset options: ", presetOptions);
@@ -95,6 +96,10 @@ define(["qlik", "jquery", "text!./style.css", "text!./index.html"], function (
 
     if (mBackgroundColor) extensionEl.css("background-color", mBackgroundColor);
     if (mTextColor) extensionEl.css("color", mTextColor);
+
+    if (customCss) {
+      $("<style>").html(customCss).appendTo("head");
+    }
   }
 
   return {
@@ -174,6 +179,12 @@ define(["qlik", "jquery", "text!./style.css", "text!./index.html"], function (
               component: "color-picker",
               type: "object",
               show: (c) => c.appearance.isCustomStyling,
+            },
+            customCss: {
+              ref: "appearance.customCss",
+              label: "Custom CSS",
+              component: "textarea",
+              type: "string",
             },
           },
         },
