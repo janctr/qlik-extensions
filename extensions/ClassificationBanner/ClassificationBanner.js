@@ -51,7 +51,7 @@ define(["qlik", "jquery", "text!./style.css", "text!./index.html"], function (
       .find(".qv-inner-object")
       .css("padding", 0);
 
-    $("#classification-banner-TPXxmG")
+    $(`#${getObjectId(layout)}`)
       .parent()
       .parent()
       .parent()
