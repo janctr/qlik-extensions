@@ -22,13 +22,37 @@ define(["qlik", "jquery", "css!./style.css", "text!./template.html"], function (
             </div>`);
     });
 
+    const readinessGradient = `
+      <div class="legend-gradient-container">
+        <h5>Readiness Scale</h5>
+        <div class="legend-gradient"></div>
+      </div>`;
+
     const wrapper = $(
       `<div class="legend-items ${layout.legendSettings.position}">
             <h4>${layout.legendSettings.title}</h4>
         </div>`
     ).append(legendItems);
 
+    wrapper.append(readinessGradient);
+
     wrapper.insertAfter($(".idevio-map-canvas"));
+
+    const mapLegendContainerObject = $("#map-legend")
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .parent();
+
+    if (qlik.navigation.getMode() === "edit") {
+      mapLegendContainerObject.css("visibility", "visible");
+    } else {
+      mapLegendContainerObject.css("visibility", "hidden");
+    }
   }
 
   return {

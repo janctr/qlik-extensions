@@ -30,6 +30,16 @@
     left: 0;
 }
 
+.legend-gradient-container {
+    margin-top: 0.25rem;
+}
+
+.legend-gradient-container > .legend-gradient {
+    background: rgb(255,0,0);
+    background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,255,0,1) 50%, rgba(0,154,23,1) 100%);
+    height: 5px;
+}
+
 .legend-items > h4 {
     text-align: center;
     margin-bottom: 0.25rem;
@@ -45,7 +55,7 @@
 }
 
 .legend-items > .legend-item > .legend-item-image {
-    flex: 1;
+    /* flex: 1; */
 }
 
 .legend-items > .legend-item > .legend-item-image > img {
