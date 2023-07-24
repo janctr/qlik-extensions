@@ -42,6 +42,65 @@ define(["qlik", "jquery", "text!./style.css", "text!./index.html"], function (
     return `${layout.qInfo.qId}_title`;
   }
 
+  function styleVizlibWritebackTables() {
+    console.log("Styling vizlib stuff");
+    const noBorderStyle = "rgba(0, 0, 0, 0)";
+    /* Regular vizlib inputs */
+    $(".vzl-input-container")
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      // .css("border-width", 0);
+      .css("border-color", noBorderStyle);
+
+    // $("<style>")
+    //   .html(".vzl-input-container:hover { border-width: 1px; }")
+    //   .appendTo("head");
+    $(
+      '<style type="text/css">.vzl-input-container:hover { border-width: 1px; }</style>'
+    ).appendTo("head");
+
+    /* Vizlib dropdowns */
+    $(".vzl-input-container")
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      // .css("border-width", 0);
+      .css("border-color", noBorderStyle);
+
+    //9
+    $("body textarea")
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      // .css("border-width", 0);
+      .css("border-color", noBorderStyle);
+
+    /* Remove column numbers */
+    $("tbody > tr > td:first-child").css("display", "none");
+    $("thead > tr > th:first-child").css("display", "none");
+
+    /* Remove table heade cells border */
+    // $("thead > tr > th").css("border-width", 0);
+    // $("td").css("border-width", 0);
+
+    $("thead > tr > th").css("border-color", noBorderStyle);
+    $("td").css("border-color", noBorderStyle);
+
+    $("tbody > tr > td, thead > tr > th").css("padding", "0.5rem 0.25rem");
+  }
+
   function render(layout) {
     // Get rid of title area
     $(`header#${getObjectTitleId(layout)}`).css("display", "none");
@@ -156,6 +215,17 @@ define(["qlik", "jquery", "text!./style.css", "text!./index.html"], function (
                 { label: "TOP SECRET/SCI", value: "ts-sci" },
               ],
             },
+            styleVizlibWbTables: {
+              ref: "appearance.styleVizlibWbTables",
+              type: "boolean",
+              label: "Run Vizlib Writeback Styles",
+              component: "switch",
+              defaultValue: false,
+              options: [
+                { label: "Enabled", value: true },
+                { label: "Disabled", value: false },
+              ],
+            },
             customStyling: {
               ref: "appearance.isCustomStyling",
               label: "Enable custom colors",
@@ -211,6 +281,15 @@ define(["qlik", "jquery", "text!./style.css", "text!./index.html"], function (
 
         $(document).ready(() => {
           render(layout);
+
+          if ($scope.layout.appearance.styleVizlibWbTables) {
+            // setInterval(function () {
+            //   styleVizlibWritebackTables();
+            // }, 5000);
+            setTimeout(function () {
+              styleVizlibWritebackTables();
+            }, 3000);
+          }
         });
       },
     ],
