@@ -24,7 +24,7 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 				}
 				selectTag.val(child);
 				selectTag.on('change', function(e) {
-					console.log(e);
+					//console.log(e);
 					parent[finalKey] = selectTag.val();
           			propertiesApi.setProperties(propsObj);
 				});
@@ -61,10 +61,14 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 				return;
 			}
 			if(scope.containerId) {
+				//console.log('getObject');
 				qlik.currApp().getObject(
 					$('#' + scope.localId), scope.containerId
 				).then(function(model){
+					//console.log('displayed object');
 					scope.initialDisplay = false;
+				}, function(error) {
+					//console.log(error);
 				});
 			}
 		}
@@ -196,17 +200,22 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 			paint: function ($element, layout) {
 				const myInfoIcon = $element.find(".infoIcon");
 				applyIconStyles(myInfoIcon, layout);
-				let backendApi = this.backendApi;
-				this.backendApi.getProperties().then(function(reply) {
-					reply.onChangeHandler = function() {
-						handleCustomDropdownProps(reply, 'containerprops.masterItem', '.container-dropdown > select', backendApi);
-					}
-					backendApi.setProperties(reply);
-				});
-
+				if(qlik.navigation.getMode() === 'edit') {
+					let backendApi = this.backendApi;
+					this.backendApi.getProperties().then(function(reply) {
+						reply.onChangeHandler = function() {
+							handleCustomDropdownProps(reply, 'containerprops.masterItem', '.container-dropdown > select', backendApi);
+						}
+						backendApi.setProperties(reply).then(function(){}, function(error) {
+							//console.log('mode', qlik.navigation.getMode());
+							//console.log(error);
+						});
+					});
+				}
 				displayContainedObject(this.$scope, layout);
 				applyTooltipProps(myInfoIcon, $element, layout);
 				applyModalProps(myInfoIcon, this.$scope, layout);
+
 				displayWatermark($element, layout);
 				return qlik.Promise.resolve();
 			},
@@ -234,12 +243,12 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 				}
 				$scope.localId = Math.floor(Math.random() * 16777215).toString(16);
 				$scope.initialDisplay = true;
-				console.log('container.objectId', $scope.containerId);
-				console.log('$scope', $scope);
+				//console.log('container.objectId', $scope.containerId);
+				//console.log('$scope', $scope);
 				let modalDiv = $('<div id="modal' + $scope.localId + '"></div>');
 				modalDiv.html(modalLayer);
 				modalDiv.addClass('infoModalLayer');
-				console.log('Modal', modalDiv);
+				//console.log('Modal', modalDiv);
 				$scope.attachModal = function() {
 					$('body').append(modalDiv);
 				}

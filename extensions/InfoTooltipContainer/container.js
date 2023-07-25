@@ -32,7 +32,7 @@ define(["qlik", "jquery",
           controller: [
             "$scope",
             function (scope) {
-              console.log('scope.args', scope.args);
+              //console.log('scope.args', scope.args);
               let data = function () {
                 return scope.data;
               };
