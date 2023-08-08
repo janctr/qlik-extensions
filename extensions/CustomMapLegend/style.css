@@ -4,7 +4,7 @@
 
 .legend-items {
     position: absolute;
-    margin: 1rem;
+    margin: 1rem 0.5rem;
     padding: 0.25rem 0.5rem;
     background-color: #FFF;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -36,7 +36,8 @@
 
 .legend-gradient-container > .legend-gradient {
     background: rgb(255,0,0);
-    background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,255,0,1) 50%, rgba(0,154,23,1) 100%);
+    /* background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,255,0,1) 50%, rgba(0,154,23,1) 100%); */
+    background: linear-gradient(90deg, rgba(51,45,45,1) 0%, rgba(255,0,0,1) 30%, rgba(228,161,27,1) 40%, rgba(20, 164, 77, 1) 50%);
     height: 5px;
 }
 
