@@ -1,3 +1,4 @@
+/*
 define(["qlik", "jquery",
     "client.property-panel/components/components",
     "client.property-panel/component-utils",
@@ -60,4 +61,21 @@ define(["qlik", "jquery",
       }
     };
   });
-  
+*/
+define(['qlik', 'qvangular'], function(qlik, qv) {
+  let Promise = qv.getService('$q');
+
+  return function() {
+    return new Promise(function(resolve, reject) {
+      let app = qlik.currApp();
+      app.getList('masterobject').then(function(model) {
+        app.destroySessionObject(model.layout.qInfo.qId);
+        if(!model.layout.qAppObjectList.qItems) {
+          return resolve({value: '', label: 'None'})
+        }
+        let masterOpts = model.layout.qAppObjectList.qItems.map(({ qInfo: { qId }, qMeta: { title } }) => ({ label: title, value: qId }));
+        return resolve(masterOpts);
+      });
+    });
+  };
+});

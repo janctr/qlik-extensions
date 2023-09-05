@@ -5,6 +5,7 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 		$("<style>").html(iconCss).appendTo("head");
 		$("<style>").html(tooltipModalCss).appendTo("head");
 		$("<style>").html(watermarkCss).appendTo("head");
+		/*
 		function handleCustomDropdownProps(propsObj, propName, dropdownClass, propertiesApi) {
 			let selectTag = $(dropdownClass);
 			if(typeof(selectTag) !== undefined) {
@@ -30,6 +31,7 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 				});
 			}
 		}
+		*/
 		/*Extract properties related to icon style and apply to the icon's css*/
 		function applyIconStyles(icon, layout) {
 			//if(layout.iconprops.colorStr) {
@@ -200,6 +202,7 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 			paint: function ($element, layout) {
 				const myInfoIcon = $element.find(".infoIcon");
 				applyIconStyles(myInfoIcon, layout);
+				/*
 				if(qlik.navigation.getMode() === 'edit') {
 					let backendApi = this.backendApi;
 					this.backendApi.getProperties().then(function(reply) {
@@ -211,7 +214,8 @@ define( ["qlik", "jquery", "./properties", "text!./template.html", "text!./modal
 							//console.log(error);
 						});
 					});
-				}
+				}*/
+
 				displayContainedObject(this.$scope, layout);
 				applyTooltipProps(myInfoIcon, $element, layout);
 				applyModalProps(myInfoIcon, this.$scope, layout);

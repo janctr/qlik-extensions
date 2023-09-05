@@ -1,7 +1,7 @@
 // JavaScript
-define(["qlik", './container'], function (qlik, Container) {
+define(["qlik", './container'], function (qlik, getContainerOptions) {
 	'use strict';
-	Container();
+	//Container();
 	const settingsProperties = {
 		type: 'items',
 		label: 'Container Appearance',
@@ -214,15 +214,28 @@ define(["qlik", './container'], function (qlik, Container) {
 			}
 		}
 	};
-
+	
 	const containerSection = {
 		type: "items",
-		translation: "Container Content",
+		label: "Container Content",
 		items: {
+		  /*
 		  container: {
 			component: "Container",
 			translation: "Container",
 		  },
+		  */
+		  masterItems: {
+			type: "string",
+			component: "dropdown",
+			label: "Master Object",
+			ref: "containerprops.masterItem",
+			options: function() {
+				return getContainerOptions().then(function (masterObjs) {
+					return masterObjs;
+				})
+			}
+		  }
 		},
 	};
 
