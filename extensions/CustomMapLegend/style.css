@@ -5,6 +5,7 @@
 .legend-items {
     position: absolute;
     margin: 1rem 0.5rem;
+    margin-bottom: 2rem;
     padding: 0.25rem 0.5rem;
     background-color: #FFF;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
