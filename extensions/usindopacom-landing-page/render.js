@@ -69,6 +69,10 @@ define(["jquery", "./util"], function ($, Util) {
     if (customCardDimensions) {
       const { cardHeight, cardWidth } = layout.pageSettings;
 
+      // Disable min-width and aspect-ratio for the cards
+      $(qualifySelector(".col")).css("min-width", "auto");
+      $(qualifySelector(".col")).css("aspect-ratio", "auto");
+
       if (!Number.isNaN(cardHeight)) {
         $(qualifySelector(".front")).css("min-height", `${cardHeight}px`);
         $(qualifySelector(".back")).css("min-height", `${cardHeight}px`);
