@@ -7,9 +7,10 @@ define(["qlik", "jquery", "css!./style.css", "text!./template.html"], function (
   "use strict";
 
   function render(layout) {
-    console.log("map canvas: ", $(".idevio-map-canvas"));
+    // console.log("map canvas: ", $(".idevio-map-canvas"));
 
-    if (!layout.legendItems.length) return;
+    if (!layout?.legendItems?.length) return true;
+
     if ($(".legend-items").length) {
       $(".legend-items").remove();
     }
@@ -36,6 +37,12 @@ define(["qlik", "jquery", "css!./style.css", "text!./template.html"], function (
 
     wrapper.append(readinessGradient);
 
+    // Check if container to render in exists
+    if (!$(".idevio-map-canvas").length) {
+      return false;
+    }
+    //
+
     wrapper.insertAfter($(".idevio-map-canvas"));
 
     const mapLegendContainerObject = $("#map-legend")
@@ -51,6 +58,8 @@ define(["qlik", "jquery", "css!./style.css", "text!./template.html"], function (
     const visibility =
       qlik.navigation.getMode() === "edit" ? "visible" : "hidden";
     mapLegendContainerObject.css("visibility", visibility);
+
+    return true;
   }
 
   return {
@@ -131,7 +140,7 @@ define(["qlik", "jquery", "css!./style.css", "text!./template.html"], function (
       exportData: true,
     },
     paint: function ($element, layout) {
-      render(layout);
+      // render(layout);
       return qlik.Promise.resolve();
     },
     controller: [
@@ -142,9 +151,13 @@ define(["qlik", "jquery", "css!./style.css", "text!./template.html"], function (
 
         $scope.legendItems = layout.legendItems;
 
-        setTimeout(function () {
-          render(layout);
-        }, 2000);
+        const interval = setInterval(() => {
+          const success = render(layout);
+
+          if (success) {
+            clearInterval(interval);
+          }
+        }, 2500);
       },
     ],
   };
