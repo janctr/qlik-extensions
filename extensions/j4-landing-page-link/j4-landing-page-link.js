@@ -1,13 +1,39 @@
-define(["qlik", "text!./template.html", "text!./styles.css"], function (
-  qlik,
-  template,
-  styles
-) {
+define([
+  "qlik",
+  "jquery",
+  "text!./template.html",
+  "text!./styles.css",
+], function (qlik, $, template, styles) {
   "use strict";
 
   [styles].forEach((cssModule) => {
     $("<style>").html(cssModule).appendTo("head");
   });
+
+  const properties = {
+    type: "items",
+    component: "accordion",
+    items: {
+      link: {
+        type: "string",
+        label: "Link",
+        translation: "Link",
+        ref: "link",
+      },
+      label: {
+        type: "string",
+        label: "Label",
+        translation: "Label",
+        ref: "label",
+      },
+    },
+  };
+
+  function render(layout) {
+    const { link, label } = layout;
+    $(".j4-landing-page-link-container > a ").attr("href", link);
+    $(".j4-landing-page-link-container > a ").text(label);
+  }
 
   return {
     template: template,
@@ -16,14 +42,17 @@ define(["qlik", "text!./template.html", "text!./styles.css"], function (
       export: false,
       exportData: false,
     },
-    paint: function () {
+    definition: properties,
+    paint: function ($element, layout) {
+      console.log("$element: ", $element);
+      render(layout);
       return qlik.Promise.resolve();
     },
     controller: [
       "$scope",
       function ($scope) {
-        $scope.j4Link =
-          "https://qlik.advana.data.mil/sense/app/0695026d-95cb-40bc-8db3-f19e944f9994/sheet/91d194c4-60a3-4186-a6ac-5c4a7042ac71/state/edit";
+        const layout = $scope.layout;
+
         $scope.isToggled = false;
 
         $(document).ready(function () {
@@ -45,6 +74,8 @@ define(["qlik", "text!./template.html", "text!./styles.css"], function (
               $(".j4-landing-page-link-container").removeAttr("style");
             }
           });
+
+          render(layout);
         });
       },
     ],
