@@ -43,6 +43,18 @@ define([
     },
     paint: function ($element, layout) {
       render(layout);
+
+      console.log("layout: ", layout.qInfo.qId);
+
+      if (!window.backendApi) {
+        window.backendApi = {};
+      }
+
+      if (!window.backendApi[layout.qInfo.qId]) {
+        /* Required to call setProperties() */
+        window.backendApi[layout.qInfo.qId] = this.backendApi;
+      }
+
       return qlik.Promise.resolve();
     },
     controller: [
@@ -61,7 +73,6 @@ define([
         $scope.menuItems = layout.menuItems;
         $scope.getSheetUrl = getSheetUrl;
         $scope.getHref = getHref;
-        $scope.pacomLogoUrl = `/appcontent/${appId}/usindopacom-logo.png`;
         $scope.makeClassFromTitle = makeClassFromTitle;
 
         $(document).ready(() => {

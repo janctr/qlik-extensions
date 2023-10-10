@@ -15,6 +15,12 @@ define([
           <p>You can view the source code here: 
             <a href="https://github.com/janctr/qlik-extensions/tree/master/extensions/usindopacom-landing-page">repository</a>
           </p>
+          <h4>Changelog</h4>
+          <h5>October 10, 2023</h5>
+          <ul>
+            <li>Added buttons for copying and pasting data from other usindopacom-landing-page objects.</li>
+            <li>Removed banner logo if not specified.</li>
+          </ul>
         </div>`;
 
       let html = copyright;

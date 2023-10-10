@@ -3,7 +3,7 @@
 	"description": "Template for making landing page that serves as central hub for links to various applications.",
 	"icon": "table",
 	"type": "visualization",
-	"version": "2.0.0",
+	"version": "3.0.0",
 	"author": "Jan Iverson Eligio",
 	"homepage": "",
 	"keywords": "qlik-sense, visualization, landing, page",

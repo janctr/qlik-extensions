@@ -40,14 +40,13 @@ define(["jquery", "./util"], function ($, Util) {
     );
 
     // Set top left logo image
-    const logoPath = !!logoUrl
-      ? logoUrl
-      : `/appcontent/${appId}/usindopacom-logo.png`;
-
-    $(qualifySelector(".pacom-logo")).attr("src", logoPath);
+    if (logoUrl) {
+      $(qualifySelector(".pacom-logo")).attr("src", logoUrl);
+    }
 
     // Set logo link if not empty or null
     $(qualifySelector(".pacom-logo")).off(); // Clear event handlers
+
     if (logoLink) {
       $(qualifySelector(".pacom-logo")).click(function () {
         navigateToUrlInNewTab(logoLink);

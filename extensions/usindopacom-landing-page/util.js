@@ -5,6 +5,41 @@ define(["qlik"], function (qlik) {
     ({ qInfo: { qId }, qMeta: { title } }) => ({ label: title, value: qId })
   );
 
+  function exportDataToClipboard(data) {
+    const { pageSettings, menuItems } = data;
+
+    // Export object to clipboard
+    // {
+    //   pageSettings,
+    //   menuItems
+    // }
+    const json = JSON.stringify({
+      pageSettings,
+      menuItems,
+    });
+    navigator.clipboard.writeText(json).then(() => {
+      alert("Successfully copied to clipboard");
+    });
+  }
+
+  function importDataFromClipboard({ qInfo: { qId } }) {
+    const backendApi = window.backendApi[qId];
+
+    navigator.clipboard.readText().then((json) => {
+      const data = JSON.parse(json);
+
+      const { pageSettings, menuItems } = data;
+
+      backendApi.getProperties().then(function (reply) {
+        if (pageSettings) reply.pageSettings = pageSettings;
+        if (menuItems) reply.menuItems = menuItems;
+
+        console.log("setting properties: ", reply);
+        backendApi.setProperties(reply);
+      });
+    });
+  }
+
   function getObjectId(layout) {
     // You can use this to target elements specific to an object
     return layout.qInfo.qId;
@@ -84,6 +119,8 @@ define(["qlik"], function (qlik) {
   return {
     appId,
     sheets,
+    exportDataToClipboard,
+    importDataFromClipboard,
     isWebLink,
     isSheetLink,
     isNotLink,

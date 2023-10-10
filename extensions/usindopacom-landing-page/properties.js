@@ -1,5 +1,11 @@
 define(["./About", "./util"], function (About, Util) {
-  const { sheets, isWebLink, isSheetLink } = Util;
+  const {
+    exportDataToClipboard,
+    importDataFromClipboard,
+    sheets,
+    isWebLink,
+    isSheetLink,
+  } = Util;
 
   About(); // Initialize About panel
 
@@ -12,7 +18,7 @@ define(["./About", "./util"], function (About, Util) {
       pageTitle: {
         type: "string",
         ref: "pageSettings.pageTitle",
-        label: "Page title",
+        label: "Title",
         defaultValue: "Title",
       },
       pageTitleBackgroundColor: {
@@ -79,6 +85,17 @@ define(["./About", "./util"], function (About, Util) {
         max: 1000,
         step: 1,
       },
+      isLogoEnabled: {
+        ref: "pageSettings.isLogoEnabled",
+        type: "booelean",
+        component: "switch",
+        label: "Enable logo",
+        defaultValue: true,
+        options: [
+          { label: "Enabled", value: true },
+          { label: "Disabled", value: false },
+        ],
+      },
       logoLink: {
         ref: "pageSettings.logoLink",
         label: "Logo Link",
@@ -101,6 +118,18 @@ define(["./About", "./util"], function (About, Util) {
           { value: false, label: "NIPR" },
           { value: true, label: "SIPR" },
         ],
+      },
+      copyDataButton: {
+        component: "button",
+        label: "Copy Data to Clipboard",
+        ref: "pageSettings.copyDataButton",
+        action: exportDataToClipboard,
+      },
+      importDataButton: {
+        component: "button",
+        label: "Import Data from Clipboard",
+        ref: "pageSettings.importDataButton",
+        action: importDataFromClipboard,
       },
     },
   };
